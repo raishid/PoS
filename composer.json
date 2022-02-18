@@ -1,0 +1,20 @@
+{
+    "name": "fededav/pos",
+    "description": "Sistema Pos MVC",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/",
+            "App\\Controllers\\": "App/Controllers/",
+            "App\\Helpers\\": "App/Helpers/"
+        }
+    },
+    "authors": [
+        {
+            "name": "fededav",
+            "email": "67575679+raishid@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
