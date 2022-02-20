@@ -6,7 +6,7 @@ use PDO;
 
 class db
 {
-    function __construct($table)
+    function __construct()
     {
         $dotenv = Dotenv::createImmutable(ROOT_PATH);
         $this->ENV = $dotenv->load();
@@ -16,8 +16,8 @@ class db
     private function connect($dbuser, $dbpass, $dbname, $dbhost, $dbport = '3306')
     {
         $dsn = 'mysql:host=' . $dbhost . ';port=' . $dbport . ';dbname=' . $dbname . ';charset=utf8';
-        $conn = new PDO($dsn, $dbuser, $dbpass);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);	
+        $this->conn = new PDO($dsn, $dbuser, $dbpass);
+       	$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);	
     }
 
     public function list()
@@ -26,7 +26,7 @@ class db
 		{
 			$result = array();
 
-			$stm = $this->pdo->prepare("SELECT * FROM $this->table");
+			$stm = $this->conn->prepare("SELECT * FROM $this->table");
 			$stm->execute();
 
 			return $stm->fetchAll(PDO::FETCH_OBJ);
@@ -41,7 +41,7 @@ class db
 	{
 		try 
 		{
-			$stm = $this->pdo
+			$stm = $this->conn
 			          ->prepare("SELECT * FROM $this->table WHERE id = ?");
 			          
 
@@ -57,7 +57,7 @@ class db
 	{
 		try 
 		{
-			$stm = $this->pdo
+			$stm = $this->conn
 			            ->prepare("DELETE FROM $this->table WHERE id = ?");			          
 
 			$stm->execute(array($id));
@@ -67,10 +67,70 @@ class db
 		}
 	}
 
-    public function query($query)
+    public function save()
 	{
 		try 
 		{
+			$properties = array();
+
+			foreach($this->fillable as $fillable){
+				if(property_exists($this, $fillable)){
+					$properties[$fillable] = $this->$fillable;
+				}
+			}
+
+			$sql  = "INSERT INTO `" . $this->table . "` (
+						`" . implode('`, `', array_keys($properties)) . "`
+					) VALUES (
+						";
+
+
+			foreach ($properties as $name => $detail)
+			{
+				$sql .= "'" . $detail . "', ";
+			}
+
+			$sql  = substr($sql, 0, -2);
+			$sql .= "
+					);";
+			
+			$prepare = $this->conn->prepare($sql);
+			$prepare->execute();
+			
+            
+		} catch (Exception $e) 
+		{
+			die($e->getMessage());
+		}
+	}
+
+	public function update($id)
+	{
+		try 
+		{
+			$properties = array();
+
+			foreach($this->fillable as $fillable){
+				if(property_exists($this, $fillable)){
+					$properties[$fillable] = $this->$fillable;
+				}
+			}
+
+			$sql  = "UPDATE `" . $this->table . "` SET";
+
+			foreach($properties as $key => $column){
+				$sql .= " $key = '$column', ";
+			}
+			
+			$sql = substr($sql, 0, -2);
+
+			$sql .= " WHERE id = '$id'";
+
+			#var_dump($sql);
+			
+			$prepare = $this->conn->prepare($sql);
+			$prepare->execute();
+			
             
 		} catch (Exception $e) 
 		{

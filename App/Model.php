@@ -4,12 +4,9 @@ namespace App;
 
 use config\db;
 
-class Model
+class Model extends db
 {
     protected $table;
+    protected $fillable;
 
-    function __construct()
-    {
-        $this->db = new db($this->table);
-    }    
 }
