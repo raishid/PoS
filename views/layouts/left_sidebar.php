@@ -2,7 +2,7 @@
  <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="/Pos/assets/images/logo1.png" alt="AdminLTE Logo" class="brand-image-xl w-100 mh-100 elevation-3" style="opacity: .8">
+      <img src="/assets/images/logo1.png" alt="AdminLTE Logo" class="brand-image-xl w-100 mh-100 elevation-3" style="opacity: .8">
     </a>
 
     <!-- Sidebar -->
@@ -10,7 +10,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="/Pos/assets/images/anonymous.png" class="img-circle elevation-2" alt="User Image">
+          <img src="/assets/images/anonymous.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">Alexander Pierce</a>
@@ -33,7 +33,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
           <li class="nav-item menu-open">
-            <a href="" class="nav-link active"><i class="fa fa-home"></i><p class="px-1">Home</p></a>
+            <a href="/home" class="nav-link active"><i class="fa fa-home"></i><p class="px-1">Home</p></a>
           </li>
           <li class="nav-item menu-open">
             <a href="" class="nav-link"><i class="fa fa-user"></i><p class="px-1">Users</p></a>

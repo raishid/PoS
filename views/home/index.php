@@ -1,20 +1,5 @@
-<?php
-  use App\Helpers\helpers;
-
-  /*
-    header
-  */
-  helpers::includeVar('layouts.header');
-
-  /*
-    sidebar
-  */
-  helpers::includeVar('layouts.right_sidebar');
-
-
-?>
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -25,7 +10,7 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><i class="fa-solid fa-gauge"></i><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><i class="fa-solid fa-gauge"></i><a href="/">Home</a></li>
               <li class="breadcrumb-item active">Panel</li>
             </ol>
           </div>
@@ -65,21 +50,3 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
-<?php
-  helpers::includeVar('layouts.footer');
-?>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
-<?php
-  helpers::includeVar('layouts.scripts');
-?>
-</body>
-</html>

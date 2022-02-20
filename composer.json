@@ -7,7 +7,9 @@
         "psr-4": {
             "App\\": "App/",
             "App\\Controllers\\": "App/Controllers/",
-            "App\\Helpers\\": "App/Helpers/"
+            "App\\Helpers\\": "App/Helpers/",
+            "config\\": "config/",
+            "App\\Models\\": "App/Models/"
         }
     },
     "authors": [
@@ -16,5 +18,7 @@
             "email": "67575679+raishid@users.noreply.github.com"
         }
     ],
-    "require": {}
+    "require": {
+        "vlucas/phpdotenv": "^5.4"
+    }
 }
