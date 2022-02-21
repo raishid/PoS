@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "name": "pos",
+  "version": "1.0.0",
+  "description": "pos system",
+  "dependencies": {
+    "esbuild": "^0.14.23",
+    "vue": "^3.2.31"
+  },
+  "devDependencies": {
+    "esbuild-plugin-vue-iii": "^0.5.0"
+  },
+  "scripts": {
+    "esbuild": "esbuild resource/js/app.js --bundle --outfile=js/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raishid/PoS.git"
+  },
+  "author": "fededav",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raishid/PoS/issues"
+  },
+  "homepage": "https://github.com/raishid/PoS#readme"
+}

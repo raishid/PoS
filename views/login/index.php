@@ -56,6 +56,8 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
+
+        </test />
     </div>
     <!-- /.login-box -->
 
