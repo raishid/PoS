@@ -26,6 +26,7 @@ class ComposerStaticInit72249e6761839b5f7836b7f2c17fd7b1
         'P' => 
         array (
             'PhpOption\\' => 10,
+            'Pecee\\' => 6,
         ),
         'G' => 
         array (
@@ -37,9 +38,6 @@ class ComposerStaticInit72249e6761839b5f7836b7f2c17fd7b1
         ),
         'A' => 
         array (
-            'App\\Models\\' => 11,
-            'App\\Helpers\\' => 12,
-            'App\\Controllers\\' => 16,
             'App\\' => 4,
         ),
     );
@@ -65,6 +63,10 @@ class ComposerStaticInit72249e6761839b5f7836b7f2c17fd7b1
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
+        'Pecee\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pecee/simple-router/src/Pecee',
+        ),
         'GrahamCampbell\\ResultType\\' => 
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
@@ -72,18 +74,6 @@ class ComposerStaticInit72249e6761839b5f7836b7f2c17fd7b1
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
-        ),
-        'App\\Models\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/App/Models',
-        ),
-        'App\\Helpers\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/App/Helpers',
-        ),
-        'App\\Controllers\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/App/Controllers',
         ),
         'App\\' => 
         array (

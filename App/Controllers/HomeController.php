@@ -1,11 +1,13 @@
 <?php
 
+namespace App\Controllers;
+
 use App\Controller;
 
-class Home extends Controller
+class HomeController extends Controller
 {
     public function index()
     {
-        $this->view->loadView($this, 'index', true);
+        return $this->view->loadView('home.index', true);
     }
 }

@@ -4,18 +4,20 @@ namespace App;
 
 class Views
 {
-    public function loadView($controller, $view, $template = false, $data = '')
+    public function loadView($pathview, $template = false, $data = '')
     {
-        $controller = get_class($controller);
-        if($view == 404){
-            $content = '/' . $view;
+        $pathview = str_replace('.', '/', $pathview);
+
+        if($pathview == 404){
+            $content = '404';
         }else{
-            $content = $controller . '/' .$view;
+            $content = $pathview;
         }
+        
         if($template){
             include 'views/template.php';
         }else{
-            include 'views/'. $controller . '/' . $view . '.php';
+            include 'views/'. $pathview . '.php';
         }
         
     }

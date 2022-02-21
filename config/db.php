@@ -124,12 +124,12 @@ class db
 			
 			$sql = substr($sql, 0, -2);
 
-			$sql .= " WHERE id = '$id'";
+			$sql .= " WHERE id = ?";
 
 			#var_dump($sql);
 			
 			$prepare = $this->conn->prepare($sql);
-			$prepare->execute();
+			$prepare->execute(array($id));
 			
             
 		} catch (Exception $e) 

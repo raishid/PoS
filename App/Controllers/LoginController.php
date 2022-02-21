@@ -1,21 +1,20 @@
 <?php
 
+namespace App\Controllers;
+
 use App\Controller;
 use App\Models\User;
+use App\Request;
 
-class Login extends Controller
+class LoginController extends Controller
 {
     public function index()
     {
-        $users = new User();
-        $users->name = 'test1';
-        $users->username = 'username';
-        $users->password = '12345';
-        $users->role = '1';
-        $users->pic = '';
-        $users->state = 1;
-        $users->date = date('Y-m-d H:i:s');
-        $users->update(3);
-        #$this->view->loadview($this, 'index');
+        $this->view->loadview('login.index');
+    }
+
+    public function login()
+    {
+        var_dump(input());
     }
 }
