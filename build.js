@@ -1,9 +1,18 @@
-const build = require('esbuild').build;
-const vue3Plugin = require('esbuild-plugin-vue-iii').vue3Plugin;
+const vuePlugin = require('esbuild-vue');
 
-build({
-  entryPoints: ['resource/js/app.js'],
-  bundle: true,
-  outdir: 'js',
-  plugins: [vue3Plugin()],
-}).catch(() => process.exit(1));
+require('esbuild').build({
+    entryPoints: ['resource/js/app.js'],
+    bundle: true,
+    outfile: 'js/app.js',
+    plugins: [vuePlugin()],
+    define: {
+        "process.env.NODE_ENV": JSON.stringify("development"),
+    },
+    watch: {
+        onRebuild(error, result) {
+          if (error) console.error('watch build failed:', error)
+          else console.log('watch build succeeded:', result)
+        },
+      },
+    minify: true,
+});

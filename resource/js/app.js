@@ -1,6 +1,11 @@
-import { createApp } from 'vue'
-import Test from './components/test.vue';
+import Vue from "vue/dist/vue.js";
 
-const app = createApp({});
-app.component('test', Test);
-app.mount('#app')
+window.axios = require('axios');
+
+window.Vue = require("vue");
+
+Vue.component('login-form', require('./components/login/Login.vue').default);
+
+const app = new Vue({
+    el: '#app'
+});

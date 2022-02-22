@@ -137,4 +137,47 @@ class db
 			die($e->getMessage());
 		}
 	}
+
+	public function where($column, $value, $operator = '=')
+	{
+		try 
+		{
+			$stm = $this->conn
+			          ->prepare("SELECT * FROM $this->table WHERE $column $operator ?");
+			          
+
+			$stm->execute(array($value));
+			return $stm->fetch(PDO::FETCH_OBJ);
+		} catch (Exception $e) 
+		{
+			die($e->getMessage());
+		}
+	}
+
+	/**
+	
+	* @param string $username username user
+	* @param string $passwordhash password in passwordHash
+	* @param array $columns Columns name array in db index 0 username column and index 1 passoword column
+	* @return object data db
+	*/
+
+	public function verifyLogin(string $username, string $passwordhash, array $columns)
+	{
+		try 
+		{
+			$user_column = $columns[0];
+			$pass_column = $columns[1];
+
+			$stm = $this->conn
+			          ->prepare("SELECT * FROM $this->table WHERE $user_column = ? AND $pass_column = ?");
+			          
+
+			$stm->execute(array($username, $passwordhash));
+			return $stm->fetch(PDO::FETCH_OBJ);
+		} catch (Exception $e) 
+		{
+			die($e->getMessage());
+		}
+	}
 }

@@ -4,31 +4,33 @@ use App\Controllers\ExceptionController;
 use Pecee\Http\Request;
 use App\Controllers\HomeController;
 use App\Controllers\LoginController;
+use App\Middleware;
 use Pecee\SimpleRouter\SimpleRouter;
 
-//HOME 
-SimpleRouter::get('/', [HomeController::class, 'index']);
+
+SimpleRouter::group(['prefix' => 'dashboard', 'middleware' => Middleware::class], function () {
+    //HOME 
+    SimpleRouter::get('/', [HomeController::class, 'index']);
+});
 
 //LOGIN
-SimpleRouter::get('/login', [LoginController::class, 'index']);
+SimpleRouter::get('/login', [LoginController::class, 'index'])->name('login.index');
 
 //ajax login
 SimpleRouter::post('/api/login', [LoginController::class, 'login']);
 
-
-
-SimpleRouter::get('/not-found', [ExceptionController::class, 'pageNoFound']);
-SimpleRouter::get('/forbidden', [ExceptionController::class, 'pageNoFound']);
 
 SimpleRouter::error(function(Request $request, \Exception $exception) {
 
     switch($exception->getCode()) {
         // Page not found
         case 404:
-            response()->redirect('/not-found');
+            http_response_code(404);
+            $request->setRewriteCallback('ExceptionController@pageNoFound');
         // Forbidden
         case 403:
-            response()->redirect('/forbidden');
+            http_response_code(403);
+            $request->setRewriteCallback('ExceptionController@pageNoFound');
     }
     
 });
