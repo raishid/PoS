@@ -4,7 +4,7 @@ namespace App;
 
 class Views
 {
-    public function loadView($pathview, $template = false, $data = '')
+    public function loadView(string $pathview, bool $template = false, $data = '')
     {
         $pathview = str_replace('.', '/', $pathview);
 

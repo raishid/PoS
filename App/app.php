@@ -17,5 +17,7 @@ class app
         SimpleRouter::csrfVerifier(new BaseCsrfVerifier());
         // Start the routing
         SimpleRouter::start();
+
+        end_flush();
     }
 }

@@ -27,4 +27,10 @@ class LoginController extends Controller
         }
 
     }
+
+    public function logout()
+    {
+        destroySession();
+        redirect(url('login.index'));
+    }
 }

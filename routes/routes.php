@@ -1,23 +1,35 @@
 <?php
 
-use App\Controllers\ExceptionController;
 use Pecee\Http\Request;
 use App\Controllers\HomeController;
 use App\Controllers\LoginController;
+use App\Controllers\UserController;
 use App\Middleware;
 use Pecee\SimpleRouter\SimpleRouter;
 
 
-SimpleRouter::group(['prefix' => 'dashboard', 'middleware' => Middleware::class], function () {
+/* SimpleRouter::group(['middleware' => Middleware::class], function () {
     //HOME 
-    SimpleRouter::get('/', [HomeController::class, 'index']);
+    SimpleRouter::get('/', [HomeController::class, 'index'])->name('index');
+}); */
+
+SimpleRouter::group(['prefix' => 'dashboard', 'middleware' => Middleware::class], function () {
+    //DASHBOARD 
+    SimpleRouter::get('/', [HomeController::class, 'index'])->name('dashboard.index');
 });
+
+
+//USERS
+SimpleRouter::get('/users', [UserController::class, 'index'])->name('users.index');
 
 //LOGIN
 SimpleRouter::get('/login', [LoginController::class, 'index'])->name('login.index');
 
 //ajax login
 SimpleRouter::post('/api/login', [LoginController::class, 'login']);
+
+//LOGOUT
+SimpleRouter::get('/logout', [LoginController::class, 'logout'])->name('login.logout');
 
 
 SimpleRouter::error(function(Request $request, \Exception $exception) {

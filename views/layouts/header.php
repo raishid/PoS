@@ -48,7 +48,7 @@
                         <!-- Dropwdown-toggle profile -->
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                             <li class="user-footer dropdown-item">
-                                <a href="#" class="btn btn-secondary">Logout</a>
+                                <a href="<?=url('login.logout')?>" class="btn btn-secondary">Logout</a>
                             </li>
                         </ul>
                     </li>
