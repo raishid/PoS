@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'f0a30d2f7064f90786fc5ba9a9db6981a7342562',
+    'reference' => '9185968de6a8a5611106cfeccb4137350d94d168',
     'name' => 'fededav/pos',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'f0a30d2f7064f90786fc5ba9a9db6981a7342562',
+      'reference' => '9185968de6a8a5611106cfeccb4137350d94d168',
     ),
     'graham-campbell/result-type' => 
     array (

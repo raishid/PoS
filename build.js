@@ -8,11 +8,12 @@ require('esbuild').build({
     define: {
         "process.env.NODE_ENV": JSON.stringify("development"),
     },
-    /* watch: {
+    logLevel: "info",
+    watch: {
         onRebuild(error, result) {
           if (error) console.error('watch build failed:', error)
           else console.log('watch build succeeded:', result)
         },
       },
-    minify: true, */
+    minify: true,
 });

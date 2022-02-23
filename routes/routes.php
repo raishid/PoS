@@ -7,20 +7,14 @@ use App\Controllers\UserController;
 use App\Middleware;
 use Pecee\SimpleRouter\SimpleRouter;
 
-
-/* SimpleRouter::group(['middleware' => Middleware::class], function () {
+SimpleRouter::group(['middleware' => Middleware::class], function () {
     //HOME 
     SimpleRouter::get('/', [HomeController::class, 'index'])->name('index');
-}); */
-
-SimpleRouter::group(['prefix' => 'dashboard', 'middleware' => Middleware::class], function () {
-    //DASHBOARD 
-    SimpleRouter::get('/', [HomeController::class, 'index'])->name('dashboard.index');
+    //USERS
+    SimpleRouter::get('/users', [UserController::class, 'index'])->name('users.index');
 });
 
 
-//USERS
-SimpleRouter::get('/users', [UserController::class, 'index'])->name('users.index');
 
 //LOGIN
 SimpleRouter::get('/login', [LoginController::class, 'index'])->name('login.index');

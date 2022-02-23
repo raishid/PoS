@@ -9,6 +9,9 @@ class UserController extends Controller
 {
     public function index()
     {
-        return $this->view->loadview('login.index', true);
+        $model_user = new User();
+        $users = $model_user->list();
+
+        return $this->view->loadview('users.index', true, ["users" => $users]);
     }
 }
