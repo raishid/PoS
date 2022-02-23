@@ -6,6 +6,9 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1>Users</h1>
+          <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#create-modal-user">
+              Create User
+          </button>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -31,3 +34,25 @@
     </div>
   </section>
 </div>
+<u-modal></u-modal>
+
+<script type="application/javascript">
+  document.addEventListener("DOMContentLoaded", () => {
+    $('#datatable-user').DataTable({
+      responsive: true,
+      destroy: true,
+      responsive: true, 
+      lengthChange: false, 
+      autoWidth: false,
+      rowReorder: {
+          selector: 'td:nth-child(2)'
+      },
+      columnDefs: [
+        { 
+          className: "text-center align-middle", targets: "_all" 
+        },
+      ],
+      
+    });
+  });
+</script>

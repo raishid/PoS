@@ -2,35 +2,19 @@
   <div class="card">
     <div class="card-header">
       <h3 class="card-title">List users</h3>
-
-      <div class="card-tools">
-        <div class="input-group input-group-sm" style="width: 150px">
-          <input
-            type="text"
-            name="table_search"
-            class="form-control float-right"
-            placeholder="Search"
-            v-model="u_search"
-          />
-
-          <div class="input-group-append">
-            <button type="submit" class="btn btn-default" @click="handleUsers">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
-    <div class="card-body table-responsive p-0">
-      <table class="table table-hover text-nowrap">
+    <div class="card-body">
+      <table class="table table-striped" id="datatable-user">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Name</th>
             <th>User</th>
+            <th>Pic</th>
             <th>Role</th>
             <th>Status</th>
-            <th>Date</th>
+            <th>Last Login</th>
+            <th>Registered</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -39,20 +23,23 @@
             <td>{{ index + 1}}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.username }}</td>
+            <td><img :src="userPic(user.pic)" class="img-thumbnail rounded" width="50" /></td>
             <td>{{ defineRole(user.role) }}</td>
-            <td>{{ defineState(user.state) }}</td>
+            <td><a class="btn btn-success btn-xs">{{ defineState(user.state) }}</a></td>
+            <td>{{ user.last_login }}</td>
             <td>{{ formatDate(user.date) }}</td>
             <td>
                 <div>
-                    <button class="btn btn-info">Editar</button>
-                    <button class="btn btn-warning">Desactivar</button>
-                    <button class="btn btn-danger">Eliminar</button>
+                    <a :href="`/edit/${user.id}`" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                    
+                    <a :href="`/delete/${user.id}`" class="btn btn-danger"><i class="fa fa-times"></i></a>
                 </div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+    
   </div>
 </template>
 <script>
@@ -95,7 +82,15 @@ export default {
         formatDate(date){
             const datetime = new Date(date);
             return datetime.toLocaleDateString('es-Mx');
-        }
-    }
+        },
+        userPic(pic){
+          if(pic){
+            return pic;
+          }else{
+            return '/assets/images/anonymous.png';
+          }
+        },
+    },
+    
 };
 </script>

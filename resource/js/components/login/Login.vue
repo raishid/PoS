@@ -67,7 +67,7 @@ export default {
                 const { data: { status, response: data } } = response;
                 if(status){
                     this.setCookie('session', this.csrf, 365);
-                    location.href = '/dashboard';
+                    location.href = '/';
                 }else{
                     this.loginError = true;
                 }

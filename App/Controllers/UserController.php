@@ -12,6 +12,9 @@ class UserController extends Controller
         $model_user = new User();
         $users = $model_user->list();
 
+        //load datable scripts
+        loadDatatable();
+
         return $this->view->loadview('users.index', true, ["users" => $users]);
     }
 }
