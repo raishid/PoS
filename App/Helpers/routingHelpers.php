@@ -57,7 +57,7 @@ function input($index = null, $defaultValue = null, ...$methods)
         return request()->getInputHandler()->value($index, $defaultValue, ...$methods);
     }
 
-    return request()->getInputHandler()->all();
+    return request()->getInputHandler();
 }
 
 /**

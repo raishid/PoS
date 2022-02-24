@@ -1,6 +1,6 @@
-<footer class="main-footer d-flex justify-content-center">
-    <strong>Copyright &copy; <?=date('Y')?> <a href="#">federicodeveloper.com</a></strong>
-    <span>. All rights reserved.</span>
+<footer class="main-footer d-flex justify-content-center flex-column flex-md-row">
+    <strong class="text-center">Copyright &copy; <?=date('Y')?> <a href="#">federicodeveloper.com</a></strong>
+    <span class="text-center">. All rights reserved.</span>
 </footer>
 
   <!-- Control Sidebar -->

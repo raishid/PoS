@@ -7,9 +7,9 @@ class app
 {
     public function load()
     {
+        require_once 'App/Helpers/helpers.php';
         require_once 'App/Helpers/routingHelpers.php';
         require_once 'routes/routes.php';
-        require_once 'App/Helpers/helpers.php';
 
         startSession();
         

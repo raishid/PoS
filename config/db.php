@@ -1,16 +1,22 @@
 <?php
 
 namespace config;
-use Dotenv\Dotenv;
 use PDO;
 
 class db
 {
+	private $conn;
+	private $stm;
+
     function __construct()
     {
-        $dotenv = Dotenv::createImmutable(ROOT_PATH);
-        $this->ENV = $dotenv->load();
-        $this->connect($this->ENV['DB_USER'], $this->ENV['DB_PASSWD'], $this->ENV['DB_NAME'], $this->ENV['DB_HOST'], $this->ENV['DB_PORT']);
+        $dbhost = Env('DB_HOST');
+        $dbport = Env('DB_PORT');
+        $dbname = Env('DB_NAME');
+        $dbuser = Env('DB_USER');
+        $dbpass = Env('DB_PASSWD');
+
+        $this->connect($dbuser, $dbpass, $dbname, $dbhost, $dbport);
     }
 
     private function connect($dbuser, $dbpass, $dbname, $dbhost, $dbport = '3306')
@@ -20,16 +26,22 @@ class db
        	$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);	
     }
 
+	private function disconnect()
+	{
+		$this->conn = null;
+		$this->stm = null;
+	}
+
     public function list()
     {
         try
 		{
-			$result = array();
+			$this->stm = $this->conn->prepare("SELECT * FROM $this->table");
+			$this->stm->execute();
 
-			$stm = $this->conn->prepare("SELECT * FROM $this->table");
-			$stm->execute();
-
-			return $stm->fetchAll(PDO::FETCH_OBJ);
+			$result = $this->stm->fetchAll(PDO::FETCH_OBJ);
+			$this->disconnect();
+			return $result;
 		}
 		catch(Exception $e)
 		{
@@ -41,12 +53,12 @@ class db
 	{
 		try 
 		{
-			$stm = $this->conn
+			$this->stm = $this->conn
 			          ->prepare("SELECT * FROM $this->table WHERE id = ?");
 			          
 
-			$stm->execute(array($id));
-			return $stm->fetch(PDO::FETCH_OBJ);
+			$this->stm->execute(array($id));
+			return $this->stm->fetch(PDO::FETCH_OBJ);
 		} catch (Exception $e) 
 		{
 			die($e->getMessage());
@@ -57,10 +69,10 @@ class db
 	{
 		try 
 		{
-			$stm = $this->conn
+			$this->stm = $this->conn
 			            ->prepare("DELETE FROM $this->table WHERE id = ?");			          
 
-			$stm->execute(array($id));
+			$this->stm->execute(array($id));
 		} catch (Exception $e) 
 		{
 			die($e->getMessage());
@@ -142,12 +154,12 @@ class db
 	{
 		try 
 		{
-			$stm = $this->conn
+			$this->stm = $this->conn
 			          ->prepare("SELECT * FROM $this->table WHERE $column $operator ?");
 			          
 
-			$stm->execute(array($value));
-			return $stm->fetch(PDO::FETCH_OBJ);
+			$this->stm->execute(array($value));
+			return $this->stm->fetch(PDO::FETCH_OBJ);
 		} catch (Exception $e) 
 		{
 			die($e->getMessage());
@@ -169,12 +181,12 @@ class db
 			$user_column = $columns[0];
 			$pass_column = $columns[1];
 
-			$stm = $this->conn
+			$this->stm = $this->conn
 			          ->prepare("SELECT * FROM $this->table WHERE $user_column = ? AND $pass_column = ?");
 			          
 
-			$stm->execute(array($username, $passwordhash));
-			return $stm->fetch(PDO::FETCH_OBJ);
+			$this->stm->execute(array($username, $passwordhash));
+			return $this->stm->fetch(PDO::FETCH_OBJ);
 		} catch (Exception $e) 
 		{
 			die($e->getMessage());

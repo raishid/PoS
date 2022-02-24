@@ -32,6 +32,7 @@
                     class="form-control"
                     placeholder="Name User"
                     v-model="name_user"
+                    required
                   />
                 </div>
               </div>
@@ -48,6 +49,7 @@
                     class="form-control"
                     placeholder="Username"
                     v-model="username"
+                    required
                   />
                 </div>
               </div>
@@ -58,12 +60,13 @@
                     ><i class="fa fa-lock"></i
                   ></span>
                   <input
-                    type="text"
+                    type="password"
                     name="password"
                     id="password"
                     class="form-control"
                     placeholder="Password"
                     v-model="password"
+                    required
                   />
                 </div>
               </div>
@@ -78,6 +81,7 @@
                     id="role"
                     class="form-select"
                     v-model="role"
+                    required
                   >
                     <option value="">Select user role</option>
                     <option value="1">Administrator</option>
@@ -98,7 +102,7 @@
                 />
                 <small class="text-muted">max weight 200mb </small>
                 <div class="mt-2">
-                  <img :src="pic" class="img-thumbnail" width="100" />
+                  <img :src="url_pic" class="img-thumbnail" width="100" />
                 </div>
               </div>
             </div>
@@ -108,6 +112,7 @@
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
+              ref="closeModal"
             >
               Close
             </button>
@@ -137,6 +142,9 @@ export default {
     prop_pic: {
       default: "/assets/images/anonymous.png",
     },
+    csrf_token :{
+      required: true
+    }
   },
   data() {
     return {
@@ -145,17 +153,47 @@ export default {
       password: this.prop_password,
       role: this.prop_role,
       pic: this.prop_pic,
+      url_pic: "/assets/images/anonymous.png",
     };
   },
   methods: {
     onFileChange(e) {
       const files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
-      console.log(files[0]);
-      return (this.pic = files[0]);
+      this.pic = files[0];
+      return (this.url_pic = URL.createObjectURL(files[0]));
     },
     handleSubmitUser(){
-        console.log('creando usuario.');
+        const form_data = new FormData();
+        form_data.append('csrf_token', this.csrf_token);
+        form_data.append('name_user', this.name_user);
+        form_data.append('username', this.username);
+        form_data.append('password', this.password);
+        form_data.append('role', this.role);
+        form_data.append('pic', this.pic);
+
+        axios({
+          method:'post',
+          url: '/users/create',
+          headers: {
+              'Content-Type': 'multipart/form-data'
+          },
+          data: form_data
+        }).then(response =>{
+          const { data: { status, response:resp } } = response;
+          if(status){
+            this.$refs.closeModal.click();
+            this.reset();
+          }
+        })
+    },
+    reset(){
+      this.name_user = '';
+      this.username = '';
+      this.password = '';
+      this.role = '';
+      this.pic = '';
+      this.url_pic = this.prop_pic;
     }
   },
 };

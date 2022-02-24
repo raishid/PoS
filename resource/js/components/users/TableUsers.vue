@@ -58,9 +58,6 @@ export default {
         }
     },
     methods:{
-        handleUsers(){
-            console.log('buscando usuarios');
-        },
         defineRole(role){
             switch (role) {
                 case "1":

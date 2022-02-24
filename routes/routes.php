@@ -12,6 +12,7 @@ SimpleRouter::group(['middleware' => Middleware::class], function () {
     SimpleRouter::get('/', [HomeController::class, 'index'])->name('index');
     //USERS
     SimpleRouter::get('/users', [UserController::class, 'index'])->name('users.index');
+    SimpleRouter::post('/users/create', [UserController::class, 'create'])->name('users.create');
 });
 
 

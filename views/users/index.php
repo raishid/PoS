@@ -34,7 +34,7 @@
     </div>
   </section>
 </div>
-<u-modal></u-modal>
+<u-modal csrf_token='<?=csrf_token()?>'></u-modal>
 
 <script type="application/javascript">
   document.addEventListener("DOMContentLoaded", () => {
