@@ -7,15 +7,15 @@
       <table class="table table-striped" id="datatable-user">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>User</th>
-            <th>Pic</th>
-            <th>Role</th>
-            <th>Status</th>
-            <th>Last Login</th>
-            <th>Registered</th>
-            <th>Action</th>
+            <th class="text-center">#</th>
+            <th class="text-center">Name</th>
+            <th class="text-center">User</th>
+            <th class="text-center">Pic</th>
+            <th class="text-center">Role</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Last Login</th>
+            <th class="text-center">Registered</th>
+            <th class="text-center">Action</th>
           </tr>
         </thead>
         <tbody>

@@ -160,6 +160,8 @@ export default {
     onFileChange(e) {
       const files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
+      this.$swal.fire('testt');
+      return;
       this.pic = files[0];
       return (this.url_pic = URL.createObjectURL(files[0]));
     },

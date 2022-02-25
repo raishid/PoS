@@ -5,6 +5,7 @@
   "description": "pos system",
   "dependencies": {
     "vue": "^2.6.14",
+    "vue-sweetalert2": "^5.0.2",
     "vue-template-compiler": "^2.6.14"
   },
   "devDependencies": {

@@ -6,7 +6,7 @@ require('esbuild').build({
     outfile: 'js/app.js',
     plugins: [vuePlugin()],
     define: {
-        "process.env.NODE_ENV": JSON.stringify("development"),
+        "process.env.NODE_ENV": JSON.stringify("production"),
     },
     logLevel: "info",
     watch: {

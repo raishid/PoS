@@ -1,15 +1,14 @@
-import Vue from "vue/dist/vue.js";
+import Vue from "vue";
+import VueSweetalert2 from 'vue-sweetalert2';
+
 
 window.axios = require('axios');
-
 window.Vue = require("vue");
 
-/* window.dt = require('datatables.net')(window, $); */
+Vue.use(VueSweetalert2);
 
 Vue.component('login-form', require('./components/login/Login.vue').default);
 Vue.component('u-table', require('./components/users/TableUsers.vue').default);
 Vue.component('u-modal', require('./components/users/ModalUser.vue').default);
 
-const app = new Vue({
-    el: '#app'
-});
+const app = new Vue().$mount('#app');
