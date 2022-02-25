@@ -108,6 +108,7 @@ class db
 			
 			$prepare = $this->conn->prepare($sql);
 			$prepare->execute();
+			return $this->get($this->conn->lastInsertId());
 			
             
 		} catch (Exception $e) 

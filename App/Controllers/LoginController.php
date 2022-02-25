@@ -14,7 +14,7 @@ class LoginController extends Controller
 
     public function login()
     {
-        $data = input();
+        $data = input()->all();
         $user = new User();
         $result = $user->verifyLogin($data['username'], $data['password'], ['username', 'password']);
 

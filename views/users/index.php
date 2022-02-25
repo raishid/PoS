@@ -26,7 +26,7 @@
       <div class="row">
         <div class="col-12">
           <!--Card -->
-          <u-table users='<?=json_encode($data['users'])?>'></u-table>
+          <u-table users='<?=json_encode($data['users'])?>' csrf_token='<?=csrf_token()?>'></u-table>
           <!-- /. Card -->
         </div>
       </div>
@@ -34,25 +34,3 @@
     </div>
   </section>
 </div>
-<u-modal csrf_token='<?=csrf_token()?>'></u-modal>
-
-<script type="application/javascript">
-  document.addEventListener("DOMContentLoaded", () => {
-    $('#datatable-user').DataTable({
-      responsive: true,
-      destroy: true,
-      responsive: true, 
-      lengthChange: false, 
-      autoWidth: false,
-      rowReorder: {
-          selector: 'td:nth-child(2)'
-      },
-      columnDefs: [
-        { 
-          className: "text-center align-middle", targets: "_all" 
-        },
-      ],
-      
-    });
-  });
-</script>

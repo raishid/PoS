@@ -183,6 +183,7 @@ export default {
           const { data: { status, response:resp } } = response;
           if(status){
             this.$refs.closeModal.click();
+            this.$emit('mutateUser', JSON.parse(resp));
             this.reset();
           }
         })

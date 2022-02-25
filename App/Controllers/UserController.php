@@ -46,8 +46,8 @@ class UserController extends Controller
         $user->pic = $relative_path;
         $user->state = 1;
         
-        $user->save();
+        $result = $user->save();
 
-        return response()->json(array('status' => true, 'response' => 'success'));
+        return response()->json(array('status' => true, 'response' => json_encode($result)));
     }
 }

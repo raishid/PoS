@@ -20,41 +20,50 @@
         </thead>
         <tbody>
           <tr v-for="(user, index) in userParser" :key="user.id">
-            <td>{{ index + 1}}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.username }}</td>
-            <td><img :src="userPic(user.pic)" class="img-thumbnail rounded" width="50" /></td>
-            <td>{{ defineRole(user.role) }}</td>
-            <td><a class="btn btn-success btn-xs">{{ defineState(user.state) }}</a></td>
-            <td>{{ user.last_login }}</td>
-            <td>{{ formatDate(user.date) }}</td>
-            <td>
+            <td class="text-center align-middle">{{ index + 1}}</td>
+            <td class="text-center align-middle">{{ user.name }}</td>
+            <td class="text-center align-middle">{{ user.username }}</td>
+            <td class="text-center align-middle"><img :src="userPic(user.pic)" class="img-thumbnail rounded" width="50" /></td>
+            <td class="text-center align-middle">{{ defineRole(user.role) }}</td>
+            <td class="text-center align-middle"><a class="btn btn-success btn-xs">{{ defineState(user.state) }}</a></td>
+            <td class="text-center align-middle">{{ user.last_login }}</td>
+            <td class="text-center align-middle">{{ formatDate(user.date) }}</td>
+            <td class="text-center align-middle">
                 <div>
-                    <a :href="`/edit/${user.id}`" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                    <button class="btn btn-warning"><i class="fa fa-pencil"></i></button>
                     
-                    <a :href="`/delete/${user.id}`" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                    <button class="btn btn-danger"><i class="fa fa-times"></i></button>
                 </div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    
+    <u-modal :csrf_token="csrf_token" @mutateUser="mutateData"></u-modal>
   </div>
 </template>
 <script>
+import ModalUser from './ModalUser.vue';
 export default {
     name: 'u-table',
     props: {
         users: {
             type: String,
             required: true
+        },
+        csrf_token: {
+          type: String,
+          required: true
         }
+    },
+    components:{
+      ModalUser
     },
     data(){
         return {
             u_search: '',
             userParser: JSON.parse(this.users),
+            datatable: undefined,
         }
     },
     methods:{
@@ -87,7 +96,32 @@ export default {
             return '/assets/images/anonymous.png';
           }
         },
+        mutateData(data){
+          this.userParser.push(data);
+          new Promise(res =>{
+            this.datatable.destroy();
+            res(true);
+          }).then( () =>{
+              this.mountedDatatable();
+          })
+
+        },
+        mountedDatatable(){
+          return this.datatable = $('#datatable-user').DataTable({
+                                          responsive: true,
+                                          destroy: true,
+                                          lengthChange: false, 
+                                          autoWidth: false,
+                                          rowReorder: {
+                                              selector: 'td:nth-child(2)'
+                                        }
+                  
+          });
+        }
     },
+    mounted(){
+      this.mountedDatatable();
+    }
     
 };
 </script>
