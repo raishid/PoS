@@ -1,3 +1,6 @@
+<?php
+
+?>
 <body class="hold-transition sidebar-mini">
 
     <!-- open app -->
@@ -43,7 +46,7 @@
                     <li class="dropdown user user-menu">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-user fs-3"></i>
-                            <span class="hidden-xs">Admin</span>
+                            <span class="hidden-xs"><?=auth()->name?></span>
                         </a>
                         <!-- Dropwdown-toggle profile -->
                         <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">

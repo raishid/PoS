@@ -47,3 +47,19 @@ function Env(string $arg){
 function assets($path = ''){
     return ROOT_PATH . '/assets' . $path;
 }
+
+function is_auth()
+{
+    if(isset($_SESSION['auth'])){
+        return true;
+    }else{
+        return null;
+    }
+}
+
+function auth()
+{
+    if(is_auth()){
+        return $_SESSION['auth'];
+    }
+}

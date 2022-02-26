@@ -17,4 +17,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-responsive-bs/2.2.9/responsive.bootstrap.min.css" integrity="sha512-lC7CsBqS9byAEsS32hb1hbptYmqxRoPc+kIKOydGHfpUXHywskhQHlIQj69/S5egtqEqsEsFwjc5x5HHx/T14Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- app js -->
     <script src="/js/app.js" defer></script>
+    <!-- css -->
+    <link rel="stylesheet" href="/css/app.css">
 </head>

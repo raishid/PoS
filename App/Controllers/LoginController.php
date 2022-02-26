@@ -19,8 +19,7 @@ class LoginController extends Controller
         $result = $user->verifyLogin($data['username'], $data['password'], ['username', 'password']);
 
         if($result){
-            $_SESSION['username'] = $result->username;
-            $_SESSION['password'] = $result->password;
+            $_SESSION['auth'] = $result;
             return json_encode(array('status' => true, 'response' => $result));
         }else{
             return json_encode(array('status' => false, 'response' => ''));

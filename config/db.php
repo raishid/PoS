@@ -175,7 +175,7 @@ class db
 	* @return object data db
 	*/
 
-	public function verifyLogin(string $username, string $passwordhash, array $columns)
+	public function verifyLogin(string $username, string $password, array $columns)
 	{
 		try 
 		{
@@ -183,11 +183,17 @@ class db
 			$pass_column = $columns[1];
 
 			$this->stm = $this->conn
-			          ->prepare("SELECT * FROM $this->table WHERE $user_column = ? AND $pass_column = ?");
+			          ->prepare("SELECT * FROM $this->table WHERE $user_column = ?");
 			          
 
-			$this->stm->execute(array($username, $passwordhash));
-			return $this->stm->fetch(PDO::FETCH_OBJ);
+			$this->stm->execute(array($username));
+			$data = $this->stm->fetch(PDO::FETCH_OBJ);
+			
+			if($data && password_verify($password, $data->$pass_column)){
+				return $data;
+			}else{
+				return false;
+			}
 		} catch (Exception $e) 
 		{
 			die($e->getMessage());
