@@ -6,7 +6,7 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1>Users</h1>
-          <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#create-modal-user">
+          <button type="button" id="modal-user-button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#create-modal-user">
               Create User
           </button>
         </div>

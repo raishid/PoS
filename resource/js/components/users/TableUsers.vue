@@ -30,7 +30,7 @@
             <td class="text-center align-middle">{{ formatDate(user.date) }}</td>
             <td class="text-center align-middle">
                 <div>
-                    <button class="btn btn-warning"><i class="fa fa-pencil"></i></button>
+                    <button class="btn btn-warning" v-on:click="editU(user.id)"><i class="fa fa-pencil"></i></button>
                     
                     <button class="btn btn-danger"><i class="fa fa-times"></i></button>
                 </div>
@@ -39,7 +39,10 @@
         </tbody>
       </table>
     </div>
-    <u-modal :csrf_token="csrf_token" @mutateUser="mutateData"></u-modal>
+    <u-modal :csrf_token="csrf_token" 
+    @mutateUser="mutateData"
+    ref="modal">
+    </u-modal>
   </div>
 </template>
 <script>
@@ -117,6 +120,11 @@ export default {
                                         }
                   
           });
+        },
+        editU(id_u){
+          const data = this.userParser.find(u => u.id == id_u);
+          this.$refs.modal.editU(data);
+          $('#modal-user-button').click();
         }
     },
     mounted(){

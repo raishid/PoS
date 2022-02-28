@@ -2,7 +2,7 @@ import Vue from "vue/dist/vue";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
-Vue.config.productionTip = true;
+Vue.config.productionTip = false;
 
 window.axios = require('axios');
 window.Vue = require("vue/dist/vue");

@@ -100,7 +100,7 @@
                   v-on:change="onFileChange"
                   accept=".png, .jpg, .jpeg"
                 />
-                <small class="text-muted">max weight 200mb </small>
+                <small class="text-muted">max weight 20mb </small>
                 <div class="mt-2">
                   <img :src="url_pic" class="img-thumbnail" width="100" />
                 </div>
@@ -127,6 +127,9 @@
 export default {
   name: "u-modal",
   props: {
+    prop_id_edit: {
+      default: ""
+    },
     prop_name_user: {
       default: "",
     },
@@ -148,6 +151,7 @@ export default {
   },
   data() {
     return {
+      id_user: this.prop_id_edit,
       name_user: this.prop_name_user,
       username: this.prop_username,
       password: this.prop_password,
@@ -202,6 +206,13 @@ export default {
       this.role = '';
       this.pic = '';
       this.url_pic = this.prop_pic;
+    },
+    editU(data_edit){
+      this.name_user = data_edit.name;
+      this.username = data_edit.username;
+      this.role = data_edit.role;
+      this.pic = data_edit.pic;
+      this.url_pic = data_edit.pic;
     }
   },
 };
