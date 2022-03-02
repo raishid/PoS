@@ -13,6 +13,9 @@ SimpleRouter::group(['middleware' => Middleware::class], function () {
     //USERS
     SimpleRouter::get('/users', [UserController::class, 'index'])->name('users.index');
     SimpleRouter::post('/users/create', [UserController::class, 'create'])->name('users.create');
+    SimpleRouter::post('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+    SimpleRouter::post('/users/state/update/{id}', [UserController::class, 'updateState'])->name('users.state.update');
+    SimpleRouter::post('/users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
 });
 
 

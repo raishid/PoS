@@ -20,6 +20,8 @@ class LoginController extends Controller
 
         if($result){
             $_SESSION['auth'] = $result;
+            $user->last_login = date("Y-m-d H:i:s");
+            $user->update($result->id);
             return json_encode(array('status' => true, 'response' => $result));
         }else{
             return json_encode(array('status' => false, 'response' => ''));

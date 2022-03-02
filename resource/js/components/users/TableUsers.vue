@@ -19,20 +19,20 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(user, index) in userParser" :key="user.id">
+          <tr v-for="(user, index) in userParser" :key="index">
             <td class="text-center align-middle">{{ index + 1}}</td>
             <td class="text-center align-middle">{{ user.name }}</td>
             <td class="text-center align-middle">{{ user.username }}</td>
             <td class="text-center align-middle"><img :src="userPic(user.pic)" class="img-thumbnail rounded" width="50" /></td>
             <td class="text-center align-middle">{{ defineRole(user.role) }}</td>
-            <td class="text-center align-middle"><a class="btn btn-success btn-xs">{{ defineState(user.state) }}</a></td>
+            <td class="text-center align-middle"><button :class="StateClass(user.state)" type="button" @click="UpdateState(user.id, user.state)" title="Activate or deactivate user">{{ defineState(user.state) }}</button></td>
             <td class="text-center align-middle">{{ user.last_login }}</td>
             <td class="text-center align-middle">{{ formatDate(user.date) }}</td>
             <td class="text-center align-middle">
                 <div>
-                    <button class="btn btn-warning" v-on:click="editU(user.id)"><i class="fa fa-pencil"></i></button>
+                    <button class="btn btn-warning" @click="editU(user.id)"><i class="fa fa-pencil"></i></button>
                     
-                    <button class="btn btn-danger"><i class="fa fa-times"></i></button>
+                    <button class="btn btn-danger" @click="deleteU(user.id)"><i class="fa fa-times"></i></button>
                 </div>
             </td>
           </tr>
@@ -41,7 +41,8 @@
     </div>
     <u-modal :csrf_token="csrf_token" 
     @mutateUser="mutateData"
-    ref="modal">
+    ref="modal"
+    @editData="editData">
     </u-modal>
   </div>
 </template>
@@ -67,16 +68,17 @@ export default {
             u_search: '',
             userParser: JSON.parse(this.users),
             datatable: undefined,
+            editB: false,
         }
     },
     methods:{
         defineRole(role){
             switch (role) {
-                case "1":
+                case "1" || 1:
                     return 'Admin';
-                case "2":
+                case "2" || 2:
                     return 'Assistant'
-                case "3":
+                case "3" || 3:
                     return 'Seller';
             }
         },
@@ -87,6 +89,28 @@ export default {
                 case "0":
                     return 'No-Active';
             }
+        },
+        StateClass(state){
+          if(state == "1"){
+            return "btn btn-success btn-sm"
+          }else if(state == "0"){
+            return "btn btn-danger btn-sm"
+          }
+        },
+        UpdateState(id, state){
+          let newState = state == "1" ? "0" : "1";
+          axios({
+            method:'post',
+            url: `/users/state/update/${id}`,
+            data: {
+              csrf_token: this.csrf_token,
+              new_state: newState
+            }
+          }).then(response => {
+            const { data: { response:resp } } = response;
+            const user = this.userParser.find(u => u.id === resp.id);
+            user.state = resp.state;
+          });
         },
         formatDate(date){
             const datetime = new Date(date);
@@ -109,6 +133,13 @@ export default {
           })
 
         },
+        editData(data){
+          const user = this.userParser.find(u => u.id === data.id);
+          user.name = data.name;
+          user.username = data.username;
+          user.role = data.role;
+          user.pic = data.pic;
+        },
         mountedDatatable(){
           return this.datatable = $('#datatable-user').DataTable({
                                           responsive: true,
@@ -122,9 +153,42 @@ export default {
           });
         },
         editU(id_u){
-          const data = this.userParser.find(u => u.id == id_u);
+          const data = this.userParser.find(u => u.id === id_u);
           this.$refs.modal.editU(data);
           $('#modal-user-button').click();
+        },
+        deleteU(id_u){
+          this.$swal.fire({
+            title: 'Are you sure?',
+            text: "do you want to delete this user?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              //ajax request delete
+              axios({
+                method:'post',
+                url: `/users/delete/${id_u}`,
+                data: {
+                  csrf_token: this.csrf_token
+                }
+              }).then(response =>{
+                  const { data: { status } } = response;
+                  if(status){
+                    this.$swal.fire(
+                      'Deleted!',
+                      'the user was deleted.',
+                      'success'
+                    )
+                    //remove user in dom
+                    this.userParser.splice(this.userParser.findIndex(u => u.id === id_u), 1);
+                  }
+              });
+            }
+          })
         }
     },
     mounted(){

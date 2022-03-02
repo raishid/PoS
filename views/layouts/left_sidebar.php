@@ -33,10 +33,10 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
           <li class="nav-item menu-open">
-            <a href="<?=url('index')?>" class="nav-link active"><i class="fa fa-home"></i><p class="px-1">Home</p></a>
+            <a href="<?=url('index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'index' ? 'active' : ''?>"><i class="fa fa-home"></i><p class="px-1">Home</p></a>
           </li>
           <li class="nav-item menu-open">
-            <a href="<?=url('users.index')?>" class="nav-link"><i class="fa fa-user"></i><p class="px-1">Users</p></a>
+            <a href="<?=url('users.index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'users.index' ? 'active' : ''?>"><i class="fa fa-user"></i><p class="px-1">Users</p></a>
           </li>
           <li class="nav-item menu-open">
             <a href="" class="nav-link"><i class="fa fa-th"></i><p class="px-1">Categories</p></a>

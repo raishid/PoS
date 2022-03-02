@@ -15,5 +15,5 @@ require('esbuild').build({
           else console.log('watch build succeeded:', result)
         },
       },
-    minify: true,
+    minify: false,
 });

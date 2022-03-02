@@ -2,11 +2,13 @@
 
 namespace config;
 use PDO;
+use PDOException;
 
 class db
 {
 	private $conn;
 	private $stm;
+	public $exception;
 
     function __construct()
     {
@@ -43,9 +45,10 @@ class db
 			$this->disconnect();
 			return $result;
 		}
-		catch(Exception $e)
+		catch (PDOException $e) 
 		{
-			die($e->getMessage());
+			$this->exception = $e->getMessage();
+			return false;
 		}
     }
 
@@ -59,9 +62,10 @@ class db
 
 			$this->stm->execute(array($id));
 			return $this->stm->fetch(PDO::FETCH_OBJ);
-		} catch (Exception $e) 
+		} catch (PDOException $e) 
 		{
-			die($e->getMessage());
+			$this->exception = $e->getMessage();
+			return false;
 		}
 	}
 
@@ -72,10 +76,11 @@ class db
 			$this->stm = $this->conn
 			            ->prepare("DELETE FROM $this->table WHERE id = ?");			          
 
-			$this->stm->execute(array($id));
-		} catch (Exception $e) 
+			return $this->stm->execute(array($id));
+		} catch (PDOException $e) 
 		{
-			die($e->getMessage());
+			$this->exception = $e->getMessage();
+			return false;
 		}
 	}
 
@@ -111,9 +116,10 @@ class db
 			return $this->get($this->conn->lastInsertId());
 			
             
-		} catch (Exception $e) 
+		} catch (PDOException $e) 
 		{
-			die($e->getMessage());
+			$this->exception = $e->getMessage();
+			return false;
 		}
 	}
 
@@ -138,16 +144,17 @@ class db
 			$sql = substr($sql, 0, -2);
 
 			$sql .= " WHERE id = ?";
-
-			#var_dump($sql);
 			
 			$prepare = $this->conn->prepare($sql);
 			$prepare->execute(array($id));
+
+			return $this->get($id);
 			
             
-		} catch (Exception $e) 
+		} catch (PDOException $e) 
 		{
-			die($e->getMessage());
+			$this->exception = $e->getMessage();
+			return false;
 		}
 	}
 
@@ -161,9 +168,10 @@ class db
 
 			$this->stm->execute(array($value));
 			return $this->stm->fetch(PDO::FETCH_OBJ);
-		} catch (Exception $e) 
+		} catch (PDOException $e) 
 		{
-			die($e->getMessage());
+			$this->exception = $e->getMessage();
+			return false;
 		}
 	}
 
@@ -194,9 +202,10 @@ class db
 			}else{
 				return false;
 			}
-		} catch (Exception $e) 
+		} catch (PDOException $e) 
 		{
-			die($e->getMessage());
+			$this->exception = $e->getMessage();
+			return false;
 		}
 	}
 }

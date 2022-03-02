@@ -16,6 +16,7 @@
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              @click="reset"
             ></button>
           </div>
           <div class="modal-body">
@@ -127,37 +128,21 @@
 export default {
   name: "u-modal",
   props: {
-    prop_id_edit: {
-      default: ""
-    },
-    prop_name_user: {
-      default: "",
-    },
-    prop_username: {
-      default: "",
-    },
-    prop_password: {
-      default: "",
-    },
-    prop_role: {
-      default: "",
-    },
-    prop_pic: {
-      default: "/assets/images/anonymous.png",
-    },
     csrf_token :{
       required: true
-    }
+    },
+    
   },
   data() {
     return {
-      id_user: this.prop_id_edit,
-      name_user: this.prop_name_user,
-      username: this.prop_username,
-      password: this.prop_password,
-      role: this.prop_role,
-      pic: this.prop_pic,
+      id_user: undefined,
+      name_user: undefined,
+      username: undefined,
+      password: undefined,
+      role: undefined,
+      pic: "/images/anonymous.png",
       url_pic: "/assets/images/anonymous.png",
+      edit: false,
     };
   },
   methods: {
@@ -183,21 +168,46 @@ export default {
         form_data.append('role', this.role);
         form_data.append('pic', this.pic);
 
-        axios({
-          method:'post',
-          url: '/users/create',
-          headers: {
-              'Content-Type': 'multipart/form-data'
-          },
-          data: form_data
-        }).then(response =>{
-          const { data: { status, response:resp } } = response;
-          if(status){
-            this.$refs.closeModal.click();
-            this.$emit('mutateUser', JSON.parse(resp));
-            this.reset();
-          }
-        })
+        if(this.edit){
+          axios({
+            method:'post',
+            url: `/users/edit/${this.id_user}`,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            data: form_data
+          }).then(response => {
+            const { data: { status, response:resp } } = response;
+            if(status){
+              this.$emit('editData', resp)
+              this.$refs.closeModal.click();
+              this.reset();
+            }
+          });
+        }else{
+          axios({
+            method:'post',
+            url: '/users/create',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            data: form_data
+          }).then(response =>{
+            const { data: { status, response:resp } } = response;
+            if(status){
+              this.$refs.closeModal.click();
+              this.$emit('mutateUser', JSON.parse(resp));
+              this.reset();
+            }else{
+              this.$swal.fire({
+                icon: 'error',
+                title: 'Error.',
+                text: resp,
+              });
+            }
+          })
+        }
+
     },
     reset(){
       this.name_user = '';
@@ -206,8 +216,11 @@ export default {
       this.role = '';
       this.pic = '';
       this.url_pic = this.prop_pic;
+      this.edit = false;
     },
     editU(data_edit){
+      this.edit = true;
+      this.id_user = data_edit.id;
       this.name_user = data_edit.name;
       this.username = data_edit.username;
       this.role = data_edit.role;
