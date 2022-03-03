@@ -11136,7 +11136,7 @@
               case "1":
                 return "Active";
               case "0":
-                return "No-Active";
+                return "Disabled";
             }
           },
           StateClass(state) {
@@ -11157,9 +11157,10 @@
               }
             }).then((response) => {
               const { data: { response: resp } } = response;
-              const user = this.userParser.find((u) => u.id === resp.id);
-              user.state = resp.state;
+              const user2 = this.userParser.find((u) => u.id === resp.id);
+              user2.state = resp.state;
             });
+            return user.state;
           },
           formatDate(date) {
             const datetime = new Date(date);
@@ -11182,11 +11183,11 @@
             });
           },
           editData(data) {
-            const user = this.userParser.find((u) => u.id === data.id);
-            user.name = data.name;
-            user.username = data.username;
-            user.role = data.role;
-            user.pic = data.pic;
+            const user2 = this.userParser.find((u) => u.id === data.id);
+            user2.name = data.name;
+            user2.username = data.username;
+            user2.role = data.role;
+            user2.pic = data.pic;
           },
           mountedDatatable() {
             return this.datatable = $("#datatable-user").DataTable({
@@ -11250,70 +11251,74 @@
             }, [
               _vm._m(1),
               _vm._v(" "),
-              _c("tbody", _vm._l(_vm.userParser, function(user, index) {
+              _c("tbody", _vm._l(_vm.userParser, function(user2, index) {
                 return _c("tr", { key: index }, [
                   _c("td", { staticClass: "text-center align-middle" }, [
                     _vm._v(_vm._s(index + 1))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(user.name))
+                    _vm._v(_vm._s(user2.name))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(user.username))
+                    _vm._v(_vm._s(user2.username))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
                     _c("img", {
                       staticClass: "img-thumbnail rounded",
-                      attrs: { src: _vm.userPic(user.pic), width: "50" }
+                      attrs: { src: _vm.userPic(user2.pic), width: "50" }
                     })
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(_vm.defineRole(user.role)))
+                    _vm._v(_vm._s(_vm.defineRole(user2.role)))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
                     _c("button", {
-                      class: _vm.StateClass(user.state),
+                      class: _vm.StateClass(user2.state),
                       attrs: {
                         type: "button",
+                        "data-src": user2.id,
+                        "data-state": user2.state,
                         title: "Activate or deactivate user"
                       },
                       on: {
                         click: function($event) {
-                          return _vm.UpdateState(user.id, user.state);
+                          return _vm.UpdateState(user2.id, user2.state);
                         }
                       }
-                    }, [_vm._v(_vm._s(_vm.defineState(user.state)))])
+                    }, [_vm._v(_vm._s(_vm.defineState(user2.state)))])
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(user.last_login))
+                    _vm._v(_vm._s(user2.last_login))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(_vm.formatDate(user.date)))
+                    _vm._v(_vm._s(_vm.formatDate(user2.date)))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
                     _c("div", [
                       _c("button", {
-                        staticClass: "btn btn-warning",
+                        staticClass: "btn btn-warning edit",
+                        attrs: { "data-src": user2.id },
                         on: {
                           click: function($event) {
-                            return _vm.editU(user.id);
+                            return _vm.editU(user2.id);
                           }
                         }
                       }, [_c("i", { staticClass: "fa fa-pencil" })]),
                       _vm._v(" "),
                       _c("button", {
-                        staticClass: "btn btn-danger",
+                        staticClass: "btn btn-danger delete",
+                        attrs: { "data-src": user2.id },
                         on: {
                           click: function($event) {
-                            return _vm.deleteU(user.id);
+                            return _vm.deleteU(user2.id);
                           }
                         }
                       }, [_c("i", { staticClass: "fa fa-times" })])
@@ -11356,13 +11361,13 @@
               _vm._v(" "),
               _c("th", { staticClass: "text-center" }, [_vm._v("Role")]),
               _vm._v(" "),
-              _c("th", { staticClass: "text-center" }, [_vm._v("Status")]),
+              _c("th", { staticClass: "text-center all" }, [_vm._v("Status")]),
               _vm._v(" "),
               _c("th", { staticClass: "text-center" }, [_vm._v("Last Login")]),
               _vm._v(" "),
               _c("th", { staticClass: "text-center" }, [_vm._v("Registered")]),
               _vm._v(" "),
-              _c("th", { staticClass: "text-center" }, [_vm._v("Action")])
+              _c("th", { staticClass: "text-center all" }, [_vm._v("Action")])
             ])
           ]);
         }

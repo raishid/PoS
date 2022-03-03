@@ -12,10 +12,10 @@
             <th class="text-center">User</th>
             <th class="text-center">Pic</th>
             <th class="text-center">Role</th>
-            <th class="text-center">Status</th>
+            <th class="text-center all">Status</th>
             <th class="text-center">Last Login</th>
             <th class="text-center">Registered</th>
-            <th class="text-center">Action</th>
+            <th class="text-center all">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -25,14 +25,14 @@
             <td class="text-center align-middle">{{ user.username }}</td>
             <td class="text-center align-middle"><img :src="userPic(user.pic)" class="img-thumbnail rounded" width="50" /></td>
             <td class="text-center align-middle">{{ defineRole(user.role) }}</td>
-            <td class="text-center align-middle"><button :class="StateClass(user.state)" type="button" @click="UpdateState(user.id, user.state)" title="Activate or deactivate user">{{ defineState(user.state) }}</button></td>
+            <td class="text-center align-middle"><button :class="StateClass(user.state)" type="button" :data-src="user.id" :data-state="user.state" @click="UpdateState(user.id, user.state)" title="Activate or deactivate user">{{ defineState(user.state) }}</button></td>
             <td class="text-center align-middle">{{ user.last_login }}</td>
             <td class="text-center align-middle">{{ formatDate(user.date) }}</td>
             <td class="text-center align-middle">
                 <div>
-                    <button class="btn btn-warning" @click="editU(user.id)"><i class="fa fa-pencil"></i></button>
+                    <button class="btn btn-warning edit" :data-src="user.id" @click="editU(user.id)"><i class="fa fa-pencil"></i></button>
                     
-                    <button class="btn btn-danger" @click="deleteU(user.id)"><i class="fa fa-times"></i></button>
+                    <button class="btn btn-danger delete" :data-src="user.id" @click="deleteU(user.id)"><i class="fa fa-times"></i></button>
                 </div>
             </td>
           </tr>
@@ -87,7 +87,7 @@ export default {
                 case "1":
                     return 'Active';
                 case "0":
-                    return 'No-Active';
+                    return 'Disabled';
             }
         },
         StateClass(state){
@@ -111,6 +111,7 @@ export default {
             const user = this.userParser.find(u => u.id === resp.id);
             user.state = resp.state;
           });
+          return user.state;
         },
         formatDate(date){
             const datetime = new Date(date);
@@ -193,6 +194,43 @@ export default {
     },
     mounted(){
       this.mountedDatatable();
+
+      /* //jquery Responsive Event Edit
+      $(document).on('click', '.child .edit', e =>{
+        const element = $(e.target);
+        if(!element.attr('data-src')){
+          const id = element.parent().attr('data-src');
+          this.editU(id);
+        }else{
+          const id = element.attr('data-src');
+          this.editU(id);
+        }
+      })
+
+      //jquery Responsive Event Delete
+      $(document).on('click', '.child .delete', e =>{
+        const element = $(e.target);
+        if(!element.attr('data-src')){
+          const id = element.parent().attr('data-src');
+          this.deleteU(id);
+        }else{
+          const id = element.attr('data-src');
+          this.deleteU(id);
+        }
+      })
+
+      //jquery responsive Event state
+      $(document).on('click', '.child .state', e =>{
+        const element = $(e.target);
+        const id = element.attr('data-src');
+        const state = element.attr('data-state');
+        const new_state = this.UpdateState(id, state);
+        console.log(new_state);
+        element.attr('data-state', new_state);
+        element.attr('class', this.StateClass(new_state));
+      }) */
+
+
     }
     
 };
