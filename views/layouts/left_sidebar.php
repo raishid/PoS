@@ -7,16 +7,6 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="/assets/images/anonymous.png" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
-        </div>
-      </div>
-
       <!-- SidebarSearch Form -->
       <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
@@ -42,7 +32,7 @@
             <a href="<?=url('category.index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'category.index' ? 'active' : ''?>"><i class="fa fa-th"></i><p class="px-1">Categories</p></a>
           </li>
           <li class="nav-item menu-open">
-            <a href="" class="nav-link"><i class="fa fa-store"></i><p class="px-1">Products</p></a>
+            <a href="<?=url('product.index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'product.index' ? 'active' : ''?>"><i class="fa fa-store"></i><p class="px-1">Products</p></a>
           </li>
           <li class="nav-item menu-open">
             <a href="" class="nav-link"><i class="fa fa-address-book"></i><p class="px-1">Customers</p></a>

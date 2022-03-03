@@ -10743,7 +10743,7 @@
             this.password = "";
             this.role = "";
             this.pic = "";
-            this.url_pic = this.prop_pic;
+            this.url_pic = this.pic;
             this.edit = false;
           },
           editU(data_edit) {
@@ -11908,6 +11908,555 @@
     }
   });
 
+  // resource/js/components/products/ModalProducts.vue
+  var ModalProducts_exports = {};
+  __export(ModalProducts_exports, {
+    default: () => ModalProducts_default
+  });
+  function __vue_normalize__6(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component = (typeof script === "function" ? script.options : script) || {};
+    component.__file = "resource\\js\\components\\products\\ModalProducts.vue";
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+      if (functional)
+        component.functional = true;
+    }
+    component._scopeId = scope;
+    if (false) {
+      let hook;
+      if (false) {
+        hook = function(context) {
+          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+            context = __VUE_SSR_CONTEXT__;
+          }
+          if (style) {
+            style.call(this, createInjectorSSR(context));
+          }
+          if (context && context._registeredComponents) {
+            context._registeredComponents.add(moduleIdentifier);
+          }
+        };
+        component._ssrRegister = hook;
+      } else if (style) {
+        hook = shadowMode ? function(context) {
+          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+        } : function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+      if (hook !== void 0) {
+        if (component.functional) {
+          const originalRender = component.render;
+          component.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context);
+          };
+        } else {
+          const existing = component.beforeCreate;
+          component.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+    return component;
+  }
+  var __vue_script__6, __vue_render__6, __vue_staticRenderFns__6, __vue_inject_styles__6, __vue_scope_id__6, __vue_module_identifier__6, __vue_is_functional_template__6, __vue_component__6, ModalProducts_default;
+  var init_ModalProducts = __esm({
+    "resource/js/components/products/ModalProducts.vue"() {
+      __vue_script__6 = {
+        name: "u-modal",
+        props: {
+          csrf_token: {
+            required: true
+          }
+        },
+        data() {
+          return {
+            id_product: void 0,
+            sku: void 0,
+            name: void 0,
+            description: void 0,
+            image: "/images/anonymous.png",
+            url_image: "/assets/images/anonymous.png",
+            stock: void 0,
+            cost: void 0,
+            price,
+            date: void 0
+          };
+        },
+        methods: {
+          handleSubmitProduct() {
+            const form_data = new FormData();
+            form_data.append("csrf_token", this.csrf_token);
+            form_data.append("sku", this.sku);
+            form_data.append("name", this.name);
+            form_data.append("description", this.description);
+            form_data.append("image", this.image);
+            form_data.append("stock", this.stock);
+            form_data.append("cost", this.cost);
+            form_data.append("price", this.price);
+            if (this.edit) {
+              axios({
+                method: "post",
+                url: `/products/edit/${this.id_product}`,
+                headers: {
+                  "Content-Type": "multipart/form-data"
+                },
+                data: form_data
+              }).then((response) => {
+                const { data: { status, response: resp } } = response;
+                if (status) {
+                  this.$emit("editData", JSON.parse(resp));
+                  this.$refs.closeModal.click();
+                  this.reset();
+                }
+              });
+            } else {
+              axios({
+                method: "post",
+                url: "/products/create",
+                headers: {
+                  "Content-Type": "multipart/form-data"
+                },
+                data: form_data
+              }).then((response) => {
+                const { data: { status, response: resp } } = response;
+                if (status) {
+                  this.$refs.closeModal.click();
+                  this.$emit("mutateProd", JSON.parse(resp));
+                  this.reset();
+                } else {
+                  this.$swal.fire({
+                    icon: "error",
+                    title: "Error.",
+                    text: resp
+                  });
+                }
+              });
+            }
+          },
+          reset() {
+            this.id_product = void 0, this.sku = void 0, this.name = void 0, this.description = void 0, this.image = "/images/anonymous.png", this.url_image = "/assets/images/anonymous.png", this.stock = void 0, this.cost = void 0, this.price = price, this.date = void 0, this.edit = false;
+          },
+          editCate(data_edit) {
+            this.edit = true;
+            this.id_category = data_edit.id;
+            this.name = data_edit.name;
+            this.description = data_edit.description;
+          }
+        }
+      };
+      __vue_render__6 = function() {
+        var _vm = this;
+        var _h = _vm.$createElement;
+        var _c = _vm._self._c || _h;
+        return _c("div", {
+          staticClass: "modal fade",
+          attrs: {
+            id: "create-modal-product",
+            tabindex: "-1",
+            "aria-labelledby": "ProductCreateModal",
+            "aria-hidden": "true"
+          }
+        }, [
+          _c("div", { staticClass: "modal-dialog" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("form", {
+                attrs: {
+                  role: "form",
+                  method: "POST",
+                  enctype: "multipart/form-data"
+                },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault();
+                    return _vm.handleSubmitProduct.apply(null, arguments);
+                  }
+                }
+              }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c("h5", {
+                    staticClass: "modal-title",
+                    attrs: { id: "ProductCreateModal" }
+                  }, [_vm._v("Add New Product")]),
+                  _vm._v(" "),
+                  _c("button", {
+                    staticClass: "btn-close",
+                    attrs: {
+                      type: "button",
+                      "data-bs-dismiss": "modal",
+                      "aria-label": "Close"
+                    },
+                    on: { click: _vm.reset }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "input-group input-group-lg" }, [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.name,
+                              expression: "name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            name: "name",
+                            id: "name",
+                            placeholder: "Name Category",
+                            required: ""
+                          },
+                          domProps: { value: _vm.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return;
+                              }
+                              _vm.name = $event.target.value;
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "input-group input-group-lg" }, [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.description,
+                              expression: "description"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            name: "description",
+                            id: "description",
+                            placeholder: "Add a Description"
+                          },
+                          domProps: { value: _vm.description },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return;
+                              }
+                              _vm.description = $event.target.value;
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c("button", {
+                    ref: "closeModal",
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-bs-dismiss": "modal" }
+                  }, [_vm._v("\n            Close\n          ")]),
+                  _vm._v(" "),
+                  _c("button", { staticClass: "btn btn-primary", attrs: { type: "submit" } }, [_vm._v("Save category")])
+                ])
+              ])
+            ])
+          ])
+        ]);
+      };
+      __vue_staticRenderFns__6 = [
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-th" })
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-align-center" })
+          ]);
+        }
+      ];
+      __vue_render__6._withStripped = true;
+      __vue_inject_styles__6 = void 0;
+      __vue_scope_id__6 = void 0;
+      __vue_module_identifier__6 = void 0;
+      __vue_is_functional_template__6 = false;
+      __vue_component__6 = /* @__PURE__ */ __vue_normalize__6({ render: __vue_render__6, staticRenderFns: __vue_staticRenderFns__6 }, __vue_inject_styles__6, __vue_script__6, __vue_scope_id__6, __vue_is_functional_template__6, __vue_module_identifier__6, false, void 0, void 0, void 0);
+      ModalProducts_default = __vue_component__6;
+    }
+  });
+
+  // resource/js/components/products/TableProducts.vue
+  var TableProducts_exports = {};
+  __export(TableProducts_exports, {
+    default: () => TableProducts_default
+  });
+  function __vue_normalize__7(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component = (typeof script === "function" ? script.options : script) || {};
+    component.__file = "resource\\js\\components\\products\\TableProducts.vue";
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+      if (functional)
+        component.functional = true;
+    }
+    component._scopeId = scope;
+    if (false) {
+      let hook;
+      if (false) {
+        hook = function(context) {
+          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+            context = __VUE_SSR_CONTEXT__;
+          }
+          if (style) {
+            style.call(this, createInjectorSSR(context));
+          }
+          if (context && context._registeredComponents) {
+            context._registeredComponents.add(moduleIdentifier);
+          }
+        };
+        component._ssrRegister = hook;
+      } else if (style) {
+        hook = shadowMode ? function(context) {
+          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+        } : function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+      if (hook !== void 0) {
+        if (component.functional) {
+          const originalRender = component.render;
+          component.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context);
+          };
+        } else {
+          const existing = component.beforeCreate;
+          component.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+    return component;
+  }
+  var __vue_script__7, __vue_render__7, __vue_staticRenderFns__7, __vue_inject_styles__7, __vue_scope_id__7, __vue_module_identifier__7, __vue_is_functional_template__7, __vue_component__7, TableProducts_default;
+  var init_TableProducts = __esm({
+    "resource/js/components/products/TableProducts.vue"() {
+      init_ModalProducts();
+      __vue_script__7 = {
+        name: "cate-table",
+        props: {
+          products: {
+            type: String,
+            required: true
+          },
+          csrf_token: {
+            type: String,
+            required: true
+          }
+        },
+        components: {
+          ModalProduct: ModalProducts_default
+        },
+        data() {
+          return {
+            u_search: "",
+            productsParser: JSON.parse(this.products),
+            datatable: void 0,
+            editB: false
+          };
+        },
+        methods: {
+          mountedDatatable() {
+            return this.datatable = $("#datatable-products").DataTable({
+              responsive: true,
+              destroy: true,
+              lengthChange: false,
+              autoWidth: false,
+              rowReorder: {
+                selector: "td:nth-child(2)"
+              }
+            });
+          },
+          mutateData(data) {
+            this.productsParser.push(data);
+            new Promise((res) => {
+              this.datatable.destroy();
+              res(true);
+            }).then(() => {
+              this.mountedDatatable();
+            });
+          },
+          editData(data) {
+            const product = this.productsParser.find((u) => u.id === data.id);
+            product.sku = data.sku;
+            product.name = data.name;
+            product.description = data.description;
+            product.image = data.image;
+            product.stock = data.stock;
+            product.cost = data.cost;
+            product.price = data.price;
+          },
+          editProd(id) {
+            const data = this.productsParser.find((u) => u.id === id);
+            this.$refs.modal.editProd(data);
+            $("#modal-product-button").click();
+          },
+          deleteProd(id) {
+            this.$swal.fire({
+              title: "Are you sure?",
+              text: "do you want to delete this product?",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                axios({
+                  method: "post",
+                  url: `/products/delete/${id}`,
+                  data: {
+                    csrf_token: this.csrf_token
+                  }
+                }).then((response) => {
+                  const { data: { status } } = response;
+                  if (status) {
+                    this.$swal.fire("Deleted!", "the product was deleted.", "success");
+                    this.productsParser.splice(this.productsParser.findIndex((u) => u.id === id), 1);
+                  }
+                });
+              }
+            });
+          }
+        },
+        mounted() {
+          this.mountedDatatable();
+        }
+      };
+      __vue_render__7 = function() {
+        var _vm = this;
+        var _h = _vm.$createElement;
+        var _c = _vm._self._c || _h;
+        return _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", {
+              staticClass: "table table-striped",
+              attrs: { id: "datatable-products" }
+            }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("tbody", _vm._l(_vm.productsParser, function(product, index) {
+                return _c("tr", { key: index }, [
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(index + 1))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(product.name))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(product.description))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _c("div", [
+                      _c("button", {
+                        staticClass: "btn btn-warning edit",
+                        on: {
+                          click: function($event) {
+                            return _vm.editProd(product.id);
+                          }
+                        }
+                      }, [_c("i", { staticClass: "fa fa-pencil" })]),
+                      _vm._v(" "),
+                      _c("button", {
+                        staticClass: "btn btn-danger delete",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteProd(product.id);
+                          }
+                        }
+                      }, [_c("i", { staticClass: "fa fa-times" })])
+                    ])
+                  ])
+                ]);
+              }), 0)
+            ])
+          ])
+        ]);
+      };
+      __vue_staticRenderFns__7 = [
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title" }, [_vm._v("List products")])
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("thead", [
+            _c("tr", [
+              _c("th", { staticClass: "text-center" }, [_vm._v("#")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("SKU")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Description")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Image")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Stock")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Cost price")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Sale price")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Date")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center all" }, [_vm._v("Action")])
+            ])
+          ]);
+        }
+      ];
+      __vue_render__7._withStripped = true;
+      __vue_inject_styles__7 = void 0;
+      __vue_scope_id__7 = void 0;
+      __vue_module_identifier__7 = void 0;
+      __vue_is_functional_template__7 = false;
+      __vue_component__7 = /* @__PURE__ */ __vue_normalize__7({ render: __vue_render__7, staticRenderFns: __vue_staticRenderFns__7 }, __vue_inject_styles__7, __vue_script__7, __vue_scope_id__7, __vue_is_functional_template__7, __vue_module_identifier__7, false, void 0, void 0, void 0);
+      TableProducts_default = __vue_component__7;
+    }
+  });
+
   // resource/js/app.js
   var import_vue = __toESM(require_vue());
   var import_vue_sweetalert2 = __toESM(require_vue_sweetalert_umd());
@@ -11920,6 +12469,8 @@
   import_vue.default.component("u-modal", (init_ModalUser(), __toCommonJS(ModalUser_exports)).default);
   import_vue.default.component("cate-table", (init_TableCategories(), __toCommonJS(TableCategories_exports)).default);
   import_vue.default.component("cate-modal", (init_ModalCategories(), __toCommonJS(ModalCategories_exports)).default);
+  import_vue.default.component("prod-table", (init_TableProducts(), __toCommonJS(TableProducts_exports)).default);
+  import_vue.default.component("prod-modal", (init_ModalProducts(), __toCommonJS(ModalProducts_exports)).default);
   var app = new import_vue.default({
     el: "#app"
   });

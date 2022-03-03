@@ -215,7 +215,7 @@ export default {
       this.password = '';
       this.role = '';
       this.pic = '';
-      this.url_pic = this.prop_pic;
+      this.url_pic = this.pic;
       this.edit = false;
     },
     editU(data_edit){

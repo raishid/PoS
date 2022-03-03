@@ -4,6 +4,7 @@ use App\Controllers\CategoryController;
 use Pecee\Http\Request;
 use App\Controllers\HomeController;
 use App\Controllers\LoginController;
+use App\Controllers\ProductController;
 use App\Controllers\UserController;
 use App\Middleware;
 use Pecee\SimpleRouter\SimpleRouter;
@@ -23,6 +24,12 @@ SimpleRouter::group(['middleware' => Middleware::class], function () {
     SimpleRouter::post('/categories/create', [CategoryController::class, 'create'])->name('category.create');
     SimpleRouter::post('/categories/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
     SimpleRouter::post('/categories/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
+
+    //PRODUCTS
+    SimpleRouter::get('/products', [ProductController::class, 'index'])->name('product.index');
+    SimpleRouter::post('/products/create', [ProductController::class, 'create'])->name('product.create');
+    SimpleRouter::post('/products/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+    SimpleRouter::post('/products/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
 });
 
 
