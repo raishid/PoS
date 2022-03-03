@@ -39,7 +39,7 @@
             <a href="<?=url('users.index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'users.index' ? 'active' : ''?>"><i class="fa fa-user"></i><p class="px-1">Users</p></a>
           </li>
           <li class="nav-item menu-open">
-            <a href="" class="nav-link"><i class="fa fa-th"></i><p class="px-1">Categories</p></a>
+            <a href="<?=url('category.index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'category.index' ? 'active' : ''?>"><i class="fa fa-th"></i><p class="px-1">Categories</p></a>
           </li>
           <li class="nav-item menu-open">
             <a href="" class="nav-link"><i class="fa fa-store"></i><p class="px-1">Products</p></a>

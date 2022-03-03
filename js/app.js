@@ -10708,7 +10708,7 @@
               }).then((response) => {
                 const { data: { status, response: resp } } = response;
                 if (status) {
-                  this.$emit("editData", resp);
+                  this.$emit("editData", JSON.parse(resp));
                   this.$refs.closeModal.click();
                   this.reset();
                 }
@@ -11378,6 +11378,536 @@
     }
   });
 
+  // resource/js/components/categories/ModalCategories.vue
+  var ModalCategories_exports = {};
+  __export(ModalCategories_exports, {
+    default: () => ModalCategories_default
+  });
+  function __vue_normalize__4(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component = (typeof script === "function" ? script.options : script) || {};
+    component.__file = "resource\\js\\components\\categories\\ModalCategories.vue";
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+      if (functional)
+        component.functional = true;
+    }
+    component._scopeId = scope;
+    if (false) {
+      let hook;
+      if (false) {
+        hook = function(context) {
+          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+            context = __VUE_SSR_CONTEXT__;
+          }
+          if (style) {
+            style.call(this, createInjectorSSR(context));
+          }
+          if (context && context._registeredComponents) {
+            context._registeredComponents.add(moduleIdentifier);
+          }
+        };
+        component._ssrRegister = hook;
+      } else if (style) {
+        hook = shadowMode ? function(context) {
+          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+        } : function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+      if (hook !== void 0) {
+        if (component.functional) {
+          const originalRender = component.render;
+          component.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context);
+          };
+        } else {
+          const existing = component.beforeCreate;
+          component.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+    return component;
+  }
+  var __vue_script__4, __vue_render__4, __vue_staticRenderFns__4, __vue_inject_styles__4, __vue_scope_id__4, __vue_module_identifier__4, __vue_is_functional_template__4, __vue_component__4, ModalCategories_default;
+  var init_ModalCategories = __esm({
+    "resource/js/components/categories/ModalCategories.vue"() {
+      __vue_script__4 = {
+        name: "u-modal",
+        props: {
+          csrf_token: {
+            required: true
+          }
+        },
+        data() {
+          return {
+            id_category: void 0,
+            name: void 0,
+            description: void 0
+          };
+        },
+        methods: {
+          handleSubmitCategory() {
+            const form_data = new FormData();
+            form_data.append("csrf_token", this.csrf_token);
+            form_data.append("name", this.name);
+            form_data.append("description", this.description);
+            if (this.edit) {
+              axios({
+                method: "post",
+                url: `/categories/edit/${this.id_category}`,
+                headers: {
+                  "Content-Type": "multipart/form-data"
+                },
+                data: form_data
+              }).then((response) => {
+                const { data: { status, response: resp } } = response;
+                if (status) {
+                  this.$emit("editData", JSON.parse(resp));
+                  this.$refs.closeModal.click();
+                  this.reset();
+                }
+              });
+            } else {
+              axios({
+                method: "post",
+                url: "/categories/create",
+                headers: {
+                  "Content-Type": "multipart/form-data"
+                },
+                data: form_data
+              }).then((response) => {
+                const { data: { status, response: resp } } = response;
+                if (status) {
+                  this.$refs.closeModal.click();
+                  this.$emit("mutateCate", JSON.parse(resp));
+                  this.reset();
+                } else {
+                  this.$swal.fire({
+                    icon: "error",
+                    title: "Error.",
+                    text: resp
+                  });
+                }
+              });
+            }
+          },
+          reset() {
+            this.name = "";
+            this.description = "";
+            this.edit = false;
+          },
+          editCate(data_edit) {
+            this.edit = true;
+            this.id_category = data_edit.id;
+            this.name = data_edit.name;
+            this.description = data_edit.description;
+          }
+        }
+      };
+      __vue_render__4 = function() {
+        var _vm = this;
+        var _h = _vm.$createElement;
+        var _c = _vm._self._c || _h;
+        return _c("div", {
+          staticClass: "modal fade",
+          attrs: {
+            id: "create-modal-category",
+            tabindex: "-1",
+            "aria-labelledby": "CategoryCreateModal",
+            "aria-hidden": "true"
+          }
+        }, [
+          _c("div", { staticClass: "modal-dialog" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("form", {
+                attrs: {
+                  role: "form",
+                  method: "POST",
+                  enctype: "multipart/form-data"
+                },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault();
+                    return _vm.handleSubmitCategory.apply(null, arguments);
+                  }
+                }
+              }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c("h5", {
+                    staticClass: "modal-title",
+                    attrs: { id: "CategoryCreateModal" }
+                  }, [_vm._v("Add New Category")]),
+                  _vm._v(" "),
+                  _c("button", {
+                    staticClass: "btn-close",
+                    attrs: {
+                      type: "button",
+                      "data-bs-dismiss": "modal",
+                      "aria-label": "Close"
+                    },
+                    on: { click: _vm.reset }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "input-group input-group-lg" }, [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.name,
+                              expression: "name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            name: "name",
+                            id: "name",
+                            placeholder: "Name Category",
+                            required: ""
+                          },
+                          domProps: { value: _vm.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return;
+                              }
+                              _vm.name = $event.target.value;
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "input-group input-group-lg" }, [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.description,
+                              expression: "description"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            name: "description",
+                            id: "description",
+                            placeholder: "Add a Description"
+                          },
+                          domProps: { value: _vm.description },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return;
+                              }
+                              _vm.description = $event.target.value;
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c("button", {
+                    ref: "closeModal",
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-bs-dismiss": "modal" }
+                  }, [_vm._v("\n            Close\n          ")]),
+                  _vm._v(" "),
+                  _c("button", { staticClass: "btn btn-primary", attrs: { type: "submit" } }, [_vm._v("Save category")])
+                ])
+              ])
+            ])
+          ])
+        ]);
+      };
+      __vue_staticRenderFns__4 = [
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-th" })
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-align-center" })
+          ]);
+        }
+      ];
+      __vue_render__4._withStripped = true;
+      __vue_inject_styles__4 = void 0;
+      __vue_scope_id__4 = void 0;
+      __vue_module_identifier__4 = void 0;
+      __vue_is_functional_template__4 = false;
+      __vue_component__4 = /* @__PURE__ */ __vue_normalize__4({ render: __vue_render__4, staticRenderFns: __vue_staticRenderFns__4 }, __vue_inject_styles__4, __vue_script__4, __vue_scope_id__4, __vue_is_functional_template__4, __vue_module_identifier__4, false, void 0, void 0, void 0);
+      ModalCategories_default = __vue_component__4;
+    }
+  });
+
+  // resource/js/components/categories/TableCategories.vue
+  var TableCategories_exports = {};
+  __export(TableCategories_exports, {
+    default: () => TableCategories_default
+  });
+  function __vue_normalize__5(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component = (typeof script === "function" ? script.options : script) || {};
+    component.__file = "resource\\js\\components\\categories\\TableCategories.vue";
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+      if (functional)
+        component.functional = true;
+    }
+    component._scopeId = scope;
+    if (false) {
+      let hook;
+      if (false) {
+        hook = function(context) {
+          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+            context = __VUE_SSR_CONTEXT__;
+          }
+          if (style) {
+            style.call(this, createInjectorSSR(context));
+          }
+          if (context && context._registeredComponents) {
+            context._registeredComponents.add(moduleIdentifier);
+          }
+        };
+        component._ssrRegister = hook;
+      } else if (style) {
+        hook = shadowMode ? function(context) {
+          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+        } : function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+      if (hook !== void 0) {
+        if (component.functional) {
+          const originalRender = component.render;
+          component.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context);
+          };
+        } else {
+          const existing = component.beforeCreate;
+          component.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+    return component;
+  }
+  var __vue_script__5, __vue_render__5, __vue_staticRenderFns__5, __vue_inject_styles__5, __vue_scope_id__5, __vue_module_identifier__5, __vue_is_functional_template__5, __vue_component__5, TableCategories_default;
+  var init_TableCategories = __esm({
+    "resource/js/components/categories/TableCategories.vue"() {
+      init_ModalCategories();
+      __vue_script__5 = {
+        name: "cate-table",
+        props: {
+          categories: {
+            type: String,
+            required: true
+          },
+          csrf_token: {
+            type: String,
+            required: true
+          }
+        },
+        components: {
+          ModalCategory: ModalCategories_default
+        },
+        data() {
+          return {
+            u_search: "",
+            categoryParser: JSON.parse(this.categories),
+            datatable: void 0,
+            editB: false
+          };
+        },
+        methods: {
+          mountedDatatable() {
+            return this.datatable = $("#datatable-categories").DataTable({
+              responsive: true,
+              destroy: true,
+              lengthChange: false,
+              autoWidth: false,
+              rowReorder: {
+                selector: "td:nth-child(2)"
+              }
+            });
+          },
+          mutateData(data) {
+            this.categoryParser.push(data);
+            new Promise((res) => {
+              this.datatable.destroy();
+              res(true);
+            }).then(() => {
+              this.mountedDatatable();
+            });
+          },
+          editData(data) {
+            const category = this.categoryParser.find((u) => u.id === data.id);
+            category.name = data.name;
+            category.description = data.description;
+          },
+          editCate(id) {
+            const data = this.categoryParser.find((u) => u.id === id);
+            this.$refs.modal.editCate(data);
+            $("#modal-category-button").click();
+          },
+          deleteCate(id) {
+            this.$swal.fire({
+              title: "Are you sure?",
+              text: "do you want to delete this category?",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                axios({
+                  method: "post",
+                  url: `/categories/delete/${id}`,
+                  data: {
+                    csrf_token: this.csrf_token
+                  }
+                }).then((response) => {
+                  const { data: { status } } = response;
+                  if (status) {
+                    this.$swal.fire("Deleted!", "the category was deleted.", "success");
+                    this.categoryParser.splice(this.categoryParser.findIndex((u) => u.id === id), 1);
+                  }
+                });
+              }
+            });
+          }
+        },
+        mounted() {
+          this.mountedDatatable();
+        }
+      };
+      __vue_render__5 = function() {
+        var _vm = this;
+        var _h = _vm.$createElement;
+        var _c = _vm._self._c || _h;
+        return _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", {
+              staticClass: "table table-striped",
+              attrs: { id: "datatable-categories" }
+            }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("tbody", _vm._l(_vm.categoryParser, function(category, index) {
+                return _c("tr", { key: index }, [
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(index + 1))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(category.name))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(category.description))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _c("div", [
+                      _c("button", {
+                        staticClass: "btn btn-warning edit",
+                        on: {
+                          click: function($event) {
+                            return _vm.editCate(category.id);
+                          }
+                        }
+                      }, [_c("i", { staticClass: "fa fa-pencil" })]),
+                      _vm._v(" "),
+                      _c("button", {
+                        staticClass: "btn btn-danger delete",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteCate(category.id);
+                          }
+                        }
+                      }, [_c("i", { staticClass: "fa fa-times" })])
+                    ])
+                  ])
+                ]);
+              }), 0)
+            ])
+          ]),
+          _vm._v(" "),
+          _c("cate-modal", {
+            ref: "modal",
+            attrs: { csrf_token: _vm.csrf_token },
+            on: { mutateCate: _vm.mutateData, editData: _vm.editData }
+          })
+        ], 1);
+      };
+      __vue_staticRenderFns__5 = [
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title" }, [_vm._v("List categories")])
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("thead", [
+            _c("tr", [
+              _c("th", { staticClass: "text-center" }, [_vm._v("#")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center desktop" }, [
+                _vm._v("Description")
+              ]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center all" }, [_vm._v("Action")])
+            ])
+          ]);
+        }
+      ];
+      __vue_render__5._withStripped = true;
+      __vue_inject_styles__5 = void 0;
+      __vue_scope_id__5 = void 0;
+      __vue_module_identifier__5 = void 0;
+      __vue_is_functional_template__5 = false;
+      __vue_component__5 = /* @__PURE__ */ __vue_normalize__5({ render: __vue_render__5, staticRenderFns: __vue_staticRenderFns__5 }, __vue_inject_styles__5, __vue_script__5, __vue_scope_id__5, __vue_is_functional_template__5, __vue_module_identifier__5, false, void 0, void 0, void 0);
+      TableCategories_default = __vue_component__5;
+    }
+  });
+
   // resource/js/app.js
   var import_vue = __toESM(require_vue());
   var import_vue_sweetalert2 = __toESM(require_vue_sweetalert_umd());
@@ -11388,6 +11918,8 @@
   import_vue.default.component("login-form", (init_Login(), __toCommonJS(Login_exports)).default);
   import_vue.default.component("u-table", (init_TableUsers(), __toCommonJS(TableUsers_exports)).default);
   import_vue.default.component("u-modal", (init_ModalUser(), __toCommonJS(ModalUser_exports)).default);
+  import_vue.default.component("cate-table", (init_TableCategories(), __toCommonJS(TableCategories_exports)).default);
+  import_vue.default.component("cate-modal", (init_ModalCategories(), __toCommonJS(ModalCategories_exports)).default);
   var app = new import_vue.default({
     el: "#app"
   });

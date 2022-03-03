@@ -10,7 +10,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><i class="fa-solid fa-gauge"></i><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><i class="fa-solid fa-gauge mx-1"></i><a href="/">Home</a></li>
             <li class="breadcrumb-item active">Panel</li>
           </ol>
         </div>

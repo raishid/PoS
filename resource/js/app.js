@@ -9,9 +9,15 @@ window.Vue = require("vue/dist/vue");
 
 Vue.use(VueSweetalert2);
 
+//login components
 Vue.component('login-form', require('./components/login/Login.vue').default);
+
+//users components
 Vue.component('u-table', require('./components/users/TableUsers.vue').default);
 Vue.component('u-modal', require('./components/users/ModalUser.vue').default);
+//categories components
+Vue.component('cate-table', require('./components/categories/TableCategories.vue').default);
+Vue.component('cate-modal', require('./components/categories/ModalCategories.vue').default);
 
 const app = new Vue({
     el: '#app'

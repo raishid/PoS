@@ -179,7 +179,7 @@ export default {
           }).then(response => {
             const { data: { status, response:resp } } = response;
             if(status){
-              this.$emit('editData', resp)
+              this.$emit('editData', JSON.parse(resp))
               this.$refs.closeModal.click();
               this.reset();
             }

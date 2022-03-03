@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\CategoryController;
 use Pecee\Http\Request;
 use App\Controllers\HomeController;
 use App\Controllers\LoginController;
@@ -16,6 +17,12 @@ SimpleRouter::group(['middleware' => Middleware::class], function () {
     SimpleRouter::post('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
     SimpleRouter::post('/users/state/update/{id}', [UserController::class, 'updateState'])->name('users.state.update');
     SimpleRouter::post('/users/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
+
+    //CATEGORIES
+    SimpleRouter::get('/categories', [CategoryController::class, 'index'])->name('category.index');
+    SimpleRouter::post('/categories/create', [CategoryController::class, 'create'])->name('category.create');
+    SimpleRouter::post('/categories/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    SimpleRouter::post('/categories/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
 });
 
 
