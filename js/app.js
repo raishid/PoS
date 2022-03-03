@@ -11281,8 +11281,6 @@
                       class: _vm.StateClass(user2.state),
                       attrs: {
                         type: "button",
-                        "data-src": user2.id,
-                        "data-state": user2.state,
                         title: "Activate or deactivate user"
                       },
                       on: {
@@ -11305,7 +11303,6 @@
                     _c("div", [
                       _c("button", {
                         staticClass: "btn btn-warning edit",
-                        attrs: { "data-src": user2.id },
                         on: {
                           click: function($event) {
                             return _vm.editU(user2.id);
@@ -11315,7 +11312,6 @@
                       _vm._v(" "),
                       _c("button", {
                         staticClass: "btn btn-danger delete",
-                        attrs: { "data-src": user2.id },
                         on: {
                           click: function($event) {
                             return _vm.deleteU(user2.id);
@@ -11353,7 +11349,7 @@
             _c("tr", [
               _c("th", { staticClass: "text-center" }, [_vm._v("#")]),
               _vm._v(" "),
-              _c("th", { staticClass: "text-center" }, [_vm._v("Name")]),
+              _c("th", { staticClass: "text-center desktop" }, [_vm._v("Name")]),
               _vm._v(" "),
               _c("th", { staticClass: "text-center" }, [_vm._v("User")]),
               _vm._v(" "),
