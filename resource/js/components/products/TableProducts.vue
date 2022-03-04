@@ -79,10 +79,37 @@ export default {
             productsParser: JSON.parse(this.products),
             datatable: undefined,
             editB: false,
-            categoriesParser: JSON.parse(this.categories)
+            categoriesParser: JSON.parse(this.categories),
+            getProduct: true,
+            mutable_data: undefined,
         }
     },
     methods:{
+      dataProducts(page=2){
+           axios({
+             method:'get',
+             url: `/api/products/all/page/${page}`,
+             data: {
+               csrf_token: this.csrf_token,
+             }
+           }).then(response => {
+              const { data: { products } } = response;
+              if(!response.data.status){
+                this.getProduct = false;
+                this.mutable_data = undefined;
+              }
+              if(this.getProduct){
+                this.mutable_data = response.data; 
+                products.map((value, index) => {
+                  this.productsParser.push(value);
+               });
+              }
+           }).then(() =>{
+             if(this.getProduct){
+               this.dataProducts(this.mutable_data.next_page);
+             }
+           })
+        },
         mountedDatatable(){
           return this.datatable = $('#datatable-products').DataTable({
                                           responsive: true,
@@ -165,6 +192,7 @@ export default {
     },
     mounted(){
       this.mountedDatatable();
+      this.dataProducts();
     }
     
 };

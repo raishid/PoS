@@ -15744,6 +15744,13 @@
           };
         },
         methods: {
+          usePercentChange() {
+            if (this.$refs.percent.checked) {
+              this.$refs.percent.checked = false;
+            } else {
+              this.$refs.percent.checked = true;
+            }
+          },
           handleSubmitProduct() {
             const form_data = new FormData();
             form_data.append("csrf_token", this.csrf_token);
@@ -16115,7 +16122,27 @@
                           })
                         ]),
                         _vm._v(" "),
-                        _vm._m(7)
+                        _c("div", { staticClass: "row mt-4" }, [
+                          _c("div", { staticClass: "col-sm-6" }, [
+                            _c("div", { staticClass: "form-group icheck-primary" }, [
+                              _c("input", {
+                                ref: "percent",
+                                attrs: { type: "checkbox" },
+                                on: { click: _vm.usePercentChange }
+                              }),
+                              _vm._v(" "),
+                              _c("label", {
+                                staticClass: "fs-7",
+                                attrs: { for: "use-percent" },
+                                on: { click: _vm.usePercentChange }
+                              }, [
+                                _vm._v("\n                        Use percentage\n                      ")
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(7)
+                        ])
                       ])
                     ]),
                     _vm._v(" "),
@@ -16223,29 +16250,15 @@
           var _vm = this;
           var _h = _vm.$createElement;
           var _c = _vm._self._c || _h;
-          return _c("div", { staticClass: "row mt-4" }, [
-            _c("div", { staticClass: "col-sm-6" }, [
-              _c("div", { staticClass: "form-group icheck-primary" }, [
-                _c("input", {
-                  attrs: { type: "checkbox", id: "use-percent", checked: "" }
-                }),
-                _vm._v(" "),
-                _c("label", { staticClass: "fs-7", attrs: { for: "use-percent" } }, [
-                  _vm._v("\n                        Use percentage\n                      ")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-sm-6 p-md-0" }, [
-              _c("div", { staticClass: "input-group input-group-lg" }, [
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "number", min: "0", value: "40", required: "" }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "input-group-text" }, [
-                  _c("i", { staticClass: "fa fa-percent fs-7" })
-                ])
+          return _c("div", { staticClass: "col-sm-6 p-md-0" }, [
+            _c("div", { staticClass: "input-group input-group-lg" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "number", min: "0", value: "40", required: "" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "input-group-text" }, [
+                _c("i", { staticClass: "fa fa-percent fs-7" })
               ])
             ])
           ]);
@@ -16255,7 +16268,7 @@
       __vue_inject_styles__6 = function(inject) {
         if (!inject)
           return;
-        inject("data-v-5428f5b3_0", { source: "\n.fs-7{\n  font-size: 0.8rem !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\products\\ModalProducts.vue"], "names": [], "mappings": ";AA0UA;EACA,4BAAA;AACA", "file": "ModalProducts.vue", "sourcesContent": [`<template>\r
+        inject("data-v-9c4a5a60_0", { source: "\n.fs-7{\n  font-size: 0.8rem !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\products\\ModalProducts.vue"], "names": [], "mappings": ";AAiVA;EACA,4BAAA;AACA", "file": "ModalProducts.vue", "sourcesContent": [`<template>\r
   <div\r
     class="modal fade"\r
     id="create-modal-product"\r
@@ -16412,8 +16425,8 @@
 \r
                     <div class="col-sm-6">\r
                       <div class="form-group icheck-primary">\r
-                          <input type="checkbox" id="use-percent" checked>\r
-                        <label for="use-percent" class="fs-7">\r
+                          <input type="checkbox" ref="percent" @click="usePercentChange">\r
+                        <label for="use-percent" class="fs-7" @click="usePercentChange">\r
                           Use percentage\r
                         </label>\r
                       </div>\r
@@ -16496,6 +16509,13 @@ export default {\r
     };\r
   },\r
   methods: {\r
+    usePercentChange(){\r
+      if(this.$refs.percent.checked){\r
+        this.$refs.percent.checked = false;\r
+      }else{\r
+        this.$refs.percent.checked = true;\r
+      }\r
+    },\r
     handleSubmitProduct() {\r
       const form_data = new FormData();\r
       form_data.append("csrf_token", this.csrf_token);\r
@@ -16682,10 +16702,37 @@ export default {\r
             productsParser: JSON.parse(this.products),
             datatable: void 0,
             editB: false,
-            categoriesParser: JSON.parse(this.categories)
+            categoriesParser: JSON.parse(this.categories),
+            getProduct: true,
+            mutable_data: void 0
           };
         },
         methods: {
+          dataProducts(page = 2) {
+            axios({
+              method: "get",
+              url: `/api/products/all/page/${page}`,
+              data: {
+                csrf_token: this.csrf_token
+              }
+            }).then((response) => {
+              const { data: { products } } = response;
+              if (!response.data.status) {
+                this.getProduct = false;
+                this.mutable_data = void 0;
+              }
+              if (this.getProduct) {
+                this.mutable_data = response.data;
+                products.map((value, index) => {
+                  this.productsParser.push(value);
+                });
+              }
+            }).then(() => {
+              if (this.getProduct) {
+                this.dataProducts(this.mutable_data.next_page);
+              }
+            });
+          },
           mountedDatatable() {
             return this.datatable = $("#datatable-products").DataTable({
               responsive: true,
@@ -16761,6 +16808,7 @@ export default {\r
         },
         mounted() {
           this.mountedDatatable();
+          this.dataProducts();
         }
       };
       __vue_render__7 = function() {

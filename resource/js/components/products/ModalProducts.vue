@@ -155,8 +155,8 @@
 
                     <div class="col-sm-6">
                       <div class="form-group icheck-primary">
-                          <input type="checkbox" id="use-percent" checked>
-                        <label for="use-percent" class="fs-7">
+                          <input type="checkbox" ref="percent" @click="usePercentChange">
+                        <label for="use-percent" class="fs-7" @click="usePercentChange">
                           Use percentage
                         </label>
                       </div>
@@ -239,6 +239,13 @@ export default {
     };
   },
   methods: {
+    usePercentChange(){
+      if(this.$refs.percent.checked){
+        this.$refs.percent.checked = false;
+      }else{
+        this.$refs.percent.checked = true;
+      }
+    },
     handleSubmitProduct() {
       const form_data = new FormData();
       form_data.append("csrf_token", this.csrf_token);
