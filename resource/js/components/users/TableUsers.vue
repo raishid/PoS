@@ -110,8 +110,9 @@ export default {
             const { data: { response:resp } } = response;
             const user = this.userParser.find(u => u.id === resp.id);
             user.state = resp.state;
+            this.mutable = user.state;
           });
-          return user.state;
+          return this.mutable;
         },
         formatDate(date){
             const datetime = new Date(date);

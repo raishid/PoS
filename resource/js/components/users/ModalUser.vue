@@ -140,7 +140,7 @@ export default {
       username: undefined,
       password: undefined,
       role: undefined,
-      pic: "/images/anonymous.png",
+      pic: "/assets/images/anonymous.png",
       url_pic: "/assets/images/anonymous.png",
       edit: false,
     };

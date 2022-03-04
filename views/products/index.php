@@ -26,7 +26,7 @@
       <div class="row">
         <div class="col-12">
           <!--Card -->
-          <prod-table products='<?=json_encode($data['products'])?>' csrf_token='<?=csrf_token()?>'></prod-table>
+          <prod-table products='<?=json_encode($data['products'])?>' categories='<?=json_encode($data['categories'])?>' csrf_token='<?=csrf_token()?>'></prod-table>
           <!-- /. Card -->
         </div>
       </div>

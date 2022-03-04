@@ -10669,7 +10669,7 @@
             username: void 0,
             password: void 0,
             role: void 0,
-            pic: "/images/anonymous.png",
+            pic: "/assets/images/anonymous.png",
             url_pic: "/assets/images/anonymous.png",
             edit: false
           };
@@ -11157,10 +11157,11 @@
               }
             }).then((response) => {
               const { data: { response: resp } } = response;
-              const user2 = this.userParser.find((u) => u.id === resp.id);
-              user2.state = resp.state;
+              const user = this.userParser.find((u) => u.id === resp.id);
+              user.state = resp.state;
+              this.mutable = user.state;
             });
-            return user.state;
+            return this.mutable;
           },
           formatDate(date) {
             const datetime = new Date(date);
@@ -11183,11 +11184,11 @@
             });
           },
           editData(data) {
-            const user2 = this.userParser.find((u) => u.id === data.id);
-            user2.name = data.name;
-            user2.username = data.username;
-            user2.role = data.role;
-            user2.pic = data.pic;
+            const user = this.userParser.find((u) => u.id === data.id);
+            user.name = data.name;
+            user.username = data.username;
+            user.role = data.role;
+            user.pic = data.pic;
           },
           mountedDatatable() {
             return this.datatable = $("#datatable-user").DataTable({
@@ -11251,52 +11252,52 @@
             }, [
               _vm._m(1),
               _vm._v(" "),
-              _c("tbody", _vm._l(_vm.userParser, function(user2, index) {
+              _c("tbody", _vm._l(_vm.userParser, function(user, index) {
                 return _c("tr", { key: index }, [
                   _c("td", { staticClass: "text-center align-middle" }, [
                     _vm._v(_vm._s(index + 1))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(user2.name))
+                    _vm._v(_vm._s(user.name))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(user2.username))
+                    _vm._v(_vm._s(user.username))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
                     _c("img", {
                       staticClass: "img-thumbnail rounded",
-                      attrs: { src: _vm.userPic(user2.pic), width: "50" }
+                      attrs: { src: _vm.userPic(user.pic), width: "50" }
                     })
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(_vm.defineRole(user2.role)))
+                    _vm._v(_vm._s(_vm.defineRole(user.role)))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
                     _c("button", {
-                      class: _vm.StateClass(user2.state),
+                      class: _vm.StateClass(user.state),
                       attrs: {
                         type: "button",
                         title: "Activate or deactivate user"
                       },
                       on: {
                         click: function($event) {
-                          return _vm.UpdateState(user2.id, user2.state);
+                          return _vm.UpdateState(user.id, user.state);
                         }
                       }
-                    }, [_vm._v(_vm._s(_vm.defineState(user2.state)))])
+                    }, [_vm._v(_vm._s(_vm.defineState(user.state)))])
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(user2.last_login))
+                    _vm._v(_vm._s(user.last_login))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(_vm.formatDate(user2.date)))
+                    _vm._v(_vm._s(_vm.formatDate(user.date)))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
@@ -11305,7 +11306,7 @@
                         staticClass: "btn btn-warning edit",
                         on: {
                           click: function($event) {
-                            return _vm.editU(user2.id);
+                            return _vm.editU(user.id);
                           }
                         }
                       }, [_c("i", { staticClass: "fa fa-pencil" })]),
@@ -11314,7 +11315,7 @@
                         staticClass: "btn btn-danger delete",
                         on: {
                           click: function($event) {
-                            return _vm.deleteU(user2.id);
+                            return _vm.deleteU(user.id);
                           }
                         }
                       }, [_c("i", { staticClass: "fa fa-times" })])
@@ -11924,7 +11925,7 @@
         component.functional = true;
     }
     component._scopeId = scope;
-    if (false) {
+    if (true) {
       let hook;
       if (false) {
         hook = function(context) {
@@ -11962,13 +11963,67 @@
     }
     return component;
   }
+  function __vue_create_injector__() {
+    const styles = __vue_create_injector__.styles || (__vue_create_injector__.styles = {});
+    const isOldIE = typeof navigator !== "undefined" && /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
+    return function addStyle(id, css) {
+      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]'))
+        return;
+      const group = isOldIE ? css.media || "default" : id;
+      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: void 0 });
+      if (!style.ids.includes(id)) {
+        let code = css.source;
+        let index = style.ids.length;
+        style.ids.push(id);
+        if (false) {
+          code += "\n/*# sourceURL=" + css.map.sources[0] + " */";
+          code += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) + " */";
+        }
+        if (isOldIE) {
+          style.element = style.element || document.querySelector("style[data-group=" + group + "]");
+        }
+        if (!style.element) {
+          const head = document.head || document.getElementsByTagName("head")[0];
+          const el = style.element = document.createElement("style");
+          el.type = "text/css";
+          if (css.media)
+            el.setAttribute("media", css.media);
+          if (isOldIE) {
+            el.setAttribute("data-group", group);
+            el.setAttribute("data-next-index", "0");
+          }
+          head.appendChild(el);
+        }
+        if (isOldIE) {
+          index = parseInt(style.element.getAttribute("data-next-index"));
+          style.element.setAttribute("data-next-index", index + 1);
+        }
+        if (style.element.styleSheet) {
+          style.parts.push(code);
+          style.element.styleSheet.cssText = style.parts.filter(Boolean).join("\n");
+        } else {
+          const textNode = document.createTextNode(code);
+          const nodes = style.element.childNodes;
+          if (nodes[index])
+            style.element.removeChild(nodes[index]);
+          if (nodes.length)
+            style.element.insertBefore(textNode, nodes[index]);
+          else
+            style.element.appendChild(textNode);
+        }
+      }
+    };
+  }
   var __vue_script__6, __vue_render__6, __vue_staticRenderFns__6, __vue_inject_styles__6, __vue_scope_id__6, __vue_module_identifier__6, __vue_is_functional_template__6, __vue_component__6, ModalProducts_default;
   var init_ModalProducts = __esm({
     "resource/js/components/products/ModalProducts.vue"() {
       __vue_script__6 = {
-        name: "u-modal",
+        name: "prod-modal",
         props: {
           csrf_token: {
+            required: true
+          },
+          categories: {
             required: true
           }
         },
@@ -11978,11 +12033,12 @@
             sku: void 0,
             name: void 0,
             description: void 0,
-            image: "/images/anonymous.png",
-            url_image: "/assets/images/anonymous.png",
+            image: "/images/products/boxed-bg.jpg",
+            url_image: "/assets/images/products/boxed-bg.jpg",
+            category: void 0,
             stock: void 0,
             cost: void 0,
-            price,
+            price: void 0,
             date: void 0
           };
         },
@@ -11994,6 +12050,7 @@
             form_data.append("name", this.name);
             form_data.append("description", this.description);
             form_data.append("image", this.image);
+            form_data.append("category", this.category);
             form_data.append("stock", this.stock);
             form_data.append("cost", this.cost);
             form_data.append("price", this.price);
@@ -12037,10 +12094,24 @@
               });
             }
           },
-          reset() {
-            this.id_product = void 0, this.sku = void 0, this.name = void 0, this.description = void 0, this.image = "/images/anonymous.png", this.url_image = "/assets/images/anonymous.png", this.stock = void 0, this.cost = void 0, this.price = price, this.date = void 0, this.edit = false;
+          onFileChange(e) {
+            const files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+              return;
+            if (files[0].size > 2e6) {
+              this.$swal.fire({
+                icon: "warning",
+                title: "The image is very heavy, the limit is up to 2mb"
+              });
+              return;
+            }
+            this.image = files[0];
+            return this.url_image = URL.createObjectURL(files[0]);
           },
-          editCate(data_edit) {
+          reset() {
+            this.id_product = void 0, this.sku = void 0, this.name = void 0, this.description = void 0, this.image = "/assets/images/products/boxed-bg.jpg", this.url_image = this.image, this.category = void 0, this.stock = void 0, this.cost = void 0, this.price = void 0, this.date = void 0, this.edit = false;
+          },
+          editProd(data_edit) {
             this.edit = true;
             this.id_category = data_edit.id;
             this.name = data_edit.name;
@@ -12104,6 +12175,40 @@
                             {
                               name: "model",
                               rawName: "v-model",
+                              value: _vm.sku,
+                              expression: "sku"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            name: "sku",
+                            id: "sku",
+                            placeholder: "Sku product",
+                            required: ""
+                          },
+                          domProps: { value: _vm.sku },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return;
+                              }
+                              _vm.sku = $event.target.value;
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "input-group input-group-lg" }, [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
                               value: _vm.name,
                               expression: "name"
                             }
@@ -12113,7 +12218,7 @@
                             type: "text",
                             name: "name",
                             id: "name",
-                            placeholder: "Name Category",
+                            placeholder: "Name product",
                             required: ""
                           },
                           domProps: { value: _vm.name },
@@ -12131,7 +12236,7 @@
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("div", { staticClass: "input-group input-group-lg" }, [
-                        _vm._m(1),
+                        _vm._m(2),
                         _vm._v(" "),
                         _c("textarea", {
                           directives: [
@@ -12159,6 +12264,185 @@
                           }
                         })
                       ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "input-group input-group-lg" }, [
+                        _vm._m(3),
+                        _vm._v(" "),
+                        _c("select", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.category,
+                              expression: "category"
+                            }
+                          ],
+                          staticClass: "form-select",
+                          attrs: {
+                            name: "category",
+                            id: "category",
+                            required: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+                                return o.selected;
+                              }).map(function(o) {
+                                var val = "_value" in o ? o._value : o.value;
+                                return val;
+                              });
+                              _vm.category = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+                            }
+                          }
+                        }, [
+                          _c("option", { attrs: { disabled: "", selected: "" } }, [_vm._v("Select category")]),
+                          _vm._v(" "),
+                          _vm._l(_vm.categories, function(category, index) {
+                            return _c("option", { key: index, domProps: { value: category.id } }, [_vm._v(_vm._s(category.name))]);
+                          })
+                        ], 2)
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "input-group input-group-lg" }, [
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.stock,
+                              expression: "stock"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "number",
+                            name: "stock",
+                            id: "stock",
+                            placeholder: "Stock",
+                            required: "",
+                            step: "1",
+                            min: "1"
+                          },
+                          domProps: { value: _vm.stock },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return;
+                              }
+                              _vm.stock = $event.target.value;
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("div", { staticClass: "col-sm-6" }, [
+                        _c("div", { staticClass: "input-group input-group-lg" }, [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.cost,
+                                expression: "cost"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "number",
+                              name: "cost",
+                              id: "cost",
+                              placeholder: "Cost price",
+                              required: "",
+                              min: "0.01",
+                              step: "0.01"
+                            },
+                            domProps: { value: _vm.cost },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return;
+                                }
+                                _vm.cost = $event.target.value;
+                              }
+                            }
+                          })
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-6" }, [
+                        _c("div", { staticClass: "input-group input-group-lg" }, [
+                          _vm._m(6),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.price,
+                                expression: "price"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "number",
+                              name: "price",
+                              id: "price",
+                              placeholder: "Sale price",
+                              required: "",
+                              min: "0.01",
+                              step: "0.01"
+                            },
+                            domProps: { value: _vm.price },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return;
+                                }
+                                _vm.price = $event.target.value;
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(7)
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("h6", { staticClass: "card-title" }, [
+                        _vm._v("Upload image")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "file",
+                          name: "image",
+                          accept: ".png, .jpg, .jpeg"
+                        },
+                        on: { change: _vm.onFileChange }
+                      }),
+                      _vm._v(" "),
+                      _c("small", { staticClass: "text-muted" }, [
+                        _vm._v("max weight 2mb ")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "mt-2" }, [
+                        _c("img", {
+                          staticClass: "img-thumbnail",
+                          attrs: { src: _vm.url_image, width: "100" }
+                        })
+                      ])
                     ])
                   ])
                 ]),
@@ -12183,7 +12467,15 @@
           var _h = _vm.$createElement;
           var _c = _vm._self._c || _h;
           return _c("span", { staticClass: "input-group-text" }, [
-            _c("i", { staticClass: "fa fa-th" })
+            _c("i", { staticClass: "fa fa-barcode" })
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-box-archive" })
           ]);
         },
         function() {
@@ -12193,14 +12485,414 @@
           return _c("span", { staticClass: "input-group-text" }, [
             _c("i", { staticClass: "fa fa-align-center" })
           ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-list-check" })
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-boxes-stacked" })
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-coins" })
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-money-check-dollar" })
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("div", { staticClass: "row mt-4" }, [
+            _c("div", { staticClass: "col-sm-6" }, [
+              _c("div", { staticClass: "form-group icheck-primary" }, [
+                _c("input", {
+                  attrs: { type: "checkbox", id: "use-percent", checked: "" }
+                }),
+                _vm._v(" "),
+                _c("label", { staticClass: "fs-7", attrs: { for: "use-percent" } }, [
+                  _vm._v("\n                        Use percentage\n                      ")
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-6 p-md-0" }, [
+              _c("div", { staticClass: "input-group input-group-lg" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "number", min: "0", value: "40", required: "" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "input-group-text" }, [
+                  _c("i", { staticClass: "fa fa-percent fs-7" })
+                ])
+              ])
+            ])
+          ]);
         }
       ];
       __vue_render__6._withStripped = true;
-      __vue_inject_styles__6 = void 0;
+      __vue_inject_styles__6 = function(inject) {
+        if (!inject)
+          return;
+        inject("data-v-5428f5b3_0", { source: "\n.fs-7{\n  font-size: 0.8rem !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\products\\ModalProducts.vue"], "names": [], "mappings": ";AA0UA;EACA,4BAAA;AACA", "file": "ModalProducts.vue", "sourcesContent": [`<template>\r
+  <div\r
+    class="modal fade"\r
+    id="create-modal-product"\r
+    tabindex="-1"\r
+    aria-labelledby="ProductCreateModal"\r
+    aria-hidden="true"\r
+  >\r
+    <div class="modal-dialog">\r
+      <div class="modal-content">\r
+        <form role="form" v-on:submit.prevent="handleSubmitProduct" method="POST" enctype="multipart/form-data">\r
+          <div class="modal-header">\r
+            <h5 class="modal-title" id="ProductCreateModal">Add New Product</h5>\r
+            <button\r
+              type="button"\r
+              class="btn-close"\r
+              data-bs-dismiss="modal"\r
+              aria-label="Close"\r
+              @click="reset"\r
+            ></button>\r
+          </div>\r
+          <div class="modal-body">\r
+            <div class="card-body">\r
+              <div class="form-group">\r
+                \r
+                <div class="input-group input-group-lg">\r
+                  <span class="input-group-text"\r
+                    ><i class="fa fa-barcode"></i\r
+                  ></span>\r
+                  <input\r
+                    type="text"\r
+                    name="sku"\r
+                    id="sku"\r
+                    class="form-control"\r
+                    placeholder="Sku product"\r
+                    v-model="sku"\r
+                    required\r
+                  />\r
+                </div>\r
+\r
+              </div>\r
+\r
+              <div class="form-group">\r
+                \r
+                <div class="input-group input-group-lg">\r
+                  <span class="input-group-text">\r
+                    <i class="fa fa-box-archive"></i>\r
+                  </span>\r
+                  <input\r
+                    type="text"\r
+                    name="name"\r
+                    id="name"\r
+                    class="form-control"\r
+                    placeholder="Name product"\r
+                    v-model="name"\r
+                    required\r
+                  />\r
+                </div>\r
+\r
+              </div>\r
+\r
+              <div class="form-group">\r
+                <div class="input-group input-group-lg">\r
+                  <span class="input-group-text">\r
+                    <i class="fa fa-align-center"></i>\r
+                  </span>\r
+                  <textarea\r
+                    name="description"\r
+                    id="description"\r
+                    class="form-control"\r
+                    placeholder="Add a Description"\r
+                    v-model="description"\r
+                  >\r
+                  </textarea>\r
+                </div>\r
+\r
+              </div>\r
+\r
+              <div class="form-group">\r
+                <div class="input-group input-group-lg">\r
+                  <span class="input-group-text"\r
+                    ><i class="fa fa-list-check"></i\r
+                  ></span>\r
+                  <select\r
+                    name="category"\r
+                    id="category"\r
+                    class="form-select"\r
+                    v-model="category"\r
+                    required\r
+                  >\r
+                    <option disabled selected>Select category</option>\r
+                    <option v-for="(category, index) in categories" :key="index" :value="category.id">{{ category.name }}</option>\r
+                  </select>\r
+                </div>\r
+              </div>\r
+\r
+              <div class="form-group">\r
+                <div class="input-group input-group-lg">\r
+                  <span class="input-group-text">\r
+                    <i class="fa fa-boxes-stacked"></i>\r
+                  </span>\r
+                  <input\r
+                    type="number"\r
+                    name="stock"\r
+                    id="stock"\r
+                    class="form-control"\r
+                    placeholder="Stock"\r
+                    v-model="stock"\r
+                    required\r
+                    step="1"\r
+                    min="1"\r
+                  />\r
+                </div>\r
+              </div>\r
+\r
+              <div class="form-group row">\r
+                <div class="col-sm-6">\r
+                  <div class="input-group input-group-lg">\r
+                    <span class="input-group-text">\r
+                      <i class="fa fa-coins"></i>\r
+                    </span>\r
+                    <input\r
+                      type="number"\r
+                      name="cost"\r
+                      id="cost"\r
+                      class="form-control"\r
+                      placeholder="Cost price"\r
+                      v-model="cost"\r
+                      required\r
+                      min="0.01"\r
+                      step="0.01"\r
+                    />\r
+                  </div>\r
+                </div>\r
+                \r
+                <div class="col-sm-6">\r
+                  <div class="input-group input-group-lg">\r
+                    <span class="input-group-text">\r
+                      <i class="fa fa-money-check-dollar"></i>\r
+                    </span>\r
+                    <input\r
+                      type="number"\r
+                      name="price"\r
+                      id="price"\r
+                      class="form-control"\r
+                      placeholder="Sale price"\r
+                      v-model="price"\r
+                      required\r
+                      min="0.01"\r
+                      step="0.01"\r
+                    />\r
+                  </div>\r
+                  \r
+                  <div class="row mt-4">\r
+\r
+                    <div class="col-sm-6">\r
+                      <div class="form-group icheck-primary">\r
+                          <input type="checkbox" id="use-percent" checked>\r
+                        <label for="use-percent" class="fs-7">\r
+                          Use percentage\r
+                        </label>\r
+                      </div>\r
+                    </div>\r
+                    \r
+                    <div class="col-sm-6 p-md-0">\r
+                      <div class="input-group input-group-lg">\r
+                        <input type="number" class="form-control" min="0" value="40" required>\r
+                        <span class="input-group-text"><i class="fa fa-percent fs-7"></i></span>\r
+                      </div>\r
+                    </div>\r
+                  </div>\r
+                </div>\r
+\r
+              </div>\r
+              \r
+              <div class="form-group">\r
+                <h6 class="card-title">Upload image</h6>\r
+                <input\r
+                  type="file"\r
+                  class="form-control"\r
+                  name="image"\r
+                  v-on:change="onFileChange"\r
+                  accept=".png, .jpg, .jpeg"\r
+                />\r
+                <small class="text-muted">max weight 2mb </small>\r
+                <div class="mt-2">\r
+                  <img :src="url_image" class="img-thumbnail" width="100" />\r
+                </div>\r
+              </div>\r
+\r
+            </div>\r
+\r
+          </div>\r
+\r
+          <div class="modal-footer">\r
+            <button\r
+              type="button"\r
+              class="btn btn-secondary"\r
+              data-bs-dismiss="modal"\r
+              ref="closeModal"\r
+            >\r
+              Close\r
+            </button>\r
+            <button type="submit" class="btn btn-primary">Save category</button>\r
+          </div>\r
+\r
+        </form>\r
+        \r
+      </div>\r
+\r
+    </div>\r
+\r
+  </div>\r
+</template>\r
+<script>\r
+export default {\r
+  name: "prod-modal",\r
+  props: {\r
+    csrf_token: {\r
+      required: true,\r
+    },\r
+    categories: {\r
+      required: true\r
+    },\r
+  },\r
+  data() {\r
+    return {\r
+      id_product: undefined,\r
+      sku: undefined,\r
+      name: undefined,\r
+      description: undefined,\r
+      image: "/images/products/boxed-bg.jpg",\r
+      url_image: "/assets/images/products/boxed-bg.jpg",\r
+      category: undefined,\r
+      stock: undefined,\r
+      cost: undefined,\r
+      price: undefined,\r
+      date: undefined,\r
+    };\r
+  },\r
+  methods: {\r
+    handleSubmitProduct() {\r
+      const form_data = new FormData();\r
+      form_data.append("csrf_token", this.csrf_token);\r
+      form_data.append("sku", this.sku);\r
+      form_data.append('name', this.name);\r
+      form_data.append('description', this.description);\r
+      form_data.append('image', this.image);\r
+      form_data.append('category', this.category);\r
+      form_data.append('stock', this.stock);\r
+      form_data.append('cost', this.cost);\r
+      form_data.append('price', this.price);\r
+\r
+      if(this.edit){\r
+          axios({\r
+            method:'post',\r
+            url: \`/products/edit/\${this.id_product}\`,\r
+            headers: {\r
+                'Content-Type': 'multipart/form-data'\r
+            },\r
+            data: form_data\r
+          }).then(response => {\r
+            const { data: { status, response:resp } } = response;\r
+            if(status){\r
+              this.$emit('editData', JSON.parse(resp))\r
+              this.$refs.closeModal.click();\r
+              this.reset();\r
+            }\r
+          });\r
+        }else{\r
+          axios({\r
+            method:'post',\r
+            url: '/products/create',\r
+            headers: {\r
+                'Content-Type': 'multipart/form-data'\r
+            },\r
+            data: form_data\r
+          }).then(response =>{\r
+            const { data: { status, response:resp } } = response;\r
+            if(status){\r
+              this.$refs.closeModal.click();\r
+              this.$emit('mutateProd', JSON.parse(resp));\r
+              this.reset();\r
+            }else{\r
+              this.$swal.fire({\r
+                icon: 'error',\r
+                title: 'Error.',\r
+                text: resp,\r
+              });\r
+            }\r
+          })\r
+        }\r
+    },\r
+    onFileChange(e) {\r
+      const files = e.target.files || e.dataTransfer.files;\r
+      if (!files.length) return;\r
+      if(files[0].size > 2000000){\r
+        this.$swal.fire({\r
+          icon: 'warning',\r
+          title: 'The image is very heavy, the limit is up to 2mb'\r
+        })\r
+        return;\r
+      }\r
+      this.image = files[0];\r
+      return (this.url_image = URL.createObjectURL(files[0]));\r
+    },\r
+    reset() {\r
+      this.id_product = undefined,\r
+      this.sku = undefined,\r
+      this.name = undefined,\r
+      this.description = undefined,\r
+      this.image = "/assets/images/products/boxed-bg.jpg",\r
+      this.url_image = this.image,\r
+      this.category = undefined,\r
+      this.stock = undefined,\r
+      this.cost = undefined,\r
+      this.price = undefined,\r
+      this.date = undefined,\r
+      this.edit = false;\r
+    },\r
+    editProd(data_edit) {\r
+      this.edit = true;\r
+      this.id_category = data_edit.id;\r
+      this.name = data_edit.name;\r
+      this.description = data_edit.description;\r
+    },\r
+  },\r
+};\r
+<\/script>\r
+<style>\r
+  .fs-7{\r
+    font-size: 0.8rem !important;\r
+  }\r
+</style>`] }, media: void 0 });
+      };
       __vue_scope_id__6 = void 0;
       __vue_module_identifier__6 = void 0;
       __vue_is_functional_template__6 = false;
-      __vue_component__6 = /* @__PURE__ */ __vue_normalize__6({ render: __vue_render__6, staticRenderFns: __vue_staticRenderFns__6 }, __vue_inject_styles__6, __vue_script__6, __vue_scope_id__6, __vue_is_functional_template__6, __vue_module_identifier__6, false, void 0, void 0, void 0);
+      __vue_component__6 = /* @__PURE__ */ __vue_normalize__6({ render: __vue_render__6, staticRenderFns: __vue_staticRenderFns__6 }, __vue_inject_styles__6, __vue_script__6, __vue_scope_id__6, __vue_is_functional_template__6, __vue_module_identifier__6, false, __vue_create_injector__, void 0, void 0);
       ModalProducts_default = __vue_component__6;
     }
   });
@@ -12273,6 +12965,10 @@
           csrf_token: {
             type: String,
             required: true
+          },
+          categories: {
+            type: String,
+            required: true
           }
         },
         components: {
@@ -12283,7 +12979,8 @@
             u_search: "",
             productsParser: JSON.parse(this.products),
             datatable: void 0,
-            editB: false
+            editB: false,
+            categoriesParser: JSON.parse(this.categories)
           };
         },
         methods: {
@@ -12306,6 +13003,13 @@
             }).then(() => {
               this.mountedDatatable();
             });
+          },
+          prodPic(image) {
+            if (image) {
+              return image;
+            } else {
+              return "/assets/images/products/boxed-bg.jpg";
+            }
           },
           editData(data) {
             const product = this.productsParser.find((u) => u.id === data.id);
@@ -12383,6 +13087,33 @@
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
+                    _c("img", {
+                      staticClass: "img-thumbnail rounded",
+                      attrs: { src: _vm.prodPic(product.image), width: "50" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(product.category))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(product.stock))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(product.cost))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(product.price))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(product.created_at))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
                     _c("div", [
                       _c("button", {
                         staticClass: "btn btn-warning edit",
@@ -12406,8 +13137,14 @@
                 ]);
               }), 0)
             ])
-          ])
-        ]);
+          ]),
+          _vm._v(" "),
+          _c("prod-modal", {
+            ref: "modal",
+            attrs: { csrf_token: _vm.csrf_token, categories: _vm.categoriesParser },
+            on: { mutateProd: _vm.mutateData, editData: _vm.editData }
+          })
+        ], 1);
       };
       __vue_staticRenderFns__7 = [
         function() {
@@ -12433,6 +13170,8 @@
               _c("th", { staticClass: "text-center" }, [_vm._v("Description")]),
               _vm._v(" "),
               _c("th", { staticClass: "text-center" }, [_vm._v("Image")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Category")]),
               _vm._v(" "),
               _c("th", { staticClass: "text-center" }, [_vm._v("Stock")]),
               _vm._v(" "),

@@ -25,14 +25,33 @@
                 
                 <div class="input-group input-group-lg">
                   <span class="input-group-text"
-                    ><i class="fa fa-th"></i
+                    ><i class="fa fa-barcode"></i
                   ></span>
+                  <input
+                    type="text"
+                    name="sku"
+                    id="sku"
+                    class="form-control"
+                    placeholder="Sku product"
+                    v-model="sku"
+                    required
+                  />
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                
+                <div class="input-group input-group-lg">
+                  <span class="input-group-text">
+                    <i class="fa fa-box-archive"></i>
+                  </span>
                   <input
                     type="text"
                     name="name"
                     id="name"
                     class="form-control"
-                    placeholder="Name Category"
+                    placeholder="Name product"
                     v-model="name"
                     required
                   />
@@ -57,7 +76,120 @@
 
               </div>
 
+              <div class="form-group">
+                <div class="input-group input-group-lg">
+                  <span class="input-group-text"
+                    ><i class="fa fa-list-check"></i
+                  ></span>
+                  <select
+                    name="category"
+                    id="category"
+                    class="form-select"
+                    v-model="category"
+                    required
+                  >
+                    <option disabled selected>Select category</option>
+                    <option v-for="(category, index) in categories" :key="index" :value="category.id">{{ category.name }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group input-group-lg">
+                  <span class="input-group-text">
+                    <i class="fa fa-boxes-stacked"></i>
+                  </span>
+                  <input
+                    type="number"
+                    name="stock"
+                    id="stock"
+                    class="form-control"
+                    placeholder="Stock"
+                    v-model="stock"
+                    required
+                    step="1"
+                    min="1"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-6">
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text">
+                      <i class="fa fa-coins"></i>
+                    </span>
+                    <input
+                      type="number"
+                      name="cost"
+                      id="cost"
+                      class="form-control"
+                      placeholder="Cost price"
+                      v-model="cost"
+                      required
+                      min="0.01"
+                      step="0.01"
+                    />
+                  </div>
+                </div>
+                
+                <div class="col-sm-6">
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text">
+                      <i class="fa fa-money-check-dollar"></i>
+                    </span>
+                    <input
+                      type="number"
+                      name="price"
+                      id="price"
+                      class="form-control"
+                      placeholder="Sale price"
+                      v-model="price"
+                      required
+                      min="0.01"
+                      step="0.01"
+                    />
+                  </div>
+                  
+                  <div class="row mt-4">
+
+                    <div class="col-sm-6">
+                      <div class="form-group icheck-primary">
+                          <input type="checkbox" id="use-percent" checked>
+                        <label for="use-percent" class="fs-7">
+                          Use percentage
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div class="col-sm-6 p-md-0">
+                      <div class="input-group input-group-lg">
+                        <input type="number" class="form-control" min="0" value="40" required>
+                        <span class="input-group-text"><i class="fa fa-percent fs-7"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              
+              <div class="form-group">
+                <h6 class="card-title">Upload image</h6>
+                <input
+                  type="file"
+                  class="form-control"
+                  name="image"
+                  v-on:change="onFileChange"
+                  accept=".png, .jpg, .jpeg"
+                />
+                <small class="text-muted">max weight 2mb </small>
+                <div class="mt-2">
+                  <img :src="url_image" class="img-thumbnail" width="100" />
+                </div>
+              </div>
+
             </div>
+
           </div>
 
           <div class="modal-footer">
@@ -82,10 +214,13 @@
 </template>
 <script>
 export default {
-  name: "u-modal",
+  name: "prod-modal",
   props: {
     csrf_token: {
       required: true,
+    },
+    categories: {
+      required: true
     },
   },
   data() {
@@ -94,13 +229,13 @@ export default {
       sku: undefined,
       name: undefined,
       description: undefined,
-      image: "/images/anonymous.png",
-      url_image: "/assets/images/anonymous.png",
+      image: "/images/products/boxed-bg.jpg",
+      url_image: "/assets/images/products/boxed-bg.jpg",
+      category: undefined,
       stock: undefined,
       cost: undefined,
-      price: price,
+      price: undefined,
       date: undefined,
-
     };
   },
   methods: {
@@ -111,6 +246,7 @@ export default {
       form_data.append('name', this.name);
       form_data.append('description', this.description);
       form_data.append('image', this.image);
+      form_data.append('category', this.category);
       form_data.append('stock', this.stock);
       form_data.append('cost', this.cost);
       form_data.append('price', this.price);
@@ -155,20 +291,34 @@ export default {
           })
         }
     },
+    onFileChange(e) {
+      const files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      if(files[0].size > 2000000){
+        this.$swal.fire({
+          icon: 'warning',
+          title: 'The image is very heavy, the limit is up to 2mb'
+        })
+        return;
+      }
+      this.image = files[0];
+      return (this.url_image = URL.createObjectURL(files[0]));
+    },
     reset() {
       this.id_product = undefined,
       this.sku = undefined,
       this.name = undefined,
       this.description = undefined,
-      this.image = "/images/anonymous.png",
-      this.url_image = "/assets/images/anonymous.png",
+      this.image = "/assets/images/products/boxed-bg.jpg",
+      this.url_image = this.image,
+      this.category = undefined,
       this.stock = undefined,
       this.cost = undefined,
-      this.price = price,
+      this.price = undefined,
       this.date = undefined,
       this.edit = false;
     },
-    editCate(data_edit) {
+    editProd(data_edit) {
       this.edit = true;
       this.id_category = data_edit.id;
       this.name = data_edit.name;
@@ -177,3 +327,8 @@ export default {
   },
 };
 </script>
+<style>
+  .fs-7{
+    font-size: 0.8rem !important;
+  }
+</style>

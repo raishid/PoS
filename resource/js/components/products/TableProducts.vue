@@ -12,6 +12,7 @@
             <th class="text-center">Name</th>
             <th class="text-center">Description</th>
             <th class="text-center">Image</th>
+            <th class="text-center">Category</th>
             <th class="text-center">Stock</th>
             <th class="text-center">Cost price</th>
             <th class="text-center">Sale price</th>
@@ -24,6 +25,12 @@
             <td class="text-center align-middle">{{ index + 1}}</td>
             <td class="text-center align-middle">{{ product.name}}</td>
             <td class="text-center align-middle">{{ product.description }}</td>
+            <td class="text-center align-middle"><img :src="prodPic(product.image)" class="img-thumbnail rounded" width="50" /></td>
+            <td class="text-center align-middle">{{ product.category }}</td>
+            <td class="text-center align-middle">{{ product.stock }}</td>
+            <td class="text-center align-middle">{{ product.cost }}</td>
+            <td class="text-center align-middle">{{ product.price }}</td>
+            <td class="text-center align-middle">{{ product.created_at }}</td>
             <td class="text-center align-middle">
                 <div>
                     <button class="btn btn-warning edit" @click="editProd(product.id)"><i class="fa fa-pencil"></i></button>
@@ -35,11 +42,12 @@
         </tbody>
       </table>
     </div>
-    <!-- <cate-modal :csrf_token="csrf_token" 
+    <prod-modal :csrf_token="csrf_token" 
     @mutateProd="mutateData"
     ref="modal"
-    @editData="editData">
-    </cate-modal> -->
+    @editData="editData"
+    :categories="categoriesParser">
+    </prod-modal>
   </div>
 </template>
 <script>
@@ -54,6 +62,10 @@ export default {
         csrf_token: {
           type: String,
           required: true
+        },
+        categories: {
+          type: String,
+          required: true
         }
     },
     components:{
@@ -65,6 +77,7 @@ export default {
             productsParser: JSON.parse(this.products),
             datatable: undefined,
             editB: false,
+            categoriesParser: JSON.parse(this.categories)
         }
     },
     methods:{
@@ -88,6 +101,13 @@ export default {
           }).then( () =>{
               this.mountedDatatable();
           })
+        },
+        prodPic(image){
+          if(image){
+            return image;
+          }else{
+            return '/assets/images/products/boxed-bg.jpg';
+          }
         },
         editData(data){
           const product = this.productsParser.find(u => u.id === data.id);
