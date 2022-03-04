@@ -9,8 +9,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $model_categories = new Category();
-        $categories = $model_categories->list();
+        $categories = Category::all();
 
         //load datable scripts
         loadDatatable();
@@ -35,10 +34,10 @@ class CategoryController extends Controller
         $result = $category->save();
 
         if(!$result){
-            return response()->json(array('status' => false, "response" => $category->exception));
+            return response()->json(array('status' => false, "response" => $result));
         }
 
-        return response()->json(array('status' => true, 'response' => json_encode($result)));
+        return response()->json(array('status' => true, 'response' => $category));
 
     }
 
@@ -48,30 +47,27 @@ class CategoryController extends Controller
             return http_response_code(400);
         }
         $data = input()->all();
-        $category = new Category();
+        $category = Category::find($id);
         $category->name = $data['name'];
         if(input()->exists('description')){
             $category->description = $data['description'];
         }
-        $category->update_at = date('Y-m-d');
-        
-        $result = $category->update($id);
+        $result = $category->save();
 
         if(!$result){
-            return response()->json(array('status' => false, "response" => $category->exception));
+            return response()->json(array('status' => false, "response" => $result));
         }
 
-        return response()->json(array('status' => true, 'response' => json_encode($result)));
+        return response()->json(array('status' => true, 'response' => $category));
 
     }
 
     public function delete($id)
     {
-        $category = new Category();
-        $result = $category->delete($id);
+        $result = Category::destroy($id);
 
         if(!$result){
-            return response()->json(array('status' => false, "response" => $category->exception));
+            return response()->json(array('status' => false, "response" => $result));
         }
 
         return response()->json(array('status' => true, 'response' => $result));

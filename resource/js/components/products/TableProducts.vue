@@ -23,14 +23,15 @@
         <tbody>
           <tr v-for="(product, index) in productsParser" :key="index">
             <td class="text-center align-middle">{{ index + 1}}</td>
+            <td class="text-center align-middle">{{ product.sku }}</td>
             <td class="text-center align-middle">{{ product.name}}</td>
             <td class="text-center align-middle">{{ product.description }}</td>
             <td class="text-center align-middle"><img :src="prodPic(product.image)" class="img-thumbnail rounded" width="50" /></td>
-            <td class="text-center align-middle">{{ product.category }}</td>
+            <td class="text-center align-middle">{{ product.category.name }}</td>
             <td class="text-center align-middle">{{ product.stock }}</td>
             <td class="text-center align-middle">{{ product.cost }}</td>
             <td class="text-center align-middle">{{ product.price }}</td>
-            <td class="text-center align-middle">{{ product.created_at }}</td>
+            <td class="text-center align-middle">{{ formatDate(product.created_at) }}</td>
             <td class="text-center align-middle">
                 <div>
                     <button class="btn btn-warning edit" @click="editProd(product.id)"><i class="fa fa-pencil"></i></button>
@@ -51,6 +52,7 @@
   </div>
 </template>
 <script>
+import moment from 'moment';
 import ModalProduct from './ModalProducts.vue';
 export default {
     name: 'cate-table',
@@ -156,6 +158,9 @@ export default {
               });
             }
           })
+        },
+        formatDate(timestamp){
+          return moment(timestamp).format('l');
         },
     },
     mounted(){

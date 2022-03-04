@@ -10,10 +10,8 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $model_products = new Product();
-        $products = $model_products->list();
-        $model_categories = new Category();
-        $categories = $model_categories->list();
+        $products = Product::with('category')->get();
+        $categories = Category::all();
         //load datable scripts
         loadDatatable();
 

@@ -73,27 +73,27 @@ export default {
     },
     methods:{
         defineRole(role){
-            switch (role) {
-                case "1" || 1:
+            switch (parseInt(role)) {
+                case 1:
                     return 'Admin';
-                case "2" || 2:
+                case 2:
                     return 'Assistant'
-                case "3" || 3:
+                case 3:
                     return 'Seller';
             }
         },
         defineState(state){
-            switch (state) {
-                case "1":
+            switch (parseInt(state)) {
+                case 1:
                     return 'Active';
-                case "0":
+                case 0:
                     return 'Disabled';
             }
         },
         StateClass(state){
-          if(state == "1"){
+          if(parseInt(state) == "1"){
             return "btn btn-success btn-sm"
-          }else if(state == "0"){
+          }else if(parseInt(state) == "0"){
             return "btn btn-danger btn-sm"
           }
         },

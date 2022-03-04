@@ -6,6 +6,7 @@ Vue.config.productionTip = false;
 
 window.axios = require('axios');
 window.Vue = require("vue/dist/vue");
+window.moment = require('moment');
 
 Vue.use(VueSweetalert2);
 

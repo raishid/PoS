@@ -15,17 +15,19 @@ class LoginController extends Controller
     public function login()
     {
         $data = input()->all();
-        $user = new User();
-        $result = $user->verifyLogin($data['username'], $data['password'], ['username', 'password']);
+        $user = User::where('username', '=', $data['username'])->get();
 
-        if($result){
-            $_SESSION['auth'] = $result;
-            $user->last_login = date("Y-m-d H:i:s");
-            $user->update($result->id);
-            return json_encode(array('status' => true, 'response' => $result));
-        }else{
-            return json_encode(array('status' => false, 'response' => ''));
+        if(count($user) > 0){
+            $user = $user[0];
+            if(password_verify($data['password'], $user->password)){
+                $_SESSION['auth'] = $user;
+                $user->last_login = date("Y-m-d H:i:s");
+                $user->save();
+                return json_encode(array('status' => true, 'response' => $user));
+            }
         }
+
+        return json_encode(array('status' => false, 'response' => ''));
 
     }
 

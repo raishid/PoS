@@ -2,10 +2,16 @@
 
 namespace App\Models;
 
-use App\Model;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
     protected $table = 'products';
-    protected $fillable = ['sku', 'name', 'description', 'image', 'stock', 'cost', 'price', 'created_at', 'updated_at'];
+    protected $fillable = ['sku', 'name', 'description', 'image', 'stock', 'cost', 'price'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }

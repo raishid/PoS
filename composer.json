@@ -17,6 +17,8 @@
     ],
     "require": {
         "vlucas/phpdotenv": "^5.4",
-        "pecee/simple-router": "4.3.7.2"
+        "pecee/simple-router": "4.3.7.2",
+        "illuminate/database": "^8.83",
+        "wanfeiyy/dd": "^1.0"
     }
 }
