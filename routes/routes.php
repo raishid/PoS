@@ -1,13 +1,15 @@
 <?php
 
-use App\Controllers\CategoryController;
+use App\Middleware;
 use Pecee\Http\Request;
 use App\Controllers\HomeController;
-use App\Controllers\LoginController;
-use App\Controllers\ProductController;
 use App\Controllers\UserController;
-use App\Middleware;
+use App\Controllers\LoginController;
 use Pecee\SimpleRouter\SimpleRouter;
+use App\Controllers\ClientController;
+use App\Controllers\ProductController;
+use App\Controllers\CategoryController;
+use App\Controllers\SaleController;
 
 SimpleRouter::group(['middleware' => Middleware::class], function () {
     //HOME 
@@ -31,6 +33,15 @@ SimpleRouter::group(['middleware' => Middleware::class], function () {
     SimpleRouter::post('/products/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
     SimpleRouter::post('/products/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
     SimpleRouter::get('/api/products/all/page/{page}', [ProductController::class, 'products'])->name('product.products');
+
+    //CLIENTS
+    SimpleRouter::get('/customers', [ClientController::class, 'index'])->name('customer.index');
+    SimpleRouter::post('/customers/create', [ClientController::class, 'create'])->name('customer.create');
+    SimpleRouter::post('/customers/edit/{id}', [ClientController::class, 'edit'])->name('customer.edit');
+    SimpleRouter::post('/customers/delete/{id}', [ClientController::class, 'delete'])->name('customer.delete');
+
+    //SALES
+    SimpleRouter::get('/sales', [SaleController::class, 'index'])->name('sales.index');
 });
 
 

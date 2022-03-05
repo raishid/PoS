@@ -54,7 +54,7 @@ class ProductController extends Controller
         $product = new Product();
         $product->sku = $data['sku'];
         $product->name = $data['name'];
-        $product->description = isset($data['description']) ? $data['description'] : null;
+        $product->description = !empty($data['description']) ? $data['description'] : null;
         $product->category_id = $data['category'];
         $product->image = $relative_path;
         $product->stock = $data['stock'];

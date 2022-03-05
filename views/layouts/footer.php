@@ -1,5 +1,5 @@
 <footer class="main-footer d-flex justify-content-center flex-column flex-md-row">
-    <strong class="text-center">Copyright &copy; <?=date('Y')?> <a href="#">federicodeveloper.com</a></strong>
+    <strong class="text-center">Copyright &copy; <?=date('Y')?> <a href="https://federicodeveloper.com" target="_blank">federicodeveloper.com</a></strong>
     <span class="text-center">. All rights reserved.</span>
 </footer>
 

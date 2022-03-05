@@ -22,6 +22,9 @@ Vue.component('cate-modal', require('./components/categories/ModalCategories.vue
 //products components
 Vue.component('prod-table', require('./components/products/TableProducts.vue').default);
 Vue.component('prod-modal', require('./components/products/ModalProducts.vue').default);
+//customers components
+Vue.component('customer-table', require('./components/customers/TableCustomers.vue').default);
+Vue.component('customer-modal', require('./components/customers/ModalCustomers.vue').default);
 
 const app = new Vue({
     el: '#app'

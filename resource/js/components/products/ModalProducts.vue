@@ -8,7 +8,7 @@
   >
     <div class="modal-dialog">
       <div class="modal-content">
-        <form role="form" v-on:submit.prevent="handleSubmitProduct" method="POST" enctype="multipart/form-data">
+        <form role="form" v-on:submit.prevent="handleSubmitProduct" autocomplete="off" method="POST" enctype="multipart/form-data">
           <div class="modal-header">
             <h5 class="modal-title" id="ProductCreateModal">Add New Product</h5>
             <button

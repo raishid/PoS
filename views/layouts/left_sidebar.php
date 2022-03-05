@@ -35,24 +35,25 @@
             <a href="<?=url('product.index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'product.index' ? 'active' : ''?>"><i class="fa fa-store"></i><p class="px-1">Products</p></a>
           </li>
           <li class="nav-item menu-open">
-            <a href="" class="nav-link"><i class="fa fa-address-book"></i><p class="px-1">Customers</p></a>
+            <a href="<?=url('customer.index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'customer.index' ? 'active' : ''?>"><i class="fa fa-address-book"></i><p class="px-1">Customers</p></a>
           </li>
-          <li class="nav-item has-treeview">
+          
+          <li class="nav-item has-treeview <?=preg_match("/sales./i", request()->getLoadedRoute()->getName()) ? 'menu-is-opening menu-open' : ''?>">
             <a href="" class="nav-link">
               <i class="fas fa-bars"></i>
               <p class="px-1">Sales <i class="right fas fa-angle-left"></i></p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="<?=url('sales.index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'sales.index' ? 'active' : ''?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage Sales</p>
                 </a>
-                <a href="#" class="nav-link active">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Sell</p>
                 </a>
-                <a href="#" class="nav-link active">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Sales report</p>
                 </a>

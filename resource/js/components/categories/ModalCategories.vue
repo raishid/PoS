@@ -8,7 +8,7 @@
   >
     <div class="modal-dialog">
       <div class="modal-content">
-        <form role="form" v-on:submit.prevent="handleSubmitCategory" method="POST" enctype="multipart/form-data">
+        <form role="form" v-on:submit.prevent="handleSubmitCategory" autocomplete="off" method="POST" enctype="multipart/form-data">
           <div class="modal-header">
             <h5 class="modal-title" id="CategoryCreateModal">Add New Category</h5>
             <button
@@ -82,7 +82,7 @@
 </template>
 <script>
 export default {
-  name: "u-modal",
+  name: "cate-modal",
   props: {
     csrf_token: {
       required: true,
