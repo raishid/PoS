@@ -15734,13 +15734,13 @@
             sku: void 0,
             name: void 0,
             description: void 0,
-            image: "/images/products/boxed-bg.jpg",
+            image: "/assets/images/products/boxed-bg.jpg",
             url_image: "/assets/images/products/boxed-bg.jpg",
             category: void 0,
             stock: void 0,
             cost: void 0,
             price: void 0,
-            date: void 0
+            earning: 40
           };
         },
         methods: {
@@ -15750,6 +15750,9 @@
             } else {
               this.$refs.percent.checked = true;
             }
+          },
+          priceAuto() {
+            this.price = this.$refs.percent.checked ? Number(this.cost) * Number(this.earning) / 100 + Number(this.cost) : Number(this.price);
           },
           handleSubmitProduct() {
             const form_data = new FormData();
@@ -15771,9 +15774,9 @@
                 },
                 data: form_data
               }).then((response) => {
-                const { data: { status, response: resp } } = response;
+                const { data: { status, response: [product] } } = response;
                 if (status) {
-                  this.$emit("editData", JSON.parse(resp));
+                  this.$emit("editData", product);
                   this.$refs.closeModal.click();
                   this.reset();
                 }
@@ -15787,16 +15790,16 @@
                 },
                 data: form_data
               }).then((response) => {
-                const { data: { status, response: resp } } = response;
+                const { data: { status, response: [product] } } = response;
                 if (status) {
                   this.$refs.closeModal.click();
-                  this.$emit("mutateProd", JSON.parse(resp));
+                  this.$emit("mutateProd", product);
                   this.reset();
                 } else {
                   this.$swal.fire({
                     icon: "error",
                     title: "Error.",
-                    text: resp
+                    text: response.data.response
                   });
                 }
               });
@@ -15817,13 +15820,22 @@
             return this.url_image = URL.createObjectURL(files[0]);
           },
           reset() {
-            this.id_product = void 0, this.sku = void 0, this.name = void 0, this.description = void 0, this.image = "/assets/images/products/boxed-bg.jpg", this.url_image = this.image, this.category = void 0, this.stock = void 0, this.cost = void 0, this.price = void 0, this.date = void 0, this.edit = false;
+            this.id_product = void 0, this.sku = void 0, this.name = void 0, this.description = void 0, this.image = "/assets/images/products/boxed-bg.jpg", this.url_image = this.image, this.category = void 0, this.stock = void 0, this.cost = void 0, this.price = void 0, this.earning = 40;
+            this.edit = false;
           },
           editProd(data_edit) {
             this.edit = true;
-            this.id_category = data_edit.id;
+            this.id_product = data_edit.id;
+            this.sku = data_edit.sku;
             this.name = data_edit.name;
             this.description = data_edit.description;
+            this.image = data_edit.image;
+            this.url_image = data_edit.image;
+            this.category = data_edit.category.id;
+            this.stock = data_edit.stock;
+            this.cost = data_edit.cost;
+            this.price = data_edit.price;
+            this.earning = this.price / this.cost * 100;
           }
         }
       };
@@ -16076,6 +16088,7 @@
                             },
                             domProps: { value: _vm.cost },
                             on: {
+                              change: _vm.priceAuto,
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return;
@@ -16127,7 +16140,7 @@
                             _c("div", { staticClass: "form-group icheck-primary" }, [
                               _c("input", {
                                 ref: "percent",
-                                attrs: { type: "checkbox" },
+                                attrs: { type: "checkbox", checked: "" },
                                 on: { click: _vm.usePercentChange }
                               }),
                               _vm._v(" "),
@@ -16141,7 +16154,34 @@
                             ])
                           ]),
                           _vm._v(" "),
-                          _vm._m(7)
+                          _c("div", { staticClass: "col-sm-6 p-md-0" }, [
+                            _c("div", { staticClass: "input-group input-group-lg" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.earning,
+                                    expression: "earning"
+                                  }
+                                ],
+                                staticClass: "form-control fs-7",
+                                attrs: { type: "number", min: "0" },
+                                domProps: { value: _vm.earning },
+                                on: {
+                                  change: _vm.priceAuto,
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return;
+                                    }
+                                    _vm.earning = $event.target.value;
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm._m(7)
+                            ])
+                          ])
                         ])
                       ])
                     ]),
@@ -16250,17 +16290,8 @@
           var _vm = this;
           var _h = _vm.$createElement;
           var _c = _vm._self._c || _h;
-          return _c("div", { staticClass: "col-sm-6 p-md-0" }, [
-            _c("div", { staticClass: "input-group input-group-lg" }, [
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "number", min: "0", value: "40", required: "" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "input-group-text" }, [
-                _c("i", { staticClass: "fa fa-percent fs-7" })
-              ])
-            ])
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-percent fs-7" })
           ]);
         }
       ];
@@ -16268,7 +16299,7 @@
       __vue_inject_styles__6 = function(inject) {
         if (!inject)
           return;
-        inject("data-v-9c4a5a60_0", { source: "\n.fs-7{\n  font-size: 0.8rem !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\products\\ModalProducts.vue"], "names": [], "mappings": ";AAiVA;EACA,4BAAA;AACA", "file": "ModalProducts.vue", "sourcesContent": [`<template>\r
+        inject("data-v-2452da26_0", { source: "\n.fs-7{\n  font-size: 0.8rem !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\products\\ModalProducts.vue"], "names": [], "mappings": ";AAiWA;EACA,4BAAA;AACA", "file": "ModalProducts.vue", "sourcesContent": [`<template>\r
   <div\r
     class="modal fade"\r
     id="create-modal-product"\r
@@ -16399,6 +16430,7 @@
                       required\r
                       min="0.01"\r
                       step="0.01"\r
+                      @change="priceAuto"\r
                     />\r
                   </div>\r
                 </div>\r
@@ -16425,7 +16457,7 @@
 \r
                     <div class="col-sm-6">\r
                       <div class="form-group icheck-primary">\r
-                          <input type="checkbox" ref="percent" @click="usePercentChange">\r
+                          <input type="checkbox" ref="percent" @click="usePercentChange" checked>\r
                         <label for="use-percent" class="fs-7" @click="usePercentChange">\r
                           Use percentage\r
                         </label>\r
@@ -16434,7 +16466,7 @@
                     \r
                     <div class="col-sm-6 p-md-0">\r
                       <div class="input-group input-group-lg">\r
-                        <input type="number" class="form-control" min="0" value="40" required>\r
+                        <input type="number" class="form-control fs-7" min="0" v-model="earning" @change="priceAuto">\r
                         <span class="input-group-text"><i class="fa fa-percent fs-7"></i></span>\r
                       </div>\r
                     </div>\r
@@ -16499,13 +16531,13 @@ export default {\r
       sku: undefined,\r
       name: undefined,\r
       description: undefined,\r
-      image: "/images/products/boxed-bg.jpg",\r
+      image: "/assets/images/products/boxed-bg.jpg",\r
       url_image: "/assets/images/products/boxed-bg.jpg",\r
       category: undefined,\r
       stock: undefined,\r
       cost: undefined,\r
       price: undefined,\r
-      date: undefined,\r
+      earning: 40,\r
     };\r
   },\r
   methods: {\r
@@ -16515,6 +16547,13 @@ export default {\r
       }else{\r
         this.$refs.percent.checked = true;\r
       }\r
+    },\r
+    priceAuto(){\r
+      this.price = (this.$refs.percent.checked) \r
+                  ?\r
+              ((Number(this.cost) * Number(this.earning)) / 100) + Number(this.cost)\r
+                  :\r
+              Number(this.price);\r
     },\r
     handleSubmitProduct() {\r
       const form_data = new FormData();\r
@@ -16537,9 +16576,9 @@ export default {\r
             },\r
             data: form_data\r
           }).then(response => {\r
-            const { data: { status, response:resp } } = response;\r
+            const { data: { status, response:[ product ] } } = response;\r
             if(status){\r
-              this.$emit('editData', JSON.parse(resp))\r
+              this.$emit('editData', product);\r
               this.$refs.closeModal.click();\r
               this.reset();\r
             }\r
@@ -16553,16 +16592,16 @@ export default {\r
             },\r
             data: form_data\r
           }).then(response =>{\r
-            const { data: { status, response:resp } } = response;\r
+            const { data: { status, response: [ product ] } } = response;\r
             if(status){\r
               this.$refs.closeModal.click();\r
-              this.$emit('mutateProd', JSON.parse(resp));\r
+              this.$emit('mutateProd', product);\r
               this.reset();\r
             }else{\r
               this.$swal.fire({\r
                 icon: 'error',\r
                 title: 'Error.',\r
-                text: resp,\r
+                text: response.data.response,\r
               });\r
             }\r
           })\r
@@ -16592,14 +16631,22 @@ export default {\r
       this.stock = undefined,\r
       this.cost = undefined,\r
       this.price = undefined,\r
-      this.date = undefined,\r
+      this.earning = 40;\r
       this.edit = false;\r
     },\r
     editProd(data_edit) {\r
       this.edit = true;\r
-      this.id_category = data_edit.id;\r
+      this.id_product = data_edit.id;\r
+      this.sku = data_edit.sku;\r
       this.name = data_edit.name;\r
       this.description = data_edit.description;\r
+      this.image = data_edit.image;\r
+      this.url_image = data_edit.image;\r
+      this.category = data_edit.category.id;\r
+      this.stock = data_edit.stock;\r
+      this.cost = data_edit.cost;\r
+      this.price = data_edit.price;\r
+      this.earning = (this.price / this.cost) * 100;\r
     },\r
   },\r
 };\r
