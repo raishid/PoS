@@ -30,6 +30,7 @@ SimpleRouter::group(['middleware' => Middleware::class], function () {
     SimpleRouter::post('/products/create', [ProductController::class, 'create'])->name('product.create');
     SimpleRouter::post('/products/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
     SimpleRouter::post('/products/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+    SimpleRouter::get('/api/products/all/page/{page}', [ProductController::class, 'products'])->name('product.products');
 });
 
 

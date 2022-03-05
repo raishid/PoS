@@ -113,7 +113,7 @@ export default {
           }).then(response => {
             const { data: { status, response:resp } } = response;
             if(status){
-              this.$emit('editData', JSON.parse(resp))
+              this.$emit('editData', resp);
               this.$refs.closeModal.click();
               this.reset();
             }
@@ -130,7 +130,7 @@ export default {
             const { data: { status, response:resp } } = response;
             if(status){
               this.$refs.closeModal.click();
-              this.$emit('mutateCate', JSON.parse(resp));
+              this.$emit('mutateCate', resp);
               this.reset();
             }else{
               this.$swal.fire({

@@ -23,14 +23,15 @@
         <tbody>
           <tr v-for="(product, index) in productsParser" :key="index">
             <td class="text-center align-middle">{{ index + 1}}</td>
+            <td class="text-center align-middle">{{ product.sku }}</td>
             <td class="text-center align-middle">{{ product.name}}</td>
             <td class="text-center align-middle">{{ product.description }}</td>
             <td class="text-center align-middle"><img :src="prodPic(product.image)" class="img-thumbnail rounded" width="50" /></td>
-            <td class="text-center align-middle">{{ product.category }}</td>
+            <td class="text-center align-middle">{{ product.category.name }}</td>
             <td class="text-center align-middle">{{ product.stock }}</td>
             <td class="text-center align-middle">{{ product.cost }}</td>
             <td class="text-center align-middle">{{ product.price }}</td>
-            <td class="text-center align-middle">{{ product.created_at }}</td>
+            <td class="text-center align-middle">{{ formatDate(product.created_at) }}</td>
             <td class="text-center align-middle">
                 <div>
                     <button class="btn btn-warning edit" @click="editProd(product.id)"><i class="fa fa-pencil"></i></button>
@@ -51,6 +52,7 @@
   </div>
 </template>
 <script>
+import moment from 'moment';
 import ModalProduct from './ModalProducts.vue';
 export default {
     name: 'cate-table',
@@ -77,10 +79,37 @@ export default {
             productsParser: JSON.parse(this.products),
             datatable: undefined,
             editB: false,
-            categoriesParser: JSON.parse(this.categories)
+            categoriesParser: JSON.parse(this.categories),
+            getProduct: true,
+            mutable_data: undefined,
         }
     },
     methods:{
+      dataProducts(page=2){
+           axios({
+             method:'get',
+             url: `/api/products/all/page/${page}`,
+             data: {
+               csrf_token: this.csrf_token,
+             }
+           }).then(response => {
+              const { data: { products } } = response;
+              if(!response.data.status){
+                this.getProduct = false;
+                this.mutable_data = undefined;
+              }
+              if(this.getProduct){
+                this.mutable_data = response.data; 
+                products.map((value, index) => {
+                  this.productsParser.push(value);
+               });
+              }
+           }).then(() =>{
+             if(this.getProduct){
+               this.dataProducts(this.mutable_data.next_page);
+             }
+           })
+        },
         mountedDatatable(){
           return this.datatable = $('#datatable-products').DataTable({
                                           responsive: true,
@@ -157,9 +186,13 @@ export default {
             }
           })
         },
+        formatDate(timestamp){
+          return moment(timestamp).format('l');
+        },
     },
     mounted(){
       this.mountedDatatable();
+      this.dataProducts();
     }
     
 };

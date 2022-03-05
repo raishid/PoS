@@ -1,11 +1,8 @@
 <?php
 
-use Dotenv\Dotenv;
-
 /* Global vars */
 
 $load_datatable = false;
-define('ENV', Dotenv::createImmutable(ROOT_PATH)->load());
 
 /*    */
 
@@ -34,14 +31,6 @@ function loadDatatable(){
 function isLoadDatatable(){
     global $load_datatable;
     return $load_datatable;
-}
-
-function Env(string $arg){
-    try{
-        return ENV[$arg];
-    }catch(Exception $e){
-        die($e->getMessage());
-    }
 }
 
 function assets($path = ''){

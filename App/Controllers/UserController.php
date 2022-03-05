@@ -9,8 +9,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $model_user = new User();
-        $users = $model_user->list();
+        $users = User::all();
 
         //load datable scripts
         loadDatatable();
@@ -50,10 +49,10 @@ class UserController extends Controller
         $result = $user->save();
 
         if(!$result){
-            return response()->json(array('status' => false, "response" => $user->exception));
+            return response()->json(array('status' => false, "response" => $result));
         }
 
-        return response()->json(array('status' => true, 'response' => json_encode($result)));
+        return response()->json(array('status' => true, 'response' => $user));
 
     }
 
@@ -64,7 +63,7 @@ class UserController extends Controller
         }
         $data = input()->all();
         $image = input()->file('pic');
-        $user = new User();
+        $user = User::find($id);
 
         if(isset($image)){
             if($image->getMime() === 'image/jpeg' || $image->getMime() === 'image/png' || $image->getMime() === 'image/jpg') 
@@ -82,13 +81,13 @@ class UserController extends Controller
         $user->username = $data['username'];
         $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
         $user->role = $data['role'];
-        $result = $user->update($id);
+        $result = $user->save();
 
         if(!$result){
             return response()->json(array('status' => false, "response" => $user->exception));
         }
 
-        return response()->json(array('status' => true, 'response' => $result));
+        return response()->json(array('status' => true, 'response' => $user));
 
     }
     
@@ -100,24 +99,23 @@ class UserController extends Controller
 
         $data = input()->all();
 
-        $user = new User();
+        $user = User::find($id);
         $user->state = $data['new_state'];
-        $result = $user->update($id);
+        $result = $user->save();
 
         if(!$result){
-            return response()->json(array('status' => false, "response" => $user->exception));
+            return response()->json(array('status' => false, "response" => $result));
         }
 
-        return response()->json(array('status' => true, 'response' => $result));
+        return response()->json(array('status' => true, 'response' => $user));
     }
 
     public function delete($id)
     {
-        $user = new User();
-        $result = $user->delete($id);
+        $result = User::destroy($id);
 
         if(!$result){
-            return response()->json(array('status' => false, "response" => $user->exception));
+            return response()->json(array('status' => false, "response" => $result));
         }
 
         return response()->json(array('status' => true, 'response' => $result));

@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
-use App\Model;
+use Illuminate\Database\Eloquent\Model;
+
+
 
 class User extends Model
 {
     protected $table = 'users';
-    protected $fillable = ['name', 'username', 'password', 'role', 'pic', 'state', 'last_login', 'date'];
+    protected $fillable = ['name', 'username', 'role', 'pic', 'state', 'last_login'];
+    public $timestamps = false;
+
+    protected $hidden = ['password'];
 
 }

@@ -2,6 +2,7 @@
 
 use Pecee\Http\Middleware\BaseCsrfVerifier;
 use Pecee\SimpleRouter\SimpleRouter;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class app
 {
@@ -10,6 +11,8 @@ class app
         require_once 'App/Helpers/helpers.php';
         require_once 'App/Helpers/routingHelpers.php';
         require_once 'routes/routes.php';
+
+        $this->Eloquent();
 
         startSession();
         
@@ -20,4 +23,19 @@ class app
 
         end_flush();
     }
+
+    public function Eloquent()
+    {        
+        $capsule = new Capsule();
+        $capsule->addConnection([
+        "driver"    =>      "mysql",
+        "host"      =>      "127.0.0.1",
+        "database"  =>      "pos",
+        "username"  =>      "root",
+        "password"  =>      ""
+        ]);
+        $capsule->setAsGlobal();
+        $capsule->bootEloquent();
+    }
+
 }

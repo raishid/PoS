@@ -129,6 +129,7 @@
                       required
                       min="0.01"
                       step="0.01"
+                      @change="priceAuto"
                     />
                   </div>
                 </div>
@@ -155,8 +156,8 @@
 
                     <div class="col-sm-6">
                       <div class="form-group icheck-primary">
-                          <input type="checkbox" id="use-percent" checked>
-                        <label for="use-percent" class="fs-7">
+                          <input type="checkbox" ref="percent" @click="usePercentChange" checked>
+                        <label for="use-percent" class="fs-7" @click="usePercentChange">
                           Use percentage
                         </label>
                       </div>
@@ -164,7 +165,7 @@
                     
                     <div class="col-sm-6 p-md-0">
                       <div class="input-group input-group-lg">
-                        <input type="number" class="form-control" min="0" value="40" required>
+                        <input type="number" class="form-control fs-7" min="0" v-model="earning" @change="priceAuto">
                         <span class="input-group-text"><i class="fa fa-percent fs-7"></i></span>
                       </div>
                     </div>
@@ -229,16 +230,30 @@ export default {
       sku: undefined,
       name: undefined,
       description: undefined,
-      image: "/images/products/boxed-bg.jpg",
+      image: "/assets/images/products/boxed-bg.jpg",
       url_image: "/assets/images/products/boxed-bg.jpg",
       category: undefined,
       stock: undefined,
       cost: undefined,
       price: undefined,
-      date: undefined,
+      earning: 40,
     };
   },
   methods: {
+    usePercentChange(){
+      if(this.$refs.percent.checked){
+        this.$refs.percent.checked = false;
+      }else{
+        this.$refs.percent.checked = true;
+      }
+    },
+    priceAuto(){
+      this.price = (this.$refs.percent.checked) 
+                  ?
+              ((Number(this.cost) * Number(this.earning)) / 100) + Number(this.cost)
+                  :
+              Number(this.price);
+    },
     handleSubmitProduct() {
       const form_data = new FormData();
       form_data.append("csrf_token", this.csrf_token);
@@ -260,9 +275,9 @@ export default {
             },
             data: form_data
           }).then(response => {
-            const { data: { status, response:resp } } = response;
+            const { data: { status, response:[ product ] } } = response;
             if(status){
-              this.$emit('editData', JSON.parse(resp))
+              this.$emit('editData', product);
               this.$refs.closeModal.click();
               this.reset();
             }
@@ -276,16 +291,16 @@ export default {
             },
             data: form_data
           }).then(response =>{
-            const { data: { status, response:resp } } = response;
+            const { data: { status, response: [ product ] } } = response;
             if(status){
               this.$refs.closeModal.click();
-              this.$emit('mutateProd', JSON.parse(resp));
+              this.$emit('mutateProd', product);
               this.reset();
             }else{
               this.$swal.fire({
                 icon: 'error',
                 title: 'Error.',
-                text: resp,
+                text: response.data.response,
               });
             }
           })
@@ -315,14 +330,22 @@ export default {
       this.stock = undefined,
       this.cost = undefined,
       this.price = undefined,
-      this.date = undefined,
+      this.earning = 40;
       this.edit = false;
     },
     editProd(data_edit) {
       this.edit = true;
-      this.id_category = data_edit.id;
+      this.id_product = data_edit.id;
+      this.sku = data_edit.sku;
       this.name = data_edit.name;
       this.description = data_edit.description;
+      this.image = data_edit.image;
+      this.url_image = data_edit.image;
+      this.category = data_edit.category.id;
+      this.stock = data_edit.stock;
+      this.cost = data_edit.cost;
+      this.price = data_edit.price;
+      this.earning = (this.price / this.cost) * 100;
     },
   },
 };
