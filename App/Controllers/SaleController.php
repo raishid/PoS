@@ -13,4 +13,9 @@ class SaleController extends Controller
 
         return $this->view->loadView('sales.index', true, []);
     }
+
+    public function create()
+    {
+        return $this->view->loadView('sales.create', true, []);
+    }
 }

@@ -25,6 +25,8 @@ Vue.component('prod-modal', require('./components/products/ModalProducts.vue').d
 //customers components
 Vue.component('customer-table', require('./components/customers/TableCustomers.vue').default);
 Vue.component('customer-modal', require('./components/customers/ModalCustomers.vue').default);
+//sales components
+Vue.component('sales-table', require('./components/sales/TableSales.vue').default);
 
 const app = new Vue({
     el: '#app'

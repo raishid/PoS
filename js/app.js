@@ -16727,7 +16727,7 @@ export default {\r
       import_moment = __toESM(require_moment());
       init_ModalProducts();
       __vue_script__7 = {
-        name: "cate-table",
+        name: "prod-table",
         props: {
           products: {
             type: String,
@@ -29025,6 +29025,303 @@ export default {\r
     }
   });
 
+  // resource/js/components/sales/TableSales.vue
+  var TableSales_exports = {};
+  __export(TableSales_exports, {
+    default: () => TableSales_default
+  });
+  function __vue_normalize__10(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script === "function" ? script.options : script) || {};
+    component2.__file = "resource\\js\\components\\sales\\TableSales.vue";
+    if (!component2.render) {
+      component2.render = template.render;
+      component2.staticRenderFns = template.staticRenderFns;
+      component2._compiled = true;
+      if (functional)
+        component2.functional = true;
+    }
+    component2._scopeId = scope;
+    if (false) {
+      let hook;
+      if (false) {
+        hook = function(context) {
+          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+            context = __VUE_SSR_CONTEXT__;
+          }
+          if (style) {
+            style.call(this, createInjectorSSR(context));
+          }
+          if (context && context._registeredComponents) {
+            context._registeredComponents.add(moduleIdentifier);
+          }
+        };
+        component2._ssrRegister = hook;
+      } else if (style) {
+        hook = shadowMode ? function(context) {
+          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+        } : function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+      if (hook !== void 0) {
+        if (component2.functional) {
+          const originalRender = component2.render;
+          component2.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context);
+          };
+        } else {
+          const existing = component2.beforeCreate;
+          component2.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+    return component2;
+  }
+  var import_moment3, __vue_script__10, __vue_render__10, __vue_staticRenderFns__10, __vue_inject_styles__10, __vue_scope_id__10, __vue_module_identifier__10, __vue_is_functional_template__10, __vue_component__10, TableSales_default;
+  var init_TableSales = __esm({
+    "resource/js/components/sales/TableSales.vue"() {
+      import_moment3 = __toESM(require_moment());
+      __vue_script__10 = {
+        name: "sales-table",
+        props: {
+          sales: {
+            type: String,
+            required: true
+          },
+          csrf_token: {
+            type: String,
+            required: true
+          }
+        },
+        data() {
+          return {
+            u_search: "",
+            salesParser: JSON.parse(this.sales),
+            datatable: void 0,
+            editB: false
+          };
+        },
+        methods: {
+          dataProducts(page = 2) {
+            axios({
+              method: "get",
+              url: `/api/products/all/page/${page}`,
+              data: {
+                csrf_token: this.csrf_token
+              }
+            }).then((response) => {
+              const { data: { products } } = response;
+              if (!response.data.status) {
+                this.getProduct = false;
+                this.mutable_data = void 0;
+              }
+              if (this.getProduct) {
+                this.mutable_data = response.data;
+                products.map((value, index) => {
+                  this.productsParser.push(value);
+                });
+              }
+            }).then(() => {
+              if (this.getProduct) {
+                this.dataProducts(this.mutable_data.next_page);
+              }
+            });
+          },
+          mountedDatatable() {
+            return this.datatable = $("#datatable-products").DataTable({
+              responsive: true,
+              destroy: true,
+              lengthChange: false,
+              autoWidth: false,
+              rowReorder: {
+                selector: "td:nth-child(2)"
+              }
+            });
+          },
+          mutateData(data) {
+            this.productsParser.push(data);
+            new Promise((res) => {
+              this.datatable.destroy();
+              res(true);
+            }).then(() => {
+              this.mountedDatatable();
+            });
+          },
+          prodPic(image) {
+            if (image) {
+              return image;
+            } else {
+              return "/assets/images/products/boxed-bg.jpg";
+            }
+          },
+          editData(data) {
+            const product = this.productsParser.find((u) => u.id === data.id);
+            product.sku = data.sku;
+            product.name = data.name;
+            product.description = data.description;
+            product.image = data.image;
+            product.stock = data.stock;
+            product.cost = data.cost;
+            product.price = data.price;
+          },
+          editProd(id) {
+            const data = this.productsParser.find((u) => u.id === id);
+            this.$refs.modal.editProd(data);
+            $("#modal-product-button").click();
+          },
+          deleteProd(id) {
+            this.$swal.fire({
+              title: "Are you sure?",
+              text: "do you want to delete this product?",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                axios({
+                  method: "post",
+                  url: `/products/delete/${id}`,
+                  data: {
+                    csrf_token: this.csrf_token
+                  }
+                }).then((response) => {
+                  const { data: { status } } = response;
+                  if (status) {
+                    this.$swal.fire("Deleted!", "the product was deleted.", "success");
+                    this.productsParser.splice(this.productsParser.findIndex((u) => u.id === id), 1);
+                  }
+                });
+              }
+            });
+          },
+          formatDate(timestamp) {
+            return (0, import_moment3.default)(timestamp).format("l");
+          }
+        },
+        mounted() {
+          this.mountedDatatable();
+        }
+      };
+      __vue_render__10 = function() {
+        var _vm = this;
+        var _h = _vm.$createElement;
+        var _c = _vm._self._c || _h;
+        return _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", {
+              staticClass: "table table-striped",
+              attrs: { id: "datatable-products" }
+            }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("tbody", _vm._l(_vm.salesParser, function(sale, index) {
+                return _c("tr", { key: index }, [
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(index + 1))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(sale.invoice))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(sale.customer.name))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(sale.seller.name))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(sale.method))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(sale.total))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(_vm.formatDate(sale.created_at)))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _c("div", [
+                      _c("button", {
+                        staticClass: "btn btn-info edit",
+                        on: {
+                          click: function($event) {
+                            return _vm.editProd(sale.id);
+                          }
+                        }
+                      }, [_c("i", { staticClass: "fa fa-print" })]),
+                      _vm._v(" "),
+                      _c("button", {
+                        staticClass: "btn btn-danger delete",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteProd(sale.id);
+                          }
+                        }
+                      }, [_c("i", { staticClass: "fa fa-times" })])
+                    ])
+                  ])
+                ]);
+              }), 0)
+            ])
+          ])
+        ]);
+      };
+      __vue_staticRenderFns__10 = [
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title" }, [_vm._v("List sales")])
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("thead", [
+            _c("tr", [
+              _c("th", { staticClass: "text-center" }, [_vm._v("#")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Invoice")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Customer")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Seller")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Method")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Total")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center" }, [
+                _vm._v("Date/th>\n          ")
+              ]),
+              _c("th", { staticClass: "text-center all" }, [_vm._v("Action")])
+            ])
+          ]);
+        }
+      ];
+      __vue_render__10._withStripped = true;
+      __vue_inject_styles__10 = void 0;
+      __vue_scope_id__10 = void 0;
+      __vue_module_identifier__10 = void 0;
+      __vue_is_functional_template__10 = false;
+      __vue_component__10 = /* @__PURE__ */ __vue_normalize__10({ render: __vue_render__10, staticRenderFns: __vue_staticRenderFns__10 }, __vue_inject_styles__10, __vue_script__10, __vue_scope_id__10, __vue_is_functional_template__10, __vue_module_identifier__10, false, void 0, void 0, void 0);
+      TableSales_default = __vue_component__10;
+    }
+  });
+
   // resource/js/app.js
   var import_vue2 = __toESM(require_vue());
   var import_vue_sweetalert2 = __toESM(require_vue_sweetalert_umd());
@@ -29042,6 +29339,7 @@ export default {\r
   import_vue2.default.component("prod-modal", (init_ModalProducts(), __toCommonJS(ModalProducts_exports)).default);
   import_vue2.default.component("customer-table", (init_TableCustomers(), __toCommonJS(TableCustomers_exports)).default);
   import_vue2.default.component("customer-modal", (init_ModalCustomers(), __toCommonJS(ModalCustomers_exports)).default);
+  import_vue2.default.component("sales-table", (init_TableSales(), __toCommonJS(TableSales_exports)).default);
   var app = new import_vue2.default({
     el: "#app"
   });

@@ -42,6 +42,7 @@ SimpleRouter::group(['middleware' => Middleware::class], function () {
 
     //SALES
     SimpleRouter::get('/sales', [SaleController::class, 'index'])->name('sales.index');
+    SimpleRouter::get('/sales/create', [SaleController::class, 'create'])->name('sales.create');
 });
 
 

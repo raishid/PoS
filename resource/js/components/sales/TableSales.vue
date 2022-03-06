@@ -1,63 +1,50 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <h3 class="card-title">List products</h3>
+      <h3 class="card-title">List sales</h3>
     </div>
     <div class="card-body">
       <table class="table table-striped" id="datatable-products">
         <thead>
           <tr>
             <th class="text-center">#</th>
-            <th class="text-center">SKU</th>
-            <th class="text-center">Name</th>
-            <th class="text-center">Description</th>
-            <th class="text-center">Image</th>
-            <th class="text-center">Category</th>
-            <th class="text-center">Stock</th>
-            <th class="text-center">Cost price</th>
-            <th class="text-center">Sale price</th>
-            <th class="text-center">Date</th>
+            <th class="text-center">Invoice</th>
+            <th class="text-center">Customer</th>
+            <th class="text-center">Seller</th>
+            <th class="text-center">Method</th>
+            <th class="text-center">Total</th>
+            <th class="text-center">Date/th>
             <th class="text-center all">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(product, index) in productsParser" :key="index">
+          <tr v-for="(sale, index) in salesParser" :key="index">
             <td class="text-center align-middle">{{ index + 1}}</td>
-            <td class="text-center align-middle">{{ product.sku }}</td>
-            <td class="text-center align-middle">{{ product.name}}</td>
-            <td class="text-center align-middle">{{ product.description }}</td>
-            <td class="text-center align-middle"><img :src="prodPic(product.image)" class="img-thumbnail rounded" width="50" /></td>
-            <td class="text-center align-middle">{{ product.category.name }}</td>
-            <td class="text-center align-middle">{{ product.stock }}</td>
-            <td class="text-center align-middle">{{ product.cost }}</td>
-            <td class="text-center align-middle">{{ product.price }}</td>
-            <td class="text-center align-middle">{{ formatDate(product.created_at) }}</td>
+            <td class="text-center align-middle">{{ sale.invoice }}</td>
+            <td class="text-center align-middle">{{ sale.customer.name }}</td>
+            <td class="text-center align-middle">{{ sale.seller.name }}</td>
+            <td class="text-center align-middle">{{ sale.method }}</td>
+            <td class="text-center align-middle">{{ sale.total }}</td>
+            <td class="text-center align-middle">{{ formatDate(sale.created_at) }}</td>
             <td class="text-center align-middle">
                 <div>
-                    <button class="btn btn-warning edit" @click="editProd(product.id)"><i class="fa fa-pencil"></i></button>
+                    <button class="btn btn-info edit" @click="editProd(sale.id)"><i class="fa fa-print"></i></button>
                     
-                    <button class="btn btn-danger delete" @click="deleteProd(product.id)"><i class="fa fa-times"></i></button>
+                    <button class="btn btn-danger delete" @click="deleteProd(sale.id)"><i class="fa fa-times"></i></button>
                 </div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <prod-modal :csrf_token="csrf_token" 
-    @mutateProd="mutateData"
-    ref="modal"
-    @editData="editData"
-    :categories="categoriesParser">
-    </prod-modal>
   </div>
 </template>
 <script>
 import moment from 'moment';
-import ModalProduct from './ModalProducts.vue';
 export default {
-    name: 'prod-table',
+    name: 'sales-table',
     props: {
-        products: {
+        sales: {
             type: String,
             required: true
         },
@@ -65,23 +52,13 @@ export default {
           type: String,
           required: true
         },
-        categories: {
-          type: String,
-          required: true
-        }
-    },
-    components:{
-        ModalProduct
     },
     data(){
         return {
             u_search: '',
-            productsParser: JSON.parse(this.products),
+            salesParser: JSON.parse(this.sales),
             datatable: undefined,
             editB: false,
-            categoriesParser: JSON.parse(this.categories),
-            getProduct: true,
-            mutable_data: undefined,
         }
     },
     methods:{
@@ -192,7 +169,6 @@ export default {
     },
     mounted(){
       this.mountedDatatable();
-      this.dataProducts();
     }
     
 };
