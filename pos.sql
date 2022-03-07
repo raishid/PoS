@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 07-03-2022 a las 05:10:33
+-- Tiempo de generación: 07-03-2022 a las 22:37:14
 -- Versión del servidor: 5.7.31
 -- Versión de PHP: 7.4.9
 
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 INSERT INTO `products` (`id`, `sku`, `name`, `description`, `category_id`, `image`, `stock`, `cost`, `price`, `created_at`, `updated_at`) VALUES
 (1, '5699', 'Silicon Gris', 'Silicon gris 180 gr Economico', 4, NULL, 10, 1, 2, '2022-03-05 10:33:08', '2022-03-05 10:33:08'),
 (2, '82194', 'Silicon Gris Permatec o Loctite', 'Silicon gris permatec o loctite 180 gr', 4, NULL, 10, 1.5, 3.51, '2022-03-05 10:38:14', '2022-03-05 10:38:14'),
-(10, '6895-020', 'Anillos Corsa/Aveo 020', 'Anillos de Corsa/Aveo Medida 020/050', 4, NULL, 10, 10, 20, '2022-03-05 11:20:49', '2022-03-05 11:21:15');
+(10, '6895-020', 'Anillos Corsa/Aveo 020', 'Anillos de Corsa/Aveo Medida 020/050', 4, NULL, 0, 10, 20, '2022-03-05 11:20:49', '2022-03-05 11:21:15');
 
 -- --------------------------------------------------------
 
@@ -174,14 +174,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_unique` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `role`, `pic`, `state`, `last_login`, `date`) VALUES
-(1, 'Administrador', 'admin', '$2y$10$sbtYhr6DQ8hoZRhlJuKG1eEA7JQIdQzRbM7B.5OF7kGsPsKvGTgHW', '1', '', 1, '2022-03-06 17:30:46', '2022-02-19 23:34:13');
+(1, 'Administrador', 'admin', '$2y$10$sbtYhr6DQ8hoZRhlJuKG1eEA7JQIdQzRbM7B.5OF7kGsPsKvGTgHW', '1', '', 1, '2022-03-07 22:36:31', '2022-02-19 23:34:13');
 
 --
 -- Restricciones para tablas volcadas

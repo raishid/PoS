@@ -26,6 +26,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-responsive/2.2.9/dataTables.responsive.min.js" integrity="sha512-4knl+8+KWBNyMb27V1fosX42eCyJFH383Sus6gnxuqzwmQpiLpyBJyuC17RRwLd5X6cmVUQeT5lOkVXbwajvCA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-rowreorder/1.2.8/dataTables.rowReorder.min.js" integrity="sha512-ig2aIjaY0uavJm/JME2q+AVLAtGDdx7qGN1Qd11T9MvqJwLbElFCdz0lSThVsxnP5c+fpN4Y6e8ZcU1mu9pzIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <!-- Select2 -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         
 <!--         <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-buttons/2.2.2/js/dataTables.buttons.min.js" integrity="sha512-GX4FkKxE4Wy3gbA07S8oEpK9VTZEFdEhkuxaiql/cHx7g1itJuLNUNdV+VFN1oq1yKiSIXjhprIPQe7SSMN78A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js" integrity="sha512-xQBQYt9UcgblF6aCMrwU1NkVA7HCXaSN2oq0so80KO+y68M+n64FOcqgav4igHe6D5ObBLIf68DWv+gfBowczg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

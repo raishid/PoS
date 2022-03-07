@@ -29327,14 +29327,14 @@ export default {\r
     }
   });
 
-  // resource/js/components/sales/CardCreateSale.vue
-  var CardCreateSale_exports = {};
-  __export(CardCreateSale_exports, {
-    default: () => CardCreateSale_default
+  // resource/js/components/sales/CardAddProduct.vue
+  var CardAddProduct_exports = {};
+  __export(CardAddProduct_exports, {
+    default: () => CardAddProduct_default
   });
   function __vue_normalize__11(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
     const component2 = (typeof script === "function" ? script.options : script) || {};
-    component2.__file = "resource\\js\\components\\sales\\CardCreateSale.vue";
+    component2.__file = "resource\\js\\components\\sales\\CardAddProduct.vue";
     if (!component2.render) {
       component2.render = template.render;
       component2.staticRenderFns = template.staticRenderFns;
@@ -29381,12 +29381,291 @@ export default {\r
     }
     return component2;
   }
-  var __vue_script__11, __vue_render__11, __vue_staticRenderFns__11, __vue_inject_styles__11, __vue_scope_id__11, __vue_module_identifier__11, __vue_is_functional_template__11, __vue_component__11, CardCreateSale_default;
+  var __vue_script__11, __vue_render__11, __vue_staticRenderFns__11, __vue_inject_styles__11, __vue_scope_id__11, __vue_module_identifier__11, __vue_is_functional_template__11, __vue_component__11, CardAddProduct_default;
+  var init_CardAddProduct = __esm({
+    "resource/js/components/sales/CardAddProduct.vue"() {
+      init_EventBus();
+      __vue_script__11 = {
+        name: "table-add-product",
+        props: {
+          products: {
+            required: true
+          },
+          id_table: {
+            type: String,
+            default: "table-products"
+          },
+          modal: {
+            type: Boolean,
+            default: false
+          }
+        },
+        data() {
+          return {
+            productsParse: JSON.parse(this.products),
+            datatable: void 0
+          };
+        },
+        methods: {
+          handleAdd(event, id) {
+            event.target.disabled = true;
+            const product = this.productsParse.find((p) => p.id == id);
+            EventBus.$emit("add", product);
+          },
+          handleRemove(id) {
+            const button = this.$refs["b-prod-" + id][0];
+            button.disabled = false;
+          },
+          addProductResponsive(data) {
+            this.productsParse = data;
+            new Promise((res) => {
+              this.datatable.destroy();
+              res(true);
+            }).then(() => {
+              this.mountedDatatable();
+            });
+          },
+          mountedDatatable() {
+            return this.datatable = $(`#${this.id_table}`).DataTable({
+              responsive: true,
+              destroy: true,
+              lengthChange: false,
+              autoWidth: false,
+              rowReorder: {
+                selector: "td:nth-child(2)"
+              }
+            });
+          }
+        },
+        mounted() {
+          this.mountedDatatable();
+          EventBus.$on("remove", (data) => this.handleRemove(data));
+          if (!this.modal) {
+            EventBus.$emit("products", this.productsParse);
+          }
+        }
+      };
+      __vue_render__11 = function() {
+        var _vm = this;
+        var _h = _vm.$createElement;
+        var _c = _vm._self._c || _h;
+        return _c("div", { staticClass: "card border-0 border-top border-4 border-warning" }, [
+          _c("div", { staticClass: "card-title" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", {
+              staticClass: "table table-striped table-bordered",
+              attrs: { id: _vm.id_table }
+            }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("tbody", _vm._l(_vm.productsParse, function(product, index) {
+                return _c("tr", { key: index }, [
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(index + 1))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(product.sku))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(product.name))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(product.description))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _c("button", {
+                      staticClass: "btn btn-sm",
+                      class: [
+                        product.stock >= 10 && "bg-success",
+                        product.stock < 10 && "btn-warning",
+                        product.stock == 0 && "btn-danger"
+                      ],
+                      attrs: { type: "button" }
+                    }, [_vm._v(_vm._s(product.stock))])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _vm._v(_vm._s(product.price))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center align-middle" }, [
+                    _c("div", { staticClass: "btn-group" }, [
+                      _c("button", {
+                        ref: "b-prod-" + product.id,
+                        refInFor: true,
+                        staticClass: "btn btn-success",
+                        attrs: {
+                          type: "button",
+                          disabled: product.stock == 0 && "disabled"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.handleAdd($event, product.id);
+                          }
+                        }
+                      }, [_vm._v("Add")])
+                    ])
+                  ])
+                ]);
+              }), 0)
+            ])
+          ])
+        ]);
+      };
+      __vue_staticRenderFns__11 = [
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("thead", [
+            _c("tr", [
+              _c("th", { staticClass: "text-center all" }, [_vm._v("#")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center all" }, [_vm._v("SKU")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center all" }, [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center desktop" }, [
+                _vm._v("Description")
+              ]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center desktop" }, [_vm._v("Stock")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center desktop" }, [_vm._v("Price")]),
+              _vm._v(" "),
+              _c("th", { staticClass: "text-center all" }, [_vm._v("Action")])
+            ])
+          ]);
+        }
+      ];
+      __vue_render__11._withStripped = true;
+      __vue_inject_styles__11 = void 0;
+      __vue_scope_id__11 = void 0;
+      __vue_module_identifier__11 = void 0;
+      __vue_is_functional_template__11 = false;
+      __vue_component__11 = /* @__PURE__ */ __vue_normalize__11({ render: __vue_render__11, staticRenderFns: __vue_staticRenderFns__11 }, __vue_inject_styles__11, __vue_script__11, __vue_scope_id__11, __vue_is_functional_template__11, __vue_module_identifier__11, false, void 0, void 0, void 0);
+      CardAddProduct_default = __vue_component__11;
+    }
+  });
+
+  // resource/js/components/sales/CardCreateSale.vue
+  var CardCreateSale_exports = {};
+  __export(CardCreateSale_exports, {
+    default: () => CardCreateSale_default
+  });
+  function __vue_normalize__12(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script === "function" ? script.options : script) || {};
+    component2.__file = "resource\\js\\components\\sales\\CardCreateSale.vue";
+    if (!component2.render) {
+      component2.render = template.render;
+      component2.staticRenderFns = template.staticRenderFns;
+      component2._compiled = true;
+      if (functional)
+        component2.functional = true;
+    }
+    component2._scopeId = scope;
+    if (true) {
+      let hook;
+      if (false) {
+        hook = function(context) {
+          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+            context = __VUE_SSR_CONTEXT__;
+          }
+          if (style) {
+            style.call(this, createInjectorSSR(context));
+          }
+          if (context && context._registeredComponents) {
+            context._registeredComponents.add(moduleIdentifier);
+          }
+        };
+        component2._ssrRegister = hook;
+      } else if (style) {
+        hook = shadowMode ? function(context) {
+          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+        } : function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+      if (hook !== void 0) {
+        if (component2.functional) {
+          const originalRender = component2.render;
+          component2.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context);
+          };
+        } else {
+          const existing = component2.beforeCreate;
+          component2.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+    return component2;
+  }
+  function __vue_create_injector__2() {
+    const styles = __vue_create_injector__2.styles || (__vue_create_injector__2.styles = {});
+    const isOldIE = typeof navigator !== "undefined" && /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
+    return function addStyle(id, css) {
+      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]'))
+        return;
+      const group = isOldIE ? css.media || "default" : id;
+      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: void 0 });
+      if (!style.ids.includes(id)) {
+        let code = css.source;
+        let index = style.ids.length;
+        style.ids.push(id);
+        if (false) {
+          code += "\n/*# sourceURL=" + css.map.sources[0] + " */";
+          code += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) + " */";
+        }
+        if (isOldIE) {
+          style.element = style.element || document.querySelector("style[data-group=" + group + "]");
+        }
+        if (!style.element) {
+          const head = document.head || document.getElementsByTagName("head")[0];
+          const el = style.element = document.createElement("style");
+          el.type = "text/css";
+          if (css.media)
+            el.setAttribute("media", css.media);
+          if (isOldIE) {
+            el.setAttribute("data-group", group);
+            el.setAttribute("data-next-index", "0");
+          }
+          head.appendChild(el);
+        }
+        if (isOldIE) {
+          index = parseInt(style.element.getAttribute("data-next-index"));
+          style.element.setAttribute("data-next-index", index + 1);
+        }
+        if (style.element.styleSheet) {
+          style.parts.push(code);
+          style.element.styleSheet.cssText = style.parts.filter(Boolean).join("\n");
+        } else {
+          const textNode = document.createTextNode(code);
+          const nodes = style.element.childNodes;
+          if (nodes[index])
+            style.element.removeChild(nodes[index]);
+          if (nodes.length)
+            style.element.insertBefore(textNode, nodes[index]);
+          else
+            style.element.appendChild(textNode);
+        }
+      }
+    };
+  }
+  var __vue_script__12, __vue_render__12, __vue_staticRenderFns__12, __vue_inject_styles__12, __vue_scope_id__12, __vue_module_identifier__12, __vue_is_functional_template__12, __vue_component__12, CardCreateSale_default;
   var init_CardCreateSale = __esm({
     "resource/js/components/sales/CardCreateSale.vue"() {
       init_EventBus();
       init_ModalCustomers();
-      __vue_script__11 = {
+      init_esm2();
+      init_CardAddProduct();
+      __vue_script__12 = {
         name: "card-create-sale",
         props: {
           auth: {
@@ -29403,7 +29682,9 @@ export default {\r
           }
         },
         components: {
-          ModalCustomer: ModalCustomers_default
+          ModalCustomer: ModalCustomers_default,
+          "imask-input": component,
+          ModalAddProduct: CardAddProduct_default
         },
         data() {
           return {
@@ -29411,7 +29692,13 @@ export default {\r
             customersParser: JSON.parse(this.customers),
             sale: {
               customer_id: "",
-              method: ""
+              method: "",
+              products: [],
+              tax: 0,
+              total: 0
+            },
+            select2: {
+              options: []
             }
           };
         },
@@ -29424,10 +29711,53 @@ export default {\r
           mutateDataCustomer(data) {
             this.customersParser.push(data);
             this.sale.customer_id = data.id;
+          },
+          addProductSale(product) {
+            product.quantity = 1;
+            this.sale.products.push(product);
+            this.totalize();
+          },
+          removeProductSale(id) {
+            this.sale.products = this.sale.products.filter((product) => {
+              return product.id != id;
+            });
+            this.totalize();
+            EventBus.$emit("remove", id);
+          },
+          totalize() {
+            let total = 0;
+            this.sale.products.map((product) => {
+              total = total + product.price * product.quantity;
+            });
+            if (this.sale.tax > 0) {
+              this.sale.total = total * this.sale.tax / 100 + total;
+            } else {
+              this.sale.total = total;
+            }
+          },
+          modifyQuantity(id, event) {
+            if (event.target.value > 0) {
+              const product = this.sale.products.find((p) => p.id == id);
+              product.quantity = parseInt(event.target.value);
+              this.totalize();
+            }
           }
+        },
+        mounted() {
+          this.customersParser.map((customer) => {
+            this.select2.options.push({ id: customer.id, value: customer.name });
+          });
+          $("#select-customer").select2({
+            width: "element",
+            placeholder: "Select Customer"
+          });
+          EventBus.$on("add", (product) => this.addProductSale(product));
+          EventBus.$on("products", (data) => {
+            this.$refs.add_product_responsive.addProductResponsive(data);
+          });
         }
       };
-      __vue_render__11 = function() {
+      __vue_render__12 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -29462,8 +29792,6 @@ export default {\r
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("div", { staticClass: "input-group" }, [
-                  _vm._m(2),
-                  _vm._v(" "),
                   _c("select", {
                     directives: [
                       {
@@ -29473,8 +29801,12 @@ export default {\r
                         expression: "sale.customer_id"
                       }
                     ],
-                    staticClass: "form-select",
-                    attrs: { name: "customer", required: "" },
+                    staticClass: "form-control",
+                    attrs: {
+                      name: "customer",
+                      required: "",
+                      id: "select-customer"
+                    },
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
@@ -29486,25 +29818,175 @@ export default {\r
                         _vm.$set(_vm.sale, "customer_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
                       }
                     }
-                  }, [
-                    _c("option", { attrs: { value: "", selected: "" } }, [
-                      _vm._v("Select Customer")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.customersParser, function(customer, index) {
-                      return _c("option", { key: index, domProps: { value: customer.id } }, [_vm._v(_vm._s(customer.name))]);
-                    })
-                  ], 2),
+                  }, _vm._l(_vm.customersParser, function(customer, index) {
+                    return _c("option", { key: index, domProps: { value: customer.id } }, [_vm._v(_vm._s(customer.name))]);
+                  }), 0),
                   _vm._v(" "),
-                  _vm._m(3)
+                  _c("button", {
+                    staticClass: "btn btn-success btn-sm",
+                    attrs: {
+                      type: "button",
+                      id: "modal-customer-button",
+                      "data-bs-toggle": "modal",
+                      "data-bs-target": "#create-modal-customer"
+                    }
+                  }, [_vm._v("Add client\n                        ")])
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(4),
+              _vm._l(_vm.sale.products, function(product, index) {
+                return _c("div", { key: index, staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "input-group " }, [
+                      _c("button", {
+                        staticClass: "btn btn-danger btn-sm",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.removeProductSale(product.id);
+                          }
+                        }
+                      }, [_c("i", { staticClass: "fa fa-times" })]),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "product",
+                          placeholder: "Product",
+                          required: "",
+                          readonly: ""
+                        },
+                        domProps: { value: product.name }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-3" }, [
+                    _c("imask-input", {
+                      staticClass: "form-control",
+                      attrs: {
+                        required: "",
+                        name: "quantity_product",
+                        mask: Number,
+                        min: 1,
+                        type: "number",
+                        max: product.stock,
+                        value: "1"
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.modifyQuantity(product.id, $event);
+                        }
+                      }
+                    })
+                  ], 1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-3 px-0 px-md-3" }, [
+                    _c("div", { staticClass: "input-group" }, [
+                      _vm._m(2, true),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "number",
+                          name: "price",
+                          placeholder: "10$",
+                          readonly: "",
+                          required: ""
+                        },
+                        domProps: { value: product.price }
+                      })
+                    ])
+                  ])
+                ]);
+              }),
               _vm._v(" "),
-              _vm._m(5),
+              _vm._m(3),
               _vm._v(" "),
-              _vm._m(6),
+              _c("div", { staticClass: "border-top mt-3 row justify-content-end" }, [
+                _c("div", { staticClass: "col-sm-8" }, [
+                  _c("table", { staticClass: "table table-light" }, [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _c("tbody", [
+                      _c("tr", [
+                        _c("td", { staticClass: "w-50" }, [
+                          _c("div", { staticClass: "input-group" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.sale.tax,
+                                  expression: "sale.tax"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "number",
+                                name: "tax",
+                                min: "0",
+                                autocomplete: "off",
+                                placeholder: "0",
+                                required: ""
+                              },
+                              domProps: { value: _vm.sale.tax },
+                              on: {
+                                change: _vm.totalize,
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return;
+                                  }
+                                  _vm.$set(_vm.sale, "tax", $event.target.value);
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm._m(5)
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "w-50" }, [
+                          _c("div", { staticClass: "input-group" }, [
+                            _vm._m(6),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.sale.total,
+                                  expression: "sale.total"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "number",
+                                name: "total_sale",
+                                min: "1",
+                                autocomplete: "off",
+                                placeholder: "0.00",
+                                readonly: "",
+                                required: ""
+                              },
+                              domProps: { value: _vm.sale.total },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return;
+                                  }
+                                  _vm.$set(_vm.sale, "total", $event.target.value);
+                                }
+                              }
+                            })
+                          ])
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "row form-group border-top mt-3 py-4" }, [
                 _c("div", { staticClass: "col-6" }, [
@@ -29557,7 +30039,7 @@ export default {\r
                 _vm._v(" "),
                 _vm.verifyMethod ? _c("div", { staticClass: "col-6" }, [_vm._m(7)]) : _vm._e()
               ])
-            ]),
+            ], 2),
             _vm._v(" "),
             _vm._m(8)
           ]),
@@ -29565,10 +30047,37 @@ export default {\r
           _c("customer-modal", {
             attrs: { csrf_token: _vm.csrf_token },
             on: { mutateCustomer: _vm.mutateDataCustomer }
-          })
+          }),
+          _vm._v(" "),
+          _c("div", {
+            staticClass: "modal fade",
+            attrs: {
+              id: "modal-add-product",
+              tabindex: "-1",
+              "aria-labelledby": "ModalAddProduct",
+              "aria-hidden": "true"
+            }
+          }, [
+            _c("div", { staticClass: "modal-dialog" }, [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("table-add-product", {
+                    ref: "add_product_responsive",
+                    attrs: {
+                      products: "[]",
+                      id_table: "table-add-responsive",
+                      responsive: true
+                    }
+                  })
+                ], 1),
+                _vm._v(" "),
+                _vm._m(9)
+              ])
+            ])
+          ])
         ], 1);
       };
-      __vue_staticRenderFns__11 = [
+      __vue_staticRenderFns__12 = [
         function() {
           var _vm = this;
           var _h = _vm.$createElement;
@@ -29590,79 +30099,7 @@ export default {\r
           var _h = _vm.$createElement;
           var _c = _vm._self._c || _h;
           return _c("span", { staticClass: "input-group-text" }, [
-            _c("i", { staticClass: "fa fa-user" })
-          ]);
-        },
-        function() {
-          var _vm = this;
-          var _h = _vm.$createElement;
-          var _c = _vm._self._c || _h;
-          return _c("span", { staticClass: "input-group-text" }, [
-            _c("button", {
-              staticClass: "btn btn-success btn-sm",
-              attrs: {
-                type: "button",
-                id: "modal-customer-button",
-                "data-bs-toggle": "modal",
-                "data-bs-target": "#create-modal-customer"
-              }
-            }, [_vm._v("Add client\n                        ")])
-          ]);
-        },
-        function() {
-          var _vm = this;
-          var _h = _vm.$createElement;
-          var _c = _vm._self._c || _h;
-          return _c("div", { staticClass: "form-group row" }, [
-            _c("div", { staticClass: "col-6" }, [
-              _c("div", { staticClass: "input-group " }, [
-                _c("button", { staticClass: "btn btn-danger btn-sm" }, [
-                  _c("i", { staticClass: "fa fa-times" })
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    name: "product",
-                    placeholder: "Add Product",
-                    required: ""
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-3" }, [
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "number",
-                  name: "quantity_product",
-                  min: "1",
-                  placeholder: "1",
-                  required: ""
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-3" }, [
-              _c("div", { staticClass: "input-group" }, [
-                _c("span", { staticClass: "input-group-text" }, [
-                  _c("i", { staticClass: "fa fa-usd" })
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "number",
-                    name: "price",
-                    placeholder: "10$",
-                    readonly: "",
-                    required: ""
-                  }
-                })
-              ])
-            ])
+            _c("i", { staticClass: "fa fa-usd" })
           ]);
         },
         function() {
@@ -29674,8 +30111,13 @@ export default {\r
               _c("div", { staticClass: "d-grid" }, [
                 _c("button", {
                   staticClass: "d-block btn btn-outline-success d-lg-none",
-                  attrs: { type: "button" }
-                }, [_vm._v("Add Product")])
+                  attrs: {
+                    type: "button",
+                    id: "modal-customer-button",
+                    "data-bs-toggle": "modal",
+                    "data-bs-target": "#modal-add-product"
+                  }
+                }, [_vm._v("Add Product\n                        ")])
               ])
             ])
           ]);
@@ -29684,63 +30126,28 @@ export default {\r
           var _vm = this;
           var _h = _vm.$createElement;
           var _c = _vm._self._c || _h;
-          return _c("div", { staticClass: "border-top mt-3 row justify-content-end" }, [
-            _c("div", { staticClass: "col-sm-8" }, [
-              _c("table", { staticClass: "table table-light" }, [
-                _c("thead", [
-                  _c("tr", [
-                    _c("th", [_vm._v("Tax")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Total")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("tbody", [
-                  _c("tr", [
-                    _c("td", { staticClass: "w-50" }, [
-                      _c("div", { staticClass: "input-group" }, [
-                        _c("input", {
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "number",
-                            name: "tax",
-                            min: "0",
-                            autocomplete: "off",
-                            placeholder: "0",
-                            required: ""
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "input-group-text" }, [
-                          _c("i", { staticClass: "fa fa-percent" })
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "w-50" }, [
-                      _c("div", { staticClass: "input-group" }, [
-                        _c("span", { staticClass: "input-group-text" }, [
-                          _c("i", { staticClass: "fa fa-usd" })
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "number",
-                            name: "total_sale",
-                            min: "1",
-                            autocomplete: "off",
-                            placeholder: "0.00",
-                            readonly: "",
-                            required: ""
-                          }
-                        })
-                      ])
-                    ])
-                  ])
-                ])
-              ])
+          return _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v("Tax")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Total")])
             ])
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-percent" })
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-usd" })
           ]);
         },
         function() {
@@ -29769,159 +30176,7 @@ export default {\r
           var _c = _vm._self._c || _h;
           return _c("div", { staticClass: "card-footer" }, [
             _c("div", { staticClass: "d-flex justify-content-end" }, [
-              _c("button", { staticClass: "btn btn-primary px-3", attrs: { type: "submit" } }, [_vm._v("Save sale")])
-            ])
-          ]);
-        }
-      ];
-      __vue_render__11._withStripped = true;
-      __vue_inject_styles__11 = void 0;
-      __vue_scope_id__11 = void 0;
-      __vue_module_identifier__11 = void 0;
-      __vue_is_functional_template__11 = false;
-      __vue_component__11 = /* @__PURE__ */ __vue_normalize__11({ render: __vue_render__11, staticRenderFns: __vue_staticRenderFns__11 }, __vue_inject_styles__11, __vue_script__11, __vue_scope_id__11, __vue_is_functional_template__11, __vue_module_identifier__11, false, void 0, void 0, void 0);
-      CardCreateSale_default = __vue_component__11;
-    }
-  });
-
-  // resource/js/components/sales/CardAddProduct.vue
-  var CardAddProduct_exports = {};
-  __export(CardAddProduct_exports, {
-    default: () => CardAddProduct_default
-  });
-  function __vue_normalize__12(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
-    component2.__file = "resource\\js\\components\\sales\\CardAddProduct.vue";
-    if (!component2.render) {
-      component2.render = template.render;
-      component2.staticRenderFns = template.staticRenderFns;
-      component2._compiled = true;
-      if (functional)
-        component2.functional = true;
-    }
-    component2._scopeId = scope;
-    if (false) {
-      let hook;
-      if (false) {
-        hook = function(context) {
-          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
-          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
-            context = __VUE_SSR_CONTEXT__;
-          }
-          if (style) {
-            style.call(this, createInjectorSSR(context));
-          }
-          if (context && context._registeredComponents) {
-            context._registeredComponents.add(moduleIdentifier);
-          }
-        };
-        component2._ssrRegister = hook;
-      } else if (style) {
-        hook = shadowMode ? function(context) {
-          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
-        } : function(context) {
-          style.call(this, createInjector(context));
-        };
-      }
-      if (hook !== void 0) {
-        if (component2.functional) {
-          const originalRender = component2.render;
-          component2.render = function renderWithStyleInjection(h, context) {
-            hook.call(context);
-            return originalRender(h, context);
-          };
-        } else {
-          const existing = component2.beforeCreate;
-          component2.beforeCreate = existing ? [].concat(existing, hook) : [hook];
-        }
-      }
-    }
-    return component2;
-  }
-  var __vue_script__12, __vue_render__12, __vue_staticRenderFns__12, __vue_inject_styles__12, __vue_scope_id__12, __vue_module_identifier__12, __vue_is_functional_template__12, __vue_component__12, CardAddProduct_default;
-  var init_CardAddProduct = __esm({
-    "resource/js/components/sales/CardAddProduct.vue"() {
-      __vue_script__12 = {
-        name: "table-add-product",
-        props: {
-          products: {
-            required: true
-          }
-        },
-        data() {
-          return {
-            productsParse: JSON.parse(this.products),
-            datatable: void 0
-          };
-        },
-        methods: {},
-        mounted() {
-          this.datatable = $("#table-products").DataTable({
-            responsive: true,
-            destroy: true,
-            lengthChange: false,
-            autoWidth: false,
-            rowReorder: {
-              selector: "td:nth-child(2)"
-            }
-          });
-        }
-      };
-      __vue_render__12 = function() {
-        var _vm = this;
-        var _h = _vm.$createElement;
-        var _c = _vm._self._c || _h;
-        return _c("div", { staticClass: "card border-0 border-top border-4 border-warning" }, [
-          _c("div", { staticClass: "card-title" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("table", {
-              staticClass: "table table-striped table-bordered",
-              attrs: { id: "table-products" }
-            }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("tbody", _vm._l(_vm.productsParse, function(product, index) {
-                return _c("tr", { key: index }, [
-                  _c("td", [_vm._v(_vm._s(index + 1))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(product.sku))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(product.name))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(product.description))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(product.stock))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(product.price))]),
-                  _vm._v(" "),
-                  _vm._m(1, true)
-                ]);
-              }), 0)
-            ])
-          ])
-        ]);
-      };
-      __vue_staticRenderFns__12 = [
-        function() {
-          var _vm = this;
-          var _h = _vm.$createElement;
-          var _c = _vm._self._c || _h;
-          return _c("thead", [
-            _c("tr", [
-              _c("th", [_vm._v("#")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("SKU")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Name")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Description")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Stock")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Price")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Action")])
+              _c("button", { staticClass: "btn btn-primary px-3", attrs: { type: "submit" } }, [_vm._v("Sell")])
             ])
           ]);
         },
@@ -29929,20 +30184,298 @@ export default {\r
           var _vm = this;
           var _h = _vm.$createElement;
           var _c = _vm._self._c || _h;
-          return _c("td", [
-            _c("div", { staticClass: "btn-group" }, [
-              _c("button", { staticClass: "btn btn-success", attrs: { type: "button" } }, [_vm._v("Add")])
-            ])
+          return _c("div", { staticClass: "modal-footer" }, [
+            _c("button", {
+              staticClass: "btn btn-secondary",
+              attrs: { type: "button", "data-bs-dismiss": "modal" }
+            }, [_vm._v("\n                        Close\n                    ")])
           ]);
         }
       ];
       __vue_render__12._withStripped = true;
-      __vue_inject_styles__12 = void 0;
+      __vue_inject_styles__12 = function(inject2) {
+        if (!inject2)
+          return;
+        inject2("data-v-6edad8a7_0", { source: "\n.select2-selection{\n    min-height: 2rem;\n}\n@media (max-width: 768px) {\n#modal-customer-button{\n        width: 100%;\n}\n.select2{\n        width: 100% !important;\n}\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\sales\\CardCreateSale.vue"], "names": [], "mappings": ";AAsQA;IACA,gBAAA;AACA;AACA;AACA;QACA,WAAA;AACA;AACA;QACA,sBAAA;AACA;AACA", "file": "CardCreateSale.vue", "sourcesContent": [`<template>\r
+    <div class="card border-0 border-top border-4 border-success">\r
+        <div class="card-title"></div>\r
+        <form role="form" method="post" autocomplete="off">\r
+            <div class="card-body">\r
+                <div class="form-group">\r
+                    <div class="input-group">\r
+                        <span class="input-group-text"><i class="fa fa-user"></i></span>\r
+                        <input type="text" name="seller" class="form-control" :value="authParser.name" readonly/>\r
+                    </div>\r
+                </div>\r
+                <div class="form-group">\r
+                    <div class="input-group">\r
+                        <span class="input-group-text"><i class="fa fa-key"></i></span>\r
+                        <input type="text" name="sale" class="form-control" :value="id_sale" readonly/>\r
+                    </div>\r
+                </div>\r
+                <div class="form-group">\r
+                    <div class="input-group">\r
+                        <select name="customer" required v-model="sale.customer_id" id="select-customer" class="form-control">\r
+                            <option v-for="(customer, index) in customersParser" :key="index" :value="customer.id" >{{ customer.name }}</option>\r
+                        </select>\r
+                            <button \r
+                                type="button" \r
+                                id="modal-customer-button" \r
+                                class="btn btn-success btn-sm" \r
+                                data-bs-toggle="modal" \r
+                                data-bs-target="#create-modal-customer"\r
+                            >Add client\r
+                            </button>\r
+                    </div>\r
+                </div>\r
+                <div class="form-group row" v-for="(product, index) in sale.products" :key="index">\r
+                    <div class="col-6">\r
+                        <div class="input-group ">\r
+                            <button class="btn btn-danger btn-sm" type="button" @click="removeProductSale(product.id)"><i class="fa fa-times"></i></button>\r
+                            <input type="text" name="product" class="form-control" placeholder="Product" required :value="product.name" readonly>\r
+                        </div>\r
+                    </div>\r
+                    <div class="col-3">\r
+                        <imask-input \r
+                            required\r
+                            name="quantity_product"\r
+                            class="form-control" \r
+                            :mask="Number"\r
+                            :min="1"\r
+                            :type="'number'"\r
+                            :max="product.stock"\r
+                            value="1"\r
+                            @change="modifyQuantity(product.id, $event)"\r
+                        />\r
+                    </div>\r
+                    <div class="col-3 px-0 px-md-3">\r
+                        <div class="input-group">\r
+                            <span class="input-group-text"><i class="fa fa-usd"></i></span>\r
+                            <input type="number" name="price" class="form-control" placeholder="10$" readonly required :value="product.price">\r
+                        </div>\r
+                    </div>\r
+                </div>\r
+                <div class="row">\r
+                    <div class="col-12">\r
+                        <div class="d-grid">\r
+                            <button \r
+                                type="button" \r
+                                id="modal-customer-button" \r
+                                class="d-block btn btn-outline-success d-lg-none" \r
+                                data-bs-toggle="modal" \r
+                                data-bs-target="#modal-add-product"\r
+                            >Add Product\r
+                            </button>\r
+                        </div>\r
+                    </div>\r
+                </div>\r
+                \r
+                <div class="border-top mt-3 row justify-content-end">\r
+                    <div class="col-sm-8">\r
+                        <table class="table table-light">\r
+                            <thead>\r
+                                <tr>\r
+                                    <th>Tax</th>\r
+                                    <th>Total</th>\r
+                                </tr>\r
+                            </thead>\r
+                            <tbody>\r
+                                <tr>\r
+                                    <td class="w-50">\r
+                                        <div class="input-group">\r
+                                            <input type="number" class="form-control" name="tax" min="0" autocomplete="off" placeholder="0" required v-model="sale.tax" @change="totalize">\r
+                                            <span class="input-group-text"><i class="fa fa-percent"></i></span>\r
+                                        </div>\r
+                                    </td>\r
+                                    <td class="w-50">\r
+                                        <div class="input-group">\r
+                                            <span class="input-group-text"><i class="fa fa-usd"></i></span>\r
+                                            <input type="number" class="form-control" name="total_sale" min="1" autocomplete="off" placeholder="0.00" readonly required v-model="sale.total">\r
+                                        </div>\r
+                                    </td>\r
+                                </tr>\r
+                            </tbody>\r
+                        </table>\r
+                    </div>\r
+                </div>\r
+                <div class="row form-group border-top mt-3 py-4">\r
+                    <div class="col-6">\r
+                        <div class="input-group">\r
+                            <select class="form-select" name="method" required v-model="sale.method">\r
+                                <option value="">Select the payment method</option>\r
+                                <option value="cash">Cash</option>\r
+                                <option value="debit">Debit</option>\r
+                                <option value="credit">Credit Card</option>\r
+                                <option value="wire_transfer">Wire transfer</option>\r
+                            </select>\r
+                        </div>\r
+                    </div>\r
+                    <div class="col-6" v-if="verifyMethod">\r
+                        <div class="input-group">\r
+                            <input type="text" name="id_transaction" class="form-control" placeholder="ID transaction" required>\r
+                            <span class="input-group-text"><i class="fa fa-lock"></i></span>\r
+                        </div>\r
+                    </div>\r
+                </div>\r
+            </div>\r
+            <div class="card-footer">\r
+                <div class="d-flex justify-content-end">\r
+                    <button type="submit" class="btn btn-primary px-3">Sell</button>\r
+                </div>\r
+            </div>\r
+        </form>\r
+\r
+        <customer-modal :csrf_token="csrf_token" @mutateCustomer="mutateDataCustomer"></customer-modal>\r
+\r
+        <div\r
+            class="modal fade"\r
+            id="modal-add-product"\r
+            tabindex="-1"\r
+            aria-labelledby="ModalAddProduct"\r
+            aria-hidden="true"\r
+        >\r
+            <div class="modal-dialog">\r
+                <div class="modal-content">\r
+                    <div class="modal-body">\r
+                        <table-add-product :products="'[]'" id_table="table-add-responsive" :responsive="true" ref="add_product_responsive"></table-add-product>\r
+                    </div>\r
+\r
+                    <div class="modal-footer">\r
+                        <button\r
+                            type="button"\r
+                            class="btn btn-secondary"\r
+                            data-bs-dismiss="modal"\r
+                        >\r
+                            Close\r
+                        </button>\r
+                </div>\r
+\r
+                </div>\r
+                \r
+            </div>\r
+        </div>\r
+    </div>\r
+\r
+</template>\r
+<script>\r
+import { EventBus } from '../EventBus';\r
+import ModalCustomer from '../customers/ModalCustomers.vue';\r
+import { IMaskComponent } from 'vue-imask';\r
+import ModalAddProduct from './CardAddProduct.vue';\r
+export default {\r
+    name: 'card-create-sale',\r
+    props:{\r
+        auth:{\r
+            required: true\r
+        },\r
+        customers:{\r
+            required: true\r
+        },\r
+        id_sale:{\r
+            required: true\r
+        },\r
+        csrf_token:{\r
+            required: true\r
+        }\r
+    },\r
+    components:{\r
+        ModalCustomer,\r
+        'imask-input': IMaskComponent,\r
+        ModalAddProduct\r
+    },\r
+    data(){\r
+        return {\r
+            authParser: JSON.parse(this.auth),\r
+            customersParser: JSON.parse(this.customers),\r
+            sale:{\r
+                customer_id: '',\r
+                method: '',\r
+                products: [],\r
+                tax: 0,\r
+                total: 0,\r
+            },\r
+            select2:{\r
+                options: []\r
+            },\r
+        }\r
+    },\r
+    computed:{\r
+        verifyMethod(){\r
+            return this.sale.method !== 'cash' && this.sale.method !== '';\r
+        },\r
+        \r
+    },\r
+    methods:{\r
+        mutateDataCustomer(data){\r
+            this.customersParser.push(data);\r
+            this.sale.customer_id = data.id;\r
+        },\r
+        addProductSale(product){\r
+            product.quantity = 1;\r
+            this.sale.products.push(product);\r
+            this.totalize();\r
+        },\r
+        removeProductSale(id){\r
+            this.sale.products = this.sale.products.filter(product => { return product.id != id }); \r
+            this.totalize();\r
+            EventBus.$emit('remove', id);\r
+        },\r
+        totalize(){\r
+            let total = 0;\r
+            this.sale.products.map(product => {\r
+                total = total + (product.price * product.quantity)\r
+            })\r
+            if(this.sale.tax > 0){\r
+                this.sale.total = ((total * this.sale.tax) / 100) + total;\r
+            }else{\r
+                this.sale.total = total;\r
+            }\r
+        },\r
+        modifyQuantity(id, event){\r
+            if(event.target.value > 0){\r
+                const product = this.sale.products.find(p => p.id == id);\r
+                product.quantity = parseInt(event.target.value);\r
+                this.totalize();    \r
+            }\r
+        }\r
+\r
+    },\r
+    mounted(){\r
+         this.customersParser.map((customer) => {\r
+            this.select2.options.push({id: customer.id, value: customer.name})\r
+        });\r
+        $('#select-customer').select2({\r
+            width: 'element',\r
+            placeholder: "Select Customer",\r
+        });\r
+\r
+        EventBus.$on('add', product => this.addProductSale(product));\r
+        EventBus.$on('products', data => {\r
+            this.$refs.add_product_responsive.addProductResponsive(data);\r
+         })\r
+    }\r
+    \r
+}\r
+<\/script>\r
+<style>\r
+    .select2-selection{\r
+        min-height: 2rem;\r
+    }\r
+    @media (max-width: 768px) {\r
+        #modal-customer-button{\r
+            width: 100%;\r
+        }\r
+        .select2{\r
+            width: 100% !important;\r
+        }\r
+    }\r
+</style>`] }, media: void 0 });
+      };
       __vue_scope_id__12 = void 0;
       __vue_module_identifier__12 = void 0;
       __vue_is_functional_template__12 = false;
-      __vue_component__12 = /* @__PURE__ */ __vue_normalize__12({ render: __vue_render__12, staticRenderFns: __vue_staticRenderFns__12 }, __vue_inject_styles__12, __vue_script__12, __vue_scope_id__12, __vue_is_functional_template__12, __vue_module_identifier__12, false, void 0, void 0, void 0);
-      CardAddProduct_default = __vue_component__12;
+      __vue_component__12 = /* @__PURE__ */ __vue_normalize__12({ render: __vue_render__12, staticRenderFns: __vue_staticRenderFns__12 }, __vue_inject_styles__12, __vue_script__12, __vue_scope_id__12, __vue_is_functional_template__12, __vue_module_identifier__12, false, __vue_create_injector__2, void 0, void 0);
+      CardCreateSale_default = __vue_component__12;
     }
   });
 

@@ -17,12 +17,9 @@
                 </div>
                 <div class="form-group">
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fa fa-user"></i></span>
-                        <select name="customer" class="form-select" required v-model="sale.customer_id">
-                            <option value="" selected>Select Customer</option>
+                        <select name="customer" required v-model="sale.customer_id" id="select-customer" class="form-control">
                             <option v-for="(customer, index) in customersParser" :key="index" :value="customer.id" >{{ customer.name }}</option>
                         </select>
-                        <span class="input-group-text">
                             <button 
                                 type="button" 
                                 id="modal-customer-button" 
@@ -31,30 +28,46 @@
                                 data-bs-target="#create-modal-customer"
                             >Add client
                             </button>
-                        </span>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row" v-for="(product, index) in sale.products" :key="index">
                     <div class="col-6">
                         <div class="input-group ">
-                            <button class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button>
-                            <input type="text" name="product" class="form-control" placeholder="Add Product" required>
+                            <button class="btn btn-danger btn-sm" type="button" @click="removeProductSale(product.id)"><i class="fa fa-times"></i></button>
+                            <input type="text" name="product" class="form-control" placeholder="Product" required :value="product.name" readonly>
                         </div>
                     </div>
                     <div class="col-3">
-                        <input type="number" name="quantity_product" class="form-control" min="1" placeholder="1" required>
+                        <imask-input 
+                            required
+                            name="quantity_product"
+                            class="form-control" 
+                            :mask="Number"
+                            :min="1"
+                            :type="'number'"
+                            :max="product.stock"
+                            value="1"
+                            @change="modifyQuantity(product.id, $event)"
+                        />
                     </div>
-                    <div class="col-3">
+                    <div class="col-3 px-0 px-md-3">
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa fa-usd"></i></span>
-                            <input type="number" name="price" class="form-control" placeholder="10$" readonly required>
+                            <input type="number" name="price" class="form-control" placeholder="10$" readonly required :value="product.price">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="d-grid">
-                            <button type="button" class="d-block btn btn-outline-success d-lg-none">Add Product</button>
+                            <button 
+                                type="button" 
+                                id="modal-customer-button" 
+                                class="d-block btn btn-outline-success d-lg-none" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#modal-add-product"
+                            >Add Product
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -72,14 +85,14 @@
                                 <tr>
                                     <td class="w-50">
                                         <div class="input-group">
-                                            <input type="number" class="form-control" name="tax" min="0" autocomplete="off" placeholder="0" required>
+                                            <input type="number" class="form-control" name="tax" min="0" autocomplete="off" placeholder="0" required v-model="sale.tax" @change="totalize">
                                             <span class="input-group-text"><i class="fa fa-percent"></i></span>
                                         </div>
                                     </td>
                                     <td class="w-50">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa fa-usd"></i></span>
-                                            <input type="number" class="form-control" name="total_sale" min="1" autocomplete="off" placeholder="0.00" readonly required>
+                                            <input type="number" class="form-control" name="total_sale" min="1" autocomplete="off" placeholder="0.00" readonly required v-model="sale.total">
                                         </div>
                                     </td>
                                 </tr>
@@ -109,18 +122,48 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary px-3">Save sale</button>
+                    <button type="submit" class="btn btn-primary px-3">Sell</button>
                 </div>
             </div>
         </form>
 
         <customer-modal :csrf_token="csrf_token" @mutateCustomer="mutateDataCustomer"></customer-modal>
+
+        <div
+            class="modal fade"
+            id="modal-add-product"
+            tabindex="-1"
+            aria-labelledby="ModalAddProduct"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <table-add-product :products="'[]'" id_table="table-add-responsive" :responsive="true" ref="add_product_responsive"></table-add-product>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                </div>
+
+                </div>
+                
+            </div>
+        </div>
     </div>
 
 </template>
 <script>
 import { EventBus } from '../EventBus';
 import ModalCustomer from '../customers/ModalCustomers.vue';
+import { IMaskComponent } from 'vue-imask';
+import ModalAddProduct from './CardAddProduct.vue';
 export default {
     name: 'card-create-sale',
     props:{
@@ -138,7 +181,9 @@ export default {
         }
     },
     components:{
-        ModalCustomer
+        ModalCustomer,
+        'imask-input': IMaskComponent,
+        ModalAddProduct
     },
     data(){
         return {
@@ -147,8 +192,13 @@ export default {
             sale:{
                 customer_id: '',
                 method: '',
-
-            }
+                products: [],
+                tax: 0,
+                total: 0,
+            },
+            select2:{
+                options: []
+            },
         }
     },
     computed:{
@@ -161,8 +211,64 @@ export default {
         mutateDataCustomer(data){
             this.customersParser.push(data);
             this.sale.customer_id = data.id;
+        },
+        addProductSale(product){
+            product.quantity = 1;
+            this.sale.products.push(product);
+            this.totalize();
+        },
+        removeProductSale(id){
+            this.sale.products = this.sale.products.filter(product => { return product.id != id }); 
+            this.totalize();
+            EventBus.$emit('remove', id);
+        },
+        totalize(){
+            let total = 0;
+            this.sale.products.map(product => {
+                total = total + (product.price * product.quantity)
+            })
+            if(this.sale.tax > 0){
+                this.sale.total = ((total * this.sale.tax) / 100) + total;
+            }else{
+                this.sale.total = total;
+            }
+        },
+        modifyQuantity(id, event){
+            if(event.target.value > 0){
+                const product = this.sale.products.find(p => p.id == id);
+                product.quantity = parseInt(event.target.value);
+                this.totalize();    
+            }
         }
+
+    },
+    mounted(){
+         this.customersParser.map((customer) => {
+            this.select2.options.push({id: customer.id, value: customer.name})
+        });
+        $('#select-customer').select2({
+            width: 'element',
+            placeholder: "Select Customer",
+        });
+
+        EventBus.$on('add', product => this.addProductSale(product));
+        EventBus.$on('products', data => {
+            this.$refs.add_product_responsive.addProductResponsive(data);
+         })
     }
     
 }
 </script>
+<style>
+    .select2-selection{
+        min-height: 2rem;
+    }
+    @media (max-width: 768px) {
+        #modal-customer-button{
+            width: 100%;
+        }
+        .select2{
+            width: 100% !important;
+        }
+    }
+</style>
