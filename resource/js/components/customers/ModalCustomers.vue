@@ -127,7 +127,6 @@
                     v-model="credit" 
                     class="form-control" 
                     placeholder="Credit Limit" 
-                    required 
                     :mask="Number"
                   />
                 </div>
@@ -190,7 +189,7 @@ export default {
       form_data.append('email', (this.email) ? this.email : '');
       form_data.append('phone', (this.phone) ? this.phone : '');
       form_data.append('address', this.address);
-      form_data.append('credit', this.credit);
+      form_data.append('credit', (this.credit) ? this.credit : '');
 
       if(this.edit){
           axios({

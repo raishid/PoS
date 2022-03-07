@@ -2268,12 +2268,12 @@
           }
         }
         var currentRenderingInstance = null;
-        function renderMixin(Vue4) {
-          installRenderHelpers(Vue4.prototype);
-          Vue4.prototype.$nextTick = function(fn) {
+        function renderMixin(Vue5) {
+          installRenderHelpers(Vue5.prototype);
+          Vue5.prototype.$nextTick = function(fn) {
             return nextTick2(fn, this);
           };
-          Vue4.prototype._render = function() {
+          Vue5.prototype._render = function() {
             var vm = this;
             var ref3 = vm.$options;
             var render2 = ref3.render;
@@ -2457,9 +2457,9 @@
           updateListeners(listeners, oldListeners || {}, add, remove$1, createOnceHandler, vm);
           target = void 0;
         }
-        function eventsMixin(Vue4) {
+        function eventsMixin(Vue5) {
           var hookRE = /^hook:/;
-          Vue4.prototype.$on = function(event, fn) {
+          Vue5.prototype.$on = function(event, fn) {
             var vm = this;
             if (Array.isArray(event)) {
               for (var i = 0, l = event.length; i < l; i++) {
@@ -2473,7 +2473,7 @@
             }
             return vm;
           };
-          Vue4.prototype.$once = function(event, fn) {
+          Vue5.prototype.$once = function(event, fn) {
             var vm = this;
             function on2() {
               vm.$off(event, on2);
@@ -2483,7 +2483,7 @@
             vm.$on(event, on2);
             return vm;
           };
-          Vue4.prototype.$off = function(event, fn) {
+          Vue5.prototype.$off = function(event, fn) {
             var vm = this;
             if (!arguments.length) {
               vm._events = /* @__PURE__ */ Object.create(null);
@@ -2514,7 +2514,7 @@
             }
             return vm;
           };
-          Vue4.prototype.$emit = function(event) {
+          Vue5.prototype.$emit = function(event) {
             var vm = this;
             {
               var lowerCaseEvent = event.toLowerCase();
@@ -2563,8 +2563,8 @@
           vm._isDestroyed = false;
           vm._isBeingDestroyed = false;
         }
-        function lifecycleMixin(Vue4) {
-          Vue4.prototype._update = function(vnode, hydrating) {
+        function lifecycleMixin(Vue5) {
+          Vue5.prototype._update = function(vnode, hydrating) {
             var vm = this;
             var prevEl = vm.$el;
             var prevVnode = vm._vnode;
@@ -2586,13 +2586,13 @@
               vm.$parent.$el = vm.$el;
             }
           };
-          Vue4.prototype.$forceUpdate = function() {
+          Vue5.prototype.$forceUpdate = function() {
             var vm = this;
             if (vm._watcher) {
               vm._watcher.update();
             }
           };
-          Vue4.prototype.$destroy = function() {
+          Vue5.prototype.$destroy = function() {
             var vm = this;
             if (vm._isBeingDestroyed) {
               return;
@@ -3201,7 +3201,7 @@
           }
           return vm.$watch(expOrFn, handler2, options);
         }
-        function stateMixin(Vue4) {
+        function stateMixin(Vue5) {
           var dataDef = {};
           dataDef.get = function() {
             return this._data;
@@ -3218,11 +3218,11 @@
               warn2("$props is readonly.", this);
             };
           }
-          Object.defineProperty(Vue4.prototype, "$data", dataDef);
-          Object.defineProperty(Vue4.prototype, "$props", propsDef);
-          Vue4.prototype.$set = set3;
-          Vue4.prototype.$delete = del2;
-          Vue4.prototype.$watch = function(expOrFn, cb, options) {
+          Object.defineProperty(Vue5.prototype, "$data", dataDef);
+          Object.defineProperty(Vue5.prototype, "$props", propsDef);
+          Vue5.prototype.$set = set3;
+          Vue5.prototype.$delete = del2;
+          Vue5.prototype.$watch = function(expOrFn, cb, options) {
             var vm = this;
             if (isPlainObject2(cb)) {
               return createWatcher2(vm, expOrFn, cb, options);
@@ -3242,8 +3242,8 @@
           };
         }
         var uid$3 = 0;
-        function initMixin(Vue4) {
-          Vue4.prototype._init = function(options) {
+        function initMixin(Vue5) {
+          Vue5.prototype._init = function(options) {
             var vm = this;
             vm._uid = uid$3++;
             var startTag, endTag2;
@@ -3328,19 +3328,19 @@
           }
           return modified;
         }
-        function Vue3(options) {
-          if (!(this instanceof Vue3)) {
+        function Vue4(options) {
+          if (!(this instanceof Vue4)) {
             warn2("Vue is a constructor and should be called with the `new` keyword");
           }
           this._init(options);
         }
-        initMixin(Vue3);
-        stateMixin(Vue3);
-        eventsMixin(Vue3);
-        lifecycleMixin(Vue3);
-        renderMixin(Vue3);
-        function initUse(Vue4) {
-          Vue4.use = function(plugin) {
+        initMixin(Vue4);
+        stateMixin(Vue4);
+        eventsMixin(Vue4);
+        lifecycleMixin(Vue4);
+        renderMixin(Vue4);
+        function initUse(Vue5) {
+          Vue5.use = function(plugin) {
             var installedPlugins = this._installedPlugins || (this._installedPlugins = []);
             if (installedPlugins.indexOf(plugin) > -1) {
               return this;
@@ -3356,16 +3356,16 @@
             return this;
           };
         }
-        function initMixin$1(Vue4) {
-          Vue4.mixin = function(mixin2) {
+        function initMixin$1(Vue5) {
+          Vue5.mixin = function(mixin2) {
             this.options = mergeOptions(this.options, mixin2);
             return this;
           };
         }
-        function initExtend(Vue4) {
-          Vue4.cid = 0;
+        function initExtend(Vue5) {
+          Vue5.cid = 0;
           var cid = 1;
-          Vue4.extend = function(extendOptions) {
+          Vue5.extend = function(extendOptions) {
             extendOptions = extendOptions || {};
             var Super = this;
             var SuperId = Super.cid;
@@ -3419,9 +3419,9 @@
             defineComputed(Comp.prototype, key, computed2[key]);
           }
         }
-        function initAssetRegisters(Vue4) {
+        function initAssetRegisters(Vue5) {
           ASSET_TYPES.forEach(function(type) {
-            Vue4[type] = function(id, definition) {
+            Vue5[type] = function(id, definition) {
               if (!definition) {
                 return this.options[type + "s"][id];
               } else {
@@ -3567,7 +3567,7 @@
         var builtInComponents = {
           KeepAlive
         };
-        function initGlobalAPI(Vue4) {
+        function initGlobalAPI(Vue5) {
           var configDef = {};
           configDef.get = function() {
             return config;
@@ -3577,44 +3577,44 @@
               warn2("Do not replace the Vue.config object, set individual fields instead.");
             };
           }
-          Object.defineProperty(Vue4, "config", configDef);
-          Vue4.util = {
+          Object.defineProperty(Vue5, "config", configDef);
+          Vue5.util = {
             warn: warn2,
             extend,
             mergeOptions,
             defineReactive: defineReactive$$1
           };
-          Vue4.set = set3;
-          Vue4.delete = del2;
-          Vue4.nextTick = nextTick2;
-          Vue4.observable = function(obj) {
+          Vue5.set = set3;
+          Vue5.delete = del2;
+          Vue5.nextTick = nextTick2;
+          Vue5.observable = function(obj) {
             observe2(obj);
             return obj;
           };
-          Vue4.options = /* @__PURE__ */ Object.create(null);
+          Vue5.options = /* @__PURE__ */ Object.create(null);
           ASSET_TYPES.forEach(function(type) {
-            Vue4.options[type + "s"] = /* @__PURE__ */ Object.create(null);
+            Vue5.options[type + "s"] = /* @__PURE__ */ Object.create(null);
           });
-          Vue4.options._base = Vue4;
-          extend(Vue4.options.components, builtInComponents);
-          initUse(Vue4);
-          initMixin$1(Vue4);
-          initExtend(Vue4);
-          initAssetRegisters(Vue4);
+          Vue5.options._base = Vue5;
+          extend(Vue5.options.components, builtInComponents);
+          initUse(Vue5);
+          initMixin$1(Vue5);
+          initExtend(Vue5);
+          initAssetRegisters(Vue5);
         }
-        initGlobalAPI(Vue3);
-        Object.defineProperty(Vue3.prototype, "$isServer", {
+        initGlobalAPI(Vue4);
+        Object.defineProperty(Vue4.prototype, "$isServer", {
           get: isServerRendering
         });
-        Object.defineProperty(Vue3.prototype, "$ssrContext", {
+        Object.defineProperty(Vue4.prototype, "$ssrContext", {
           get: function get2() {
             return this.$vnode && this.$vnode.ssrContext;
           }
         });
-        Object.defineProperty(Vue3, "FunctionalRenderContext", {
+        Object.defineProperty(Vue4, "FunctionalRenderContext", {
           value: FunctionalRenderContext
         });
-        Vue3.version = "2.6.14";
+        Vue4.version = "2.6.14";
         var isReservedAttr = makeMap("style,class");
         var acceptValue = makeMap("input,textarea,option,select,progress");
         var mustUseProp = function(tag, type, attr) {
@@ -6159,15 +6159,15 @@
           Transition,
           TransitionGroup
         };
-        Vue3.config.mustUseProp = mustUseProp;
-        Vue3.config.isReservedTag = isReservedTag;
-        Vue3.config.isReservedAttr = isReservedAttr;
-        Vue3.config.getTagNamespace = getTagNamespace;
-        Vue3.config.isUnknownElement = isUnknownElement;
-        extend(Vue3.options.directives, platformDirectives);
-        extend(Vue3.options.components, platformComponents);
-        Vue3.prototype.__patch__ = inBrowser ? patch : noop;
-        Vue3.prototype.$mount = function(el, hydrating) {
+        Vue4.config.mustUseProp = mustUseProp;
+        Vue4.config.isReservedTag = isReservedTag;
+        Vue4.config.isReservedAttr = isReservedAttr;
+        Vue4.config.getTagNamespace = getTagNamespace;
+        Vue4.config.isUnknownElement = isUnknownElement;
+        extend(Vue4.options.directives, platformDirectives);
+        extend(Vue4.options.components, platformComponents);
+        Vue4.prototype.__patch__ = inBrowser ? patch : noop;
+        Vue4.prototype.$mount = function(el, hydrating) {
           el = el && inBrowser ? query(el) : void 0;
           return mountComponent(this, el, hydrating);
         };
@@ -6175,7 +6175,7 @@
           setTimeout(function() {
             if (config.devtools) {
               if (devtools) {
-                devtools.emit("init", Vue3);
+                devtools.emit("init", Vue4);
               } else {
                 console[console.info ? "info" : "log"]("Download the Vue Devtools extension for a better development experience:\nhttps://github.com/vuejs/vue-devtools");
               }
@@ -8171,8 +8171,8 @@
           var el = query(id);
           return el && el.innerHTML;
         });
-        var mount = Vue3.prototype.$mount;
-        Vue3.prototype.$mount = function(el, hydrating) {
+        var mount = Vue4.prototype.$mount;
+        Vue4.prototype.$mount = function(el, hydrating) {
           el = el && query(el);
           if (el === document.body || el === document.documentElement) {
             warn2("Do not mount Vue to <html> or <body> - mount to normal elements instead.");
@@ -8232,8 +8232,8 @@
             return container.innerHTML;
           }
         }
-        Vue3.compile = compileToFunctions;
-        return Vue3;
+        Vue4.compile = compileToFunctions;
+        return Vue4;
       });
     }
   });
@@ -22808,12 +22808,12 @@ export default {\r
         }
       }
       var currentRenderingInstance = null;
-      function renderMixin(Vue4) {
-        installRenderHelpers(Vue4.prototype);
-        Vue4.prototype.$nextTick = function(fn) {
+      function renderMixin(Vue5) {
+        installRenderHelpers(Vue5.prototype);
+        Vue5.prototype.$nextTick = function(fn) {
           return nextTick2(fn, this);
         };
-        Vue4.prototype._render = function() {
+        Vue5.prototype._render = function() {
           var vm = this;
           var ref3 = vm.$options;
           var render2 = ref3.render;
@@ -22997,9 +22997,9 @@ export default {\r
         updateListeners(listeners, oldListeners || {}, add, remove$1, createOnceHandler, vm);
         target = void 0;
       }
-      function eventsMixin(Vue4) {
+      function eventsMixin(Vue5) {
         var hookRE = /^hook:/;
-        Vue4.prototype.$on = function(event, fn) {
+        Vue5.prototype.$on = function(event, fn) {
           var vm = this;
           if (Array.isArray(event)) {
             for (var i = 0, l = event.length; i < l; i++) {
@@ -23013,7 +23013,7 @@ export default {\r
           }
           return vm;
         };
-        Vue4.prototype.$once = function(event, fn) {
+        Vue5.prototype.$once = function(event, fn) {
           var vm = this;
           function on() {
             vm.$off(event, on);
@@ -23023,7 +23023,7 @@ export default {\r
           vm.$on(event, on);
           return vm;
         };
-        Vue4.prototype.$off = function(event, fn) {
+        Vue5.prototype.$off = function(event, fn) {
           var vm = this;
           if (!arguments.length) {
             vm._events = /* @__PURE__ */ Object.create(null);
@@ -23054,7 +23054,7 @@ export default {\r
           }
           return vm;
         };
-        Vue4.prototype.$emit = function(event) {
+        Vue5.prototype.$emit = function(event) {
           var vm = this;
           {
             var lowerCaseEvent = event.toLowerCase();
@@ -23103,8 +23103,8 @@ export default {\r
         vm._isDestroyed = false;
         vm._isBeingDestroyed = false;
       }
-      function lifecycleMixin(Vue4) {
-        Vue4.prototype._update = function(vnode, hydrating) {
+      function lifecycleMixin(Vue5) {
+        Vue5.prototype._update = function(vnode, hydrating) {
           var vm = this;
           var prevEl = vm.$el;
           var prevVnode = vm._vnode;
@@ -23126,13 +23126,13 @@ export default {\r
             vm.$parent.$el = vm.$el;
           }
         };
-        Vue4.prototype.$forceUpdate = function() {
+        Vue5.prototype.$forceUpdate = function() {
           var vm = this;
           if (vm._watcher) {
             vm._watcher.update();
           }
         };
-        Vue4.prototype.$destroy = function() {
+        Vue5.prototype.$destroy = function() {
           var vm = this;
           if (vm._isBeingDestroyed) {
             return;
@@ -23742,7 +23742,7 @@ export default {\r
         }
         return vm.$watch(expOrFn, handler2, options);
       }
-      function stateMixin(Vue4) {
+      function stateMixin(Vue5) {
         var dataDef = {};
         dataDef.get = function() {
           return this._data;
@@ -23759,11 +23759,11 @@ export default {\r
             warn2("$props is readonly.", this);
           };
         }
-        Object.defineProperty(Vue4.prototype, "$data", dataDef);
-        Object.defineProperty(Vue4.prototype, "$props", propsDef);
-        Vue4.prototype.$set = set3;
-        Vue4.prototype.$delete = del2;
-        Vue4.prototype.$watch = function(expOrFn, cb, options) {
+        Object.defineProperty(Vue5.prototype, "$data", dataDef);
+        Object.defineProperty(Vue5.prototype, "$props", propsDef);
+        Vue5.prototype.$set = set3;
+        Vue5.prototype.$delete = del2;
+        Vue5.prototype.$watch = function(expOrFn, cb, options) {
           var vm = this;
           if (isPlainObject2(cb)) {
             return createWatcher2(vm, expOrFn, cb, options);
@@ -23783,8 +23783,8 @@ export default {\r
         };
       }
       var uid$3 = 0;
-      function initMixin(Vue4) {
-        Vue4.prototype._init = function(options) {
+      function initMixin(Vue5) {
+        Vue5.prototype._init = function(options) {
           var vm = this;
           vm._uid = uid$3++;
           var startTag, endTag;
@@ -23869,19 +23869,19 @@ export default {\r
         }
         return modified;
       }
-      function Vue3(options) {
-        if (!(this instanceof Vue3)) {
+      function Vue4(options) {
+        if (!(this instanceof Vue4)) {
           warn2("Vue is a constructor and should be called with the `new` keyword");
         }
         this._init(options);
       }
-      initMixin(Vue3);
-      stateMixin(Vue3);
-      eventsMixin(Vue3);
-      lifecycleMixin(Vue3);
-      renderMixin(Vue3);
-      function initUse(Vue4) {
-        Vue4.use = function(plugin) {
+      initMixin(Vue4);
+      stateMixin(Vue4);
+      eventsMixin(Vue4);
+      lifecycleMixin(Vue4);
+      renderMixin(Vue4);
+      function initUse(Vue5) {
+        Vue5.use = function(plugin) {
           var installedPlugins = this._installedPlugins || (this._installedPlugins = []);
           if (installedPlugins.indexOf(plugin) > -1) {
             return this;
@@ -23897,16 +23897,16 @@ export default {\r
           return this;
         };
       }
-      function initMixin$1(Vue4) {
-        Vue4.mixin = function(mixin2) {
+      function initMixin$1(Vue5) {
+        Vue5.mixin = function(mixin2) {
           this.options = mergeOptions(this.options, mixin2);
           return this;
         };
       }
-      function initExtend(Vue4) {
-        Vue4.cid = 0;
+      function initExtend(Vue5) {
+        Vue5.cid = 0;
         var cid = 1;
-        Vue4.extend = function(extendOptions) {
+        Vue5.extend = function(extendOptions) {
           extendOptions = extendOptions || {};
           var Super = this;
           var SuperId = Super.cid;
@@ -23960,9 +23960,9 @@ export default {\r
           defineComputed(Comp.prototype, key, computed2[key]);
         }
       }
-      function initAssetRegisters(Vue4) {
+      function initAssetRegisters(Vue5) {
         ASSET_TYPES.forEach(function(type) {
-          Vue4[type] = function(id, definition) {
+          Vue5[type] = function(id, definition) {
             if (!definition) {
               return this.options[type + "s"][id];
             } else {
@@ -24108,7 +24108,7 @@ export default {\r
       var builtInComponents = {
         KeepAlive
       };
-      function initGlobalAPI(Vue4) {
+      function initGlobalAPI(Vue5) {
         var configDef = {};
         configDef.get = function() {
           return config;
@@ -24118,44 +24118,44 @@ export default {\r
             warn2("Do not replace the Vue.config object, set individual fields instead.");
           };
         }
-        Object.defineProperty(Vue4, "config", configDef);
-        Vue4.util = {
+        Object.defineProperty(Vue5, "config", configDef);
+        Vue5.util = {
           warn: warn2,
           extend,
           mergeOptions,
           defineReactive: defineReactive$$1
         };
-        Vue4.set = set3;
-        Vue4.delete = del2;
-        Vue4.nextTick = nextTick2;
-        Vue4.observable = function(obj) {
+        Vue5.set = set3;
+        Vue5.delete = del2;
+        Vue5.nextTick = nextTick2;
+        Vue5.observable = function(obj) {
           observe2(obj);
           return obj;
         };
-        Vue4.options = /* @__PURE__ */ Object.create(null);
+        Vue5.options = /* @__PURE__ */ Object.create(null);
         ASSET_TYPES.forEach(function(type) {
-          Vue4.options[type + "s"] = /* @__PURE__ */ Object.create(null);
+          Vue5.options[type + "s"] = /* @__PURE__ */ Object.create(null);
         });
-        Vue4.options._base = Vue4;
-        extend(Vue4.options.components, builtInComponents);
-        initUse(Vue4);
-        initMixin$1(Vue4);
-        initExtend(Vue4);
-        initAssetRegisters(Vue4);
+        Vue5.options._base = Vue5;
+        extend(Vue5.options.components, builtInComponents);
+        initUse(Vue5);
+        initMixin$1(Vue5);
+        initExtend(Vue5);
+        initAssetRegisters(Vue5);
       }
-      initGlobalAPI(Vue3);
-      Object.defineProperty(Vue3.prototype, "$isServer", {
+      initGlobalAPI(Vue4);
+      Object.defineProperty(Vue4.prototype, "$isServer", {
         get: isServerRendering
       });
-      Object.defineProperty(Vue3.prototype, "$ssrContext", {
+      Object.defineProperty(Vue4.prototype, "$ssrContext", {
         get: function get2() {
           return this.$vnode && this.$vnode.ssrContext;
         }
       });
-      Object.defineProperty(Vue3, "FunctionalRenderContext", {
+      Object.defineProperty(Vue4, "FunctionalRenderContext", {
         value: FunctionalRenderContext
       });
-      Vue3.version = "2.6.14";
+      Vue4.version = "2.6.14";
       var isReservedAttr = makeMap("style,class");
       var acceptValue = makeMap("input,textarea,option,select,progress");
       var mustUseProp = function(tag, type, attr) {
@@ -26263,15 +26263,15 @@ export default {\r
         Transition,
         TransitionGroup
       };
-      Vue3.config.mustUseProp = mustUseProp;
-      Vue3.config.isReservedTag = isReservedTag;
-      Vue3.config.isReservedAttr = isReservedAttr;
-      Vue3.config.getTagNamespace = getTagNamespace;
-      Vue3.config.isUnknownElement = isUnknownElement;
-      extend(Vue3.options.directives, platformDirectives);
-      extend(Vue3.options.components, platformComponents);
-      Vue3.prototype.__patch__ = inBrowser ? patch : noop;
-      Vue3.prototype.$mount = function(el, hydrating) {
+      Vue4.config.mustUseProp = mustUseProp;
+      Vue4.config.isReservedTag = isReservedTag;
+      Vue4.config.isReservedAttr = isReservedAttr;
+      Vue4.config.getTagNamespace = getTagNamespace;
+      Vue4.config.isUnknownElement = isUnknownElement;
+      extend(Vue4.options.directives, platformDirectives);
+      extend(Vue4.options.components, platformComponents);
+      Vue4.prototype.__patch__ = inBrowser ? patch : noop;
+      Vue4.prototype.$mount = function(el, hydrating) {
         el = el && inBrowser ? query(el) : void 0;
         return mountComponent(this, el, hydrating);
       };
@@ -26279,7 +26279,7 @@ export default {\r
         setTimeout(function() {
           if (config.devtools) {
             if (devtools) {
-              devtools.emit("init", Vue3);
+              devtools.emit("init", Vue4);
             } else {
               console[console.info ? "info" : "log"]("Download the Vue Devtools extension for a better development experience:\nhttps://github.com/vuejs/vue-devtools");
             }
@@ -26289,7 +26289,7 @@ export default {\r
           }
         }, 0);
       }
-      module.exports = Vue3;
+      module.exports = Vue4;
     }
   });
 
@@ -26396,8 +26396,8 @@ export default {\r
   function isVue(obj) {
     return obj && isFunction(obj) && obj.name === "Vue";
   }
-  function isVueRegistered(Vue3) {
-    return vueConstructor && hasOwn(Vue3, PluginInstalledFlag);
+  function isVueRegistered(Vue4) {
+    return vueConstructor && hasOwn(Vue4, PluginInstalledFlag);
   }
   function getVueConstructor() {
     if (true) {
@@ -26412,12 +26412,12 @@ export default {\r
     }
     return constructor;
   }
-  function setVueConstructor(Vue3) {
-    if (vueConstructor && Vue3.__proto__ !== vueConstructor.__proto__) {
+  function setVueConstructor(Vue4) {
+    if (vueConstructor && Vue4.__proto__ !== vueConstructor.__proto__) {
       warn("[vue-composition-api] another instance of Vue installed");
     }
-    vueConstructor = Vue3;
-    Object.defineProperty(Vue3, PluginInstalledFlag, {
+    vueConstructor = Vue4;
+    Object.defineProperty(Vue4, PluginInstalledFlag, {
       configurable: true,
       writable: true,
       value: true
@@ -26552,11 +26552,11 @@ export default {\r
     return v === void 0 || v === null;
   }
   function warn(msg, vm) {
-    var Vue3 = getRegisteredVueOrDefault();
-    if (!Vue3 || !Vue3.util)
+    var Vue4 = getRegisteredVueOrDefault();
+    if (!Vue4 || !Vue4.util)
       console.warn("[vue-composition-api] ".concat(msg));
     else
-      Vue3.util.warn(msg, vm);
+      Vue4.util.warn(msg, vm);
   }
   function logError(err, vm, info) {
     if (true) {
@@ -26593,8 +26593,8 @@ export default {\r
     return vm;
   }
   function isComponentInstance(obj) {
-    var Vue3 = getVueConstructor();
-    return Vue3 && obj instanceof Vue3;
+    var Vue4 = getVueConstructor();
+    return Vue4 && obj instanceof Vue4;
   }
   function createSlotProxy(vm, slotName) {
     return function() {
@@ -26635,8 +26635,8 @@ export default {\r
     return hasSymbol ? Symbol.for(name) : name;
   }
   function set$1(target, key, val) {
-    var Vue3 = getVueConstructor();
-    var _a = Vue3.util, warn2 = _a.warn, defineReactive = _a.defineReactive;
+    var Vue4 = getVueConstructor();
+    var _a = Vue4.util, warn2 = _a.warn, defineReactive = _a.defineReactive;
     if (isUndef(target) || isPrimitive(target)) {
       warn2("Cannot set reactive property on undefined, null, or primitive value: ".concat(target));
     }
@@ -26798,12 +26798,12 @@ export default {\r
     });
   }
   function observe(obj) {
-    var Vue3 = getRegisteredVueOrDefault();
+    var Vue4 = getRegisteredVueOrDefault();
     var observed;
-    if (Vue3.observable) {
-      observed = Vue3.observable(obj);
+    if (Vue4.observable) {
+      observed = Vue4.observable(obj);
     } else {
-      var vm = defineComponentInstance(Vue3, {
+      var vm = defineComponentInstance(Vue4, {
         data: {
           $$state: obj
         }
@@ -26890,9 +26890,9 @@ export default {\r
       return instance && injectHookOption(getVueConstructor(), instance, lifeCyclehook, callback);
     };
   }
-  function injectHookOption(Vue3, instance, hook, val) {
+  function injectHookOption(Vue4, instance, hook, val) {
     var options = instance.proxy.$options;
-    var mergeFn = Vue3.config.optionMergeStrategies[hook];
+    var mergeFn = Vue4.config.optionMergeStrategies[hook];
     var wrappedHook = wrapHookCall(instance, val);
     options[hook] = mergeFn(options[hook], wrappedHook);
     return wrappedHook;
@@ -27374,8 +27374,8 @@ export default {\r
       setCurrentInstance(preVm);
     }
   }
-  function mixin(Vue3) {
-    Vue3.mixin({
+  function mixin(Vue4) {
+    Vue4.mixin({
       beforeCreate: functionApiInit,
       mounted: function() {
         afterRender(this);
@@ -27484,8 +27484,8 @@ export default {\r
         return;
       if (!isPlainObject(target) || isRef(target) || isReactive(target) || isRaw(target))
         return;
-      var Vue4 = getVueConstructor();
-      var defineReactive = Vue4.util.defineReactive;
+      var Vue5 = getVueConstructor();
+      var defineReactive = Vue5.util.defineReactive;
       Object.keys(target).forEach(function(k) {
         var val = target[k];
         defineReactive(target, k, val);
@@ -27582,29 +27582,29 @@ export default {\r
     }
     return to;
   }
-  function install(Vue3) {
-    if (isVueRegistered(Vue3)) {
+  function install(Vue4) {
+    if (isVueRegistered(Vue4)) {
       if (true) {
         warn("[vue-composition-api] already installed. Vue.use(VueCompositionAPI) should be called only once.");
       }
       return;
     }
     if (true) {
-      if (Vue3.version) {
-        if (Vue3.version[0] !== "2" || Vue3.version[1] !== ".") {
-          warn("[vue-composition-api] only works with Vue 2, v".concat(Vue3.version, " found."));
+      if (Vue4.version) {
+        if (Vue4.version[0] !== "2" || Vue4.version[1] !== ".") {
+          warn("[vue-composition-api] only works with Vue 2, v".concat(Vue4.version, " found."));
         }
       } else {
         warn("[vue-composition-api] no Vue version found");
       }
     }
-    Vue3.config.optionMergeStrategies.setup = function(parent, child) {
+    Vue4.config.optionMergeStrategies.setup = function(parent, child) {
       return function mergedSetupFn(props2, context) {
         return mergeData(isFunction(parent) ? parent(props2, context) || {} : void 0, isFunction(child) ? child(props2, context) || {} : void 0);
       };
     };
-    setVueConstructor(Vue3);
-    mixin(Vue3);
+    setVueConstructor(Vue4);
+    mixin(Vue4);
   }
   var extendStatics, __assign, activeEffectScope, effectScopeStack, EffectScopeImpl, EffectScope, vueDependency, requiredVue, vueConstructor, currentInstance, currentInstanceTracking, PluginInstalledFlag, instanceMapCache, toString, hasSymbol, noopFn, objectToString, toTypeString, isMap, isSet, MAX_VALID_ARRAY_LENGTH, WatcherPreFlushQueueKey, WatcherPostFlushQueueKey, RefKey, accessModifiedSet, rawSet, readonlySet, RefImpl, genName, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted, onErrorCaptured, onActivated, onDeactivated, onServerPrefetch, fallbackVM, EMPTY_OBJ, fallbackCreateElement, createElement, vmStateManager, Plugin;
   var init_vue_composition_api = __esm({
@@ -27781,8 +27781,8 @@ export default {\r
         get
       };
       Plugin = {
-        install: function(Vue3) {
-          return install(Vue3);
+        install: function(Vue4) {
+          return install(Vue4);
         }
       };
       if (typeof window !== "undefined" && window.Vue) {
@@ -28358,7 +28358,7 @@ export default {\r
             form_data.append("email", this.email ? this.email : "");
             form_data.append("phone", this.phone ? this.phone : "");
             form_data.append("address", this.address);
-            form_data.append("credit", this.credit);
+            form_data.append("credit", this.credit ? this.credit : "");
             if (this.edit) {
               axios({
                 method: "post",
@@ -28636,11 +28636,7 @@ export default {\r
                         _vm._v(" "),
                         _c("imask-input", {
                           staticClass: "form-control",
-                          attrs: {
-                            placeholder: "Credit Limit",
-                            required: "",
-                            mask: Number
-                          },
+                          attrs: { placeholder: "Credit Limit", mask: Number },
                           model: {
                             value: _vm.credit,
                             callback: function($$v) {
@@ -29322,25 +29318,655 @@ export default {\r
     }
   });
 
+  // resource/js/components/EventBus.js
+  var import_vue2, EventBus;
+  var init_EventBus = __esm({
+    "resource/js/components/EventBus.js"() {
+      import_vue2 = __toESM(require_vue());
+      EventBus = new import_vue2.default();
+    }
+  });
+
+  // resource/js/components/sales/CardCreateSale.vue
+  var CardCreateSale_exports = {};
+  __export(CardCreateSale_exports, {
+    default: () => CardCreateSale_default
+  });
+  function __vue_normalize__11(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script === "function" ? script.options : script) || {};
+    component2.__file = "resource\\js\\components\\sales\\CardCreateSale.vue";
+    if (!component2.render) {
+      component2.render = template.render;
+      component2.staticRenderFns = template.staticRenderFns;
+      component2._compiled = true;
+      if (functional)
+        component2.functional = true;
+    }
+    component2._scopeId = scope;
+    if (false) {
+      let hook;
+      if (false) {
+        hook = function(context) {
+          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+            context = __VUE_SSR_CONTEXT__;
+          }
+          if (style) {
+            style.call(this, createInjectorSSR(context));
+          }
+          if (context && context._registeredComponents) {
+            context._registeredComponents.add(moduleIdentifier);
+          }
+        };
+        component2._ssrRegister = hook;
+      } else if (style) {
+        hook = shadowMode ? function(context) {
+          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+        } : function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+      if (hook !== void 0) {
+        if (component2.functional) {
+          const originalRender = component2.render;
+          component2.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context);
+          };
+        } else {
+          const existing = component2.beforeCreate;
+          component2.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+    return component2;
+  }
+  var __vue_script__11, __vue_render__11, __vue_staticRenderFns__11, __vue_inject_styles__11, __vue_scope_id__11, __vue_module_identifier__11, __vue_is_functional_template__11, __vue_component__11, CardCreateSale_default;
+  var init_CardCreateSale = __esm({
+    "resource/js/components/sales/CardCreateSale.vue"() {
+      init_EventBus();
+      init_ModalCustomers();
+      __vue_script__11 = {
+        name: "card-create-sale",
+        props: {
+          auth: {
+            required: true
+          },
+          customers: {
+            required: true
+          },
+          id_sale: {
+            required: true
+          },
+          csrf_token: {
+            required: true
+          }
+        },
+        components: {
+          ModalCustomer: ModalCustomers_default
+        },
+        data() {
+          return {
+            authParser: JSON.parse(this.auth),
+            customersParser: JSON.parse(this.customers),
+            sale: {
+              customer_id: "",
+              method: ""
+            }
+          };
+        },
+        computed: {
+          verifyMethod() {
+            return this.sale.method !== "cash" && this.sale.method !== "";
+          }
+        },
+        methods: {
+          mutateDataCustomer(data) {
+            this.customersParser.push(data);
+            this.sale.customer_id = data.id;
+          }
+        }
+      };
+      __vue_render__11 = function() {
+        var _vm = this;
+        var _h = _vm.$createElement;
+        var _c = _vm._self._c || _h;
+        return _c("div", { staticClass: "card border-0 border-top border-4 border-success" }, [
+          _c("div", { staticClass: "card-title" }),
+          _vm._v(" "),
+          _c("form", { attrs: { role: "form", method: "post", autocomplete: "off" } }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("div", { staticClass: "input-group" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: { type: "text", name: "seller", readonly: "" },
+                    domProps: { value: _vm.authParser.name }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("div", { staticClass: "input-group" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: { type: "text", name: "sale", readonly: "" },
+                    domProps: { value: _vm.id_sale }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("div", { staticClass: "input-group" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c("select", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.sale.customer_id,
+                        expression: "sale.customer_id"
+                      }
+                    ],
+                    staticClass: "form-select",
+                    attrs: { name: "customer", required: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+                          return o.selected;
+                        }).map(function(o) {
+                          var val = "_value" in o ? o._value : o.value;
+                          return val;
+                        });
+                        _vm.$set(_vm.sale, "customer_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+                      }
+                    }
+                  }, [
+                    _c("option", { attrs: { value: "", selected: "" } }, [
+                      _vm._v("Select Customer")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.customersParser, function(customer, index) {
+                      return _c("option", { key: index, domProps: { value: customer.id } }, [_vm._v(_vm._s(customer.name))]);
+                    })
+                  ], 2),
+                  _vm._v(" "),
+                  _vm._m(3)
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(4),
+              _vm._v(" "),
+              _vm._m(5),
+              _vm._v(" "),
+              _vm._m(6),
+              _vm._v(" "),
+              _c("div", { staticClass: "row form-group border-top mt-3 py-4" }, [
+                _c("div", { staticClass: "col-6" }, [
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("select", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.sale.method,
+                          expression: "sale.method"
+                        }
+                      ],
+                      staticClass: "form-select",
+                      attrs: { name: "method", required: "" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+                            return o.selected;
+                          }).map(function(o) {
+                            var val = "_value" in o ? o._value : o.value;
+                            return val;
+                          });
+                          _vm.$set(_vm.sale, "method", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+                        }
+                      }
+                    }, [
+                      _c("option", { attrs: { value: "" } }, [
+                        _vm._v("Select the payment method")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "cash" } }, [
+                        _vm._v("Cash")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "debit" } }, [
+                        _vm._v("Debit")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "credit" } }, [
+                        _vm._v("Credit Card")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "wire_transfer" } }, [
+                        _vm._v("Wire transfer")
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm.verifyMethod ? _c("div", { staticClass: "col-6" }, [_vm._m(7)]) : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(8)
+          ]),
+          _vm._v(" "),
+          _c("customer-modal", {
+            attrs: { csrf_token: _vm.csrf_token },
+            on: { mutateCustomer: _vm.mutateDataCustomer }
+          })
+        ], 1);
+      };
+      __vue_staticRenderFns__11 = [
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-user" })
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-key" })
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-user" })
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("button", {
+              staticClass: "btn btn-success btn-sm",
+              attrs: {
+                type: "button",
+                id: "modal-customer-button",
+                "data-bs-toggle": "modal",
+                "data-bs-target": "#create-modal-customer"
+              }
+            }, [_vm._v("Add client\n                        ")])
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("div", { staticClass: "form-group row" }, [
+            _c("div", { staticClass: "col-6" }, [
+              _c("div", { staticClass: "input-group " }, [
+                _c("button", { staticClass: "btn btn-danger btn-sm" }, [
+                  _c("i", { staticClass: "fa fa-times" })
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    name: "product",
+                    placeholder: "Add Product",
+                    required: ""
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-3" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "number",
+                  name: "quantity_product",
+                  min: "1",
+                  placeholder: "1",
+                  required: ""
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-3" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c("span", { staticClass: "input-group-text" }, [
+                  _c("i", { staticClass: "fa fa-usd" })
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "number",
+                    name: "price",
+                    placeholder: "10$",
+                    readonly: "",
+                    required: ""
+                  }
+                })
+              ])
+            ])
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-12" }, [
+              _c("div", { staticClass: "d-grid" }, [
+                _c("button", {
+                  staticClass: "d-block btn btn-outline-success d-lg-none",
+                  attrs: { type: "button" }
+                }, [_vm._v("Add Product")])
+              ])
+            ])
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("div", { staticClass: "border-top mt-3 row justify-content-end" }, [
+            _c("div", { staticClass: "col-sm-8" }, [
+              _c("table", { staticClass: "table table-light" }, [
+                _c("thead", [
+                  _c("tr", [
+                    _c("th", [_vm._v("Tax")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Total")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tbody", [
+                  _c("tr", [
+                    _c("td", { staticClass: "w-50" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "number",
+                            name: "tax",
+                            min: "0",
+                            autocomplete: "off",
+                            placeholder: "0",
+                            required: ""
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "input-group-text" }, [
+                          _c("i", { staticClass: "fa fa-percent" })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "w-50" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _c("span", { staticClass: "input-group-text" }, [
+                          _c("i", { staticClass: "fa fa-usd" })
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "number",
+                            name: "total_sale",
+                            min: "1",
+                            autocomplete: "off",
+                            placeholder: "0.00",
+                            readonly: "",
+                            required: ""
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("div", { staticClass: "input-group" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                name: "id_transaction",
+                placeholder: "ID transaction",
+                required: ""
+              }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "input-group-text" }, [
+              _c("i", { staticClass: "fa fa-lock" })
+            ])
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("div", { staticClass: "card-footer" }, [
+            _c("div", { staticClass: "d-flex justify-content-end" }, [
+              _c("button", { staticClass: "btn btn-primary px-3", attrs: { type: "submit" } }, [_vm._v("Save sale")])
+            ])
+          ]);
+        }
+      ];
+      __vue_render__11._withStripped = true;
+      __vue_inject_styles__11 = void 0;
+      __vue_scope_id__11 = void 0;
+      __vue_module_identifier__11 = void 0;
+      __vue_is_functional_template__11 = false;
+      __vue_component__11 = /* @__PURE__ */ __vue_normalize__11({ render: __vue_render__11, staticRenderFns: __vue_staticRenderFns__11 }, __vue_inject_styles__11, __vue_script__11, __vue_scope_id__11, __vue_is_functional_template__11, __vue_module_identifier__11, false, void 0, void 0, void 0);
+      CardCreateSale_default = __vue_component__11;
+    }
+  });
+
+  // resource/js/components/sales/CardAddProduct.vue
+  var CardAddProduct_exports = {};
+  __export(CardAddProduct_exports, {
+    default: () => CardAddProduct_default
+  });
+  function __vue_normalize__12(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script === "function" ? script.options : script) || {};
+    component2.__file = "resource\\js\\components\\sales\\CardAddProduct.vue";
+    if (!component2.render) {
+      component2.render = template.render;
+      component2.staticRenderFns = template.staticRenderFns;
+      component2._compiled = true;
+      if (functional)
+        component2.functional = true;
+    }
+    component2._scopeId = scope;
+    if (false) {
+      let hook;
+      if (false) {
+        hook = function(context) {
+          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+            context = __VUE_SSR_CONTEXT__;
+          }
+          if (style) {
+            style.call(this, createInjectorSSR(context));
+          }
+          if (context && context._registeredComponents) {
+            context._registeredComponents.add(moduleIdentifier);
+          }
+        };
+        component2._ssrRegister = hook;
+      } else if (style) {
+        hook = shadowMode ? function(context) {
+          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+        } : function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+      if (hook !== void 0) {
+        if (component2.functional) {
+          const originalRender = component2.render;
+          component2.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context);
+          };
+        } else {
+          const existing = component2.beforeCreate;
+          component2.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+    return component2;
+  }
+  var __vue_script__12, __vue_render__12, __vue_staticRenderFns__12, __vue_inject_styles__12, __vue_scope_id__12, __vue_module_identifier__12, __vue_is_functional_template__12, __vue_component__12, CardAddProduct_default;
+  var init_CardAddProduct = __esm({
+    "resource/js/components/sales/CardAddProduct.vue"() {
+      __vue_script__12 = {
+        name: "table-add-product",
+        props: {
+          products: {
+            required: true
+          }
+        },
+        data() {
+          return {
+            productsParse: JSON.parse(this.products),
+            datatable: void 0
+          };
+        },
+        methods: {},
+        mounted() {
+          this.datatable = $("#table-products").DataTable({
+            responsive: true,
+            destroy: true,
+            lengthChange: false,
+            autoWidth: false,
+            rowReorder: {
+              selector: "td:nth-child(2)"
+            }
+          });
+        }
+      };
+      __vue_render__12 = function() {
+        var _vm = this;
+        var _h = _vm.$createElement;
+        var _c = _vm._self._c || _h;
+        return _c("div", { staticClass: "card border-0 border-top border-4 border-warning" }, [
+          _c("div", { staticClass: "card-title" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", {
+              staticClass: "table table-striped table-bordered",
+              attrs: { id: "table-products" }
+            }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("tbody", _vm._l(_vm.productsParse, function(product, index) {
+                return _c("tr", { key: index }, [
+                  _c("td", [_vm._v(_vm._s(index + 1))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(product.sku))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(product.name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(product.description))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(product.stock))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(product.price))]),
+                  _vm._v(" "),
+                  _vm._m(1, true)
+                ]);
+              }), 0)
+            ])
+          ])
+        ]);
+      };
+      __vue_staticRenderFns__12 = [
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v("#")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("SKU")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Description")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Stock")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Price")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Action")])
+            ])
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("td", [
+            _c("div", { staticClass: "btn-group" }, [
+              _c("button", { staticClass: "btn btn-success", attrs: { type: "button" } }, [_vm._v("Add")])
+            ])
+          ]);
+        }
+      ];
+      __vue_render__12._withStripped = true;
+      __vue_inject_styles__12 = void 0;
+      __vue_scope_id__12 = void 0;
+      __vue_module_identifier__12 = void 0;
+      __vue_is_functional_template__12 = false;
+      __vue_component__12 = /* @__PURE__ */ __vue_normalize__12({ render: __vue_render__12, staticRenderFns: __vue_staticRenderFns__12 }, __vue_inject_styles__12, __vue_script__12, __vue_scope_id__12, __vue_is_functional_template__12, __vue_module_identifier__12, false, void 0, void 0, void 0);
+      CardAddProduct_default = __vue_component__12;
+    }
+  });
+
   // resource/js/app.js
-  var import_vue2 = __toESM(require_vue());
+  var import_vue3 = __toESM(require_vue());
   var import_vue_sweetalert2 = __toESM(require_vue_sweetalert_umd());
-  import_vue2.default.config.productionTip = false;
+  import_vue3.default.config.productionTip = false;
   window.axios = require_axios2();
   window.Vue = require_vue();
   window.moment = require_moment();
-  import_vue2.default.use(import_vue_sweetalert2.default);
-  import_vue2.default.component("login-form", (init_Login(), __toCommonJS(Login_exports)).default);
-  import_vue2.default.component("u-table", (init_TableUsers(), __toCommonJS(TableUsers_exports)).default);
-  import_vue2.default.component("u-modal", (init_ModalUser(), __toCommonJS(ModalUser_exports)).default);
-  import_vue2.default.component("cate-table", (init_TableCategories(), __toCommonJS(TableCategories_exports)).default);
-  import_vue2.default.component("cate-modal", (init_ModalCategories(), __toCommonJS(ModalCategories_exports)).default);
-  import_vue2.default.component("prod-table", (init_TableProducts(), __toCommonJS(TableProducts_exports)).default);
-  import_vue2.default.component("prod-modal", (init_ModalProducts(), __toCommonJS(ModalProducts_exports)).default);
-  import_vue2.default.component("customer-table", (init_TableCustomers(), __toCommonJS(TableCustomers_exports)).default);
-  import_vue2.default.component("customer-modal", (init_ModalCustomers(), __toCommonJS(ModalCustomers_exports)).default);
-  import_vue2.default.component("sales-table", (init_TableSales(), __toCommonJS(TableSales_exports)).default);
-  var app = new import_vue2.default({
+  import_vue3.default.use(import_vue_sweetalert2.default);
+  import_vue3.default.component("login-form", (init_Login(), __toCommonJS(Login_exports)).default);
+  import_vue3.default.component("u-table", (init_TableUsers(), __toCommonJS(TableUsers_exports)).default);
+  import_vue3.default.component("u-modal", (init_ModalUser(), __toCommonJS(ModalUser_exports)).default);
+  import_vue3.default.component("cate-table", (init_TableCategories(), __toCommonJS(TableCategories_exports)).default);
+  import_vue3.default.component("cate-modal", (init_ModalCategories(), __toCommonJS(ModalCategories_exports)).default);
+  import_vue3.default.component("prod-table", (init_TableProducts(), __toCommonJS(TableProducts_exports)).default);
+  import_vue3.default.component("prod-modal", (init_ModalProducts(), __toCommonJS(ModalProducts_exports)).default);
+  import_vue3.default.component("customer-table", (init_TableCustomers(), __toCommonJS(TableCustomers_exports)).default);
+  import_vue3.default.component("customer-modal", (init_ModalCustomers(), __toCommonJS(ModalCustomers_exports)).default);
+  import_vue3.default.component("sales-table", (init_TableSales(), __toCommonJS(TableSales_exports)).default);
+  import_vue3.default.component("card-create-sale", (init_CardCreateSale(), __toCommonJS(CardCreateSale_exports)).default);
+  import_vue3.default.component("table-add-product", (init_CardAddProduct(), __toCommonJS(CardAddProduct_exports)).default);
+  var app = new import_vue3.default({
     el: "#app"
   });
 })();

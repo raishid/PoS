@@ -27,6 +27,9 @@ Vue.component('customer-table', require('./components/customers/TableCustomers.v
 Vue.component('customer-modal', require('./components/customers/ModalCustomers.vue').default);
 //sales components
 Vue.component('sales-table', require('./components/sales/TableSales.vue').default);
+Vue.component('card-create-sale', require('./components/sales/CardCreateSale.vue').default);
+Vue.component('table-add-product', require('./components/sales/CardAddProduct.vue').default);
+
 
 const app = new Vue({
     el: '#app'

@@ -18,17 +18,17 @@ class ClientController extends Controller
 
     public function create()
     {
-        if(!input()->exists(['name', 'dni', 'address', 'credit'])){
+        if(!input()->exists(['name', 'dni', 'address'])){
             return http_response_code(400);
         }
         $data = input()->all();
         $client = new Client();
         $client->name = $data['name'];
         $client->dni = $data['dni'];
-        $client->email = isset($data['email']) ? $data['email'] : null;
-        $client->phone = isset($data['phone']) ? $data['phone'] : null;
+        $client->email = !empty($data['email']) ? $data['email'] : null;
+        $client->phone = !empty($data['phone']) ? $data['phone'] : null;
         $client->address = $data['address'];
-        $client->credit = $data['credit'];
+        $client->credit = !empty($data['credit']) ? $data['credit'] : null;
         $result = $client->save();
 
         if(!$result){
@@ -40,7 +40,7 @@ class ClientController extends Controller
 
     public function edit($id)
     {
-        if(!input()->exists(['name', 'dni', 'address', 'credit'])){
+        if(!input()->exists(['name', 'dni', 'address',])){
             return http_response_code(400);
         }
         $data = input()->all();
@@ -48,10 +48,10 @@ class ClientController extends Controller
 
         $client->name = $data['name'];
         $client->dni = $data['dni'];
-        $client->email = isset($data['email']) ? $data['email'] : null;
-        $client->phone = isset($data['phone']) ? $data['phone'] : null;
+        $client->email = !empty($data['email']) ? $data['email'] : null;
+        $client->phone = !empty($data['phone']) ? $data['phone'] : null;
         $client->address = $data['address'];
-        $client->credit = $data['credit'];
+        $client->credit = !empty($data['credit']) ? $data['credit'] : null;
         $result = $client->save();
 
         if(!$result){
