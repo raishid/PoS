@@ -1,14 +1,18 @@
 import Vue from "vue/dist/vue";
 import VueSweetalert2 from 'vue-sweetalert2';
+import vSelect from 'vue-select'
 import 'sweetalert2/dist/sweetalert2.min.css';
+import 'vue-select/dist/vue-select.css';
 
 Vue.config.productionTip = false;
 
 window.axios = require('axios');
 window.Vue = require("vue/dist/vue");
 window.moment = require('moment');
+window.numeral = require('numeral');
 
 Vue.use(VueSweetalert2);
+Vue.component('v-select', vSelect);
 
 //login components
 Vue.component('login-form', require('./components/login/Login.vue').default);

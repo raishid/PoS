@@ -1,7 +1,7 @@
 <template>
     <div class="card border-0 border-top border-4 border-success">
         <div class="card-title"></div>
-        <form role="form" method="post" autocomplete="off">
+        <form v-on:submit.prevent="sell" role="form" method="post" autocomplete="off">
             <div class="card-body">
                 <div class="form-group">
                     <div class="input-group">
@@ -17,17 +17,15 @@
                 </div>
                 <div class="form-group">
                     <div class="input-group">
-                        <select name="customer" required v-model="sale.customer_id" id="select-customer" class="form-control">
-                            <option v-for="(customer, index) in customersParser" :key="index" :value="customer.id" >{{ customer.name }}</option>
-                        </select>
-                            <button 
-                                type="button" 
-                                id="modal-customer-button" 
-                                class="btn btn-success btn-sm" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#create-modal-customer"
-                            >Add client
-                            </button>
+                        <v-select :options="select2.options" v-model="sale.customer_id" placeholder="Select Customer"></v-select>
+                        <button 
+                            type="button" 
+                            id="modal-customer-button" 
+                            class="btn btn-success btn-sm" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#create-modal-customer"
+                        >Add client
+                        </button>
                     </div>
                 </div>
                 <div class="form-group row" v-for="(product, index) in sale.products" :key="index">
@@ -53,7 +51,7 @@
                     <div class="col-3 px-0 px-md-3">
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa fa-usd"></i></span>
-                            <input type="number" name="price" class="form-control" placeholder="10$" readonly required :value="product.price">
+                            <input type="text" name="price" class="form-control" placeholder="10$" readonly required :value="numberFormat(product.price)">
                         </div>
                     </div>
                 </div>
@@ -78,21 +76,28 @@
                             <thead>
                                 <tr>
                                     <th>Tax</th>
+                                    <th>Subtotal</th>
                                     <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="w-50">
+                                    <td>
                                         <div class="input-group">
                                             <input type="number" class="form-control" name="tax" min="0" autocomplete="off" placeholder="0" required v-model="sale.tax" @change="totalize">
                                             <span class="input-group-text"><i class="fa fa-percent"></i></span>
                                         </div>
                                     </td>
-                                    <td class="w-50">
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="net" min="0" autocomplete="off" placeholder="0" required v-model="sale.net" readonly>
+                                            <span class="input-group-text"><i class="fa fa-usd"></i></span>
+                                        </div>
+                                    </td>
+                                    <td>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fa fa-usd"></i></span>
-                                            <input type="number" class="form-control" name="total_sale" min="1" autocomplete="off" placeholder="0.00" readonly required v-model="sale.total">
+                                            <input type="text" class="form-control" name="total_sale" min="1" autocomplete="off" placeholder="0.00" readonly required v-model="sale.total">
                                         </div>
                                     </td>
                                 </tr>
@@ -164,6 +169,7 @@ import { EventBus } from '../EventBus';
 import ModalCustomer from '../customers/ModalCustomers.vue';
 import { IMaskComponent } from 'vue-imask';
 import ModalAddProduct from './CardAddProduct.vue';
+import numeral from 'numeral';
 export default {
     name: 'card-create-sale',
     props:{
@@ -190,11 +196,12 @@ export default {
             authParser: JSON.parse(this.auth),
             customersParser: JSON.parse(this.customers),
             sale:{
-                customer_id: '',
+                customer: '',
                 method: '',
                 products: [],
                 tax: 0,
                 total: 0,
+                net: 0,
             },
             select2:{
                 options: []
@@ -228,9 +235,11 @@ export default {
                 total = total + (product.price * product.quantity)
             })
             if(this.sale.tax > 0){
-                this.sale.total = ((total * this.sale.tax) / 100) + total;
+                this.sale.net = numeral(total).format('0,0.00');
+                this.sale.total = numeral(((total * this.sale.tax) / 100) + total).format('0,0.00');
             }else{
-                this.sale.total = total;
+                this.sale.net = numeral(total).format('0,0.00');
+                this.sale.total = numeral(total).format('0,0.00');
             }
         },
         modifyQuantity(id, event){
@@ -239,18 +248,43 @@ export default {
                 product.quantity = parseInt(event.target.value);
                 this.totalize();    
             }
+        },
+        numberFormat(price){
+            return numeral(price).format('0,0.00')
+        },
+        sell(){
+            if(this.sale.products > 0){
+                this.$swal.fire({
+                title: 'Are you sure to make this sale?',
+                text: "Are all the data correct?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, sell...'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                    'Success!',
+                    'Your sale has been registered.',
+                    'success'
+                    )
+                }
+                })
+            }else{
+                this.$swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You cannot sell if you have no products added.!',
+                    })
+            }
         }
 
     },
     mounted(){
          this.customersParser.map((customer) => {
-            this.select2.options.push({id: customer.id, value: customer.name})
+            this.select2.options.push({label: customer.name, code: customer.id})
         });
-        $('#select-customer').select2({
-            width: 'element',
-            placeholder: "Select Customer",
-        });
-
         EventBus.$on('add', product => this.addProductSale(product));
         EventBus.$on('products', data => {
             this.$refs.add_product_responsive.addProductResponsive(data);
@@ -260,8 +294,9 @@ export default {
 }
 </script>
 <style>
-    .select2-selection{
-        min-height: 2rem;
+    .v-select{
+        position: relative;
+        flex: 1 1 auto;
     }
     @media (max-width: 768px) {
         #modal-customer-button{

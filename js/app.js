@@ -9114,6 +9114,412 @@
     }
   });
 
+  // node_modules/vue-select/dist/vue-select.js
+  var require_vue_select = __commonJS({
+    "node_modules/vue-select/dist/vue-select.js"(exports, module) {
+      !function(t, e) {
+        typeof exports == "object" && typeof module == "object" ? module.exports = e() : typeof define == "function" && define.amd ? define([], e) : typeof exports == "object" ? exports.VueSelect = e() : t.VueSelect = e();
+      }(typeof self != "undefined" ? self : exports, function() {
+        return (() => {
+          var t = { 646: (t2) => {
+            t2.exports = function(t3) {
+              if (Array.isArray(t3)) {
+                for (var e2 = 0, n2 = new Array(t3.length); e2 < t3.length; e2++)
+                  n2[e2] = t3[e2];
+                return n2;
+              }
+            };
+          }, 713: (t2) => {
+            t2.exports = function(t3, e2, n2) {
+              return e2 in t3 ? Object.defineProperty(t3, e2, { value: n2, enumerable: true, configurable: true, writable: true }) : t3[e2] = n2, t3;
+            };
+          }, 860: (t2) => {
+            t2.exports = function(t3) {
+              if (Symbol.iterator in Object(t3) || Object.prototype.toString.call(t3) === "[object Arguments]")
+                return Array.from(t3);
+            };
+          }, 206: (t2) => {
+            t2.exports = function() {
+              throw new TypeError("Invalid attempt to spread non-iterable instance");
+            };
+          }, 319: (t2, e2, n2) => {
+            var o2 = n2(646), i = n2(860), s = n2(206);
+            t2.exports = function(t3) {
+              return o2(t3) || i(t3) || s();
+            };
+          }, 8: (t2) => {
+            function e2(n2) {
+              return typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? t2.exports = e2 = function(t3) {
+                return typeof t3;
+              } : t2.exports = e2 = function(t3) {
+                return t3 && typeof Symbol == "function" && t3.constructor === Symbol && t3 !== Symbol.prototype ? "symbol" : typeof t3;
+              }, e2(n2);
+            }
+            t2.exports = e2;
+          } }, e = {};
+          function n(o2) {
+            var i = e[o2];
+            if (i !== void 0)
+              return i.exports;
+            var s = e[o2] = { exports: {} };
+            return t[o2](s, s.exports, n), s.exports;
+          }
+          n.n = (t2) => {
+            var e2 = t2 && t2.__esModule ? () => t2.default : () => t2;
+            return n.d(e2, { a: e2 }), e2;
+          }, n.d = (t2, e2) => {
+            for (var o2 in e2)
+              n.o(e2, o2) && !n.o(t2, o2) && Object.defineProperty(t2, o2, { enumerable: true, get: e2[o2] });
+          }, n.o = (t2, e2) => Object.prototype.hasOwnProperty.call(t2, e2), n.r = (t2) => {
+            typeof Symbol != "undefined" && Symbol.toStringTag && Object.defineProperty(t2, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(t2, "__esModule", { value: true });
+          };
+          var o = {};
+          return (() => {
+            "use strict";
+            n.r(o), n.d(o, { VueSelect: () => m, default: () => O, mixins: () => _ });
+            var t2 = n(319), e2 = n.n(t2), i = n(8), s = n.n(i), r = n(713), a = n.n(r);
+            const l = { props: { autoscroll: { type: Boolean, default: true } }, watch: { typeAheadPointer: function() {
+              this.autoscroll && this.maybeAdjustScroll();
+            }, open: function(t3) {
+              var e3 = this;
+              this.autoscroll && t3 && this.$nextTick(function() {
+                return e3.maybeAdjustScroll();
+              });
+            } }, methods: { maybeAdjustScroll: function() {
+              var t3, e3 = ((t3 = this.$refs.dropdownMenu) === null || t3 === void 0 ? void 0 : t3.children[this.typeAheadPointer]) || false;
+              if (e3) {
+                var n2 = this.getDropdownViewport(), o2 = e3.getBoundingClientRect(), i2 = o2.top, s2 = o2.bottom, r2 = o2.height;
+                if (i2 < n2.top)
+                  return this.$refs.dropdownMenu.scrollTop = e3.offsetTop;
+                if (s2 > n2.bottom)
+                  return this.$refs.dropdownMenu.scrollTop = e3.offsetTop - (n2.height - r2);
+              }
+            }, getDropdownViewport: function() {
+              return this.$refs.dropdownMenu ? this.$refs.dropdownMenu.getBoundingClientRect() : { height: 0, top: 0, bottom: 0 };
+            } } }, c = { data: function() {
+              return { typeAheadPointer: -1 };
+            }, watch: { filteredOptions: function() {
+              for (var t3 = 0; t3 < this.filteredOptions.length; t3++)
+                if (this.selectable(this.filteredOptions[t3])) {
+                  this.typeAheadPointer = t3;
+                  break;
+                }
+            }, open: function(t3) {
+              t3 && this.typeAheadToLastSelected();
+            }, selectedValue: function() {
+              this.open && this.typeAheadToLastSelected();
+            } }, methods: { typeAheadUp: function() {
+              for (var t3 = this.typeAheadPointer - 1; t3 >= 0; t3--)
+                if (this.selectable(this.filteredOptions[t3])) {
+                  this.typeAheadPointer = t3;
+                  break;
+                }
+            }, typeAheadDown: function() {
+              for (var t3 = this.typeAheadPointer + 1; t3 < this.filteredOptions.length; t3++)
+                if (this.selectable(this.filteredOptions[t3])) {
+                  this.typeAheadPointer = t3;
+                  break;
+                }
+            }, typeAheadSelect: function() {
+              var t3 = this.filteredOptions[this.typeAheadPointer];
+              t3 && this.selectable(t3) && this.select(t3);
+            }, typeAheadToLastSelected: function() {
+              this.typeAheadPointer = this.selectedValue.length !== 0 ? this.filteredOptions.indexOf(this.selectedValue[this.selectedValue.length - 1]) : -1;
+            } } }, u = { props: { loading: { type: Boolean, default: false } }, data: function() {
+              return { mutableLoading: false };
+            }, watch: { search: function() {
+              this.$emit("search", this.search, this.toggleLoading);
+            }, loading: function(t3) {
+              this.mutableLoading = t3;
+            } }, methods: { toggleLoading: function() {
+              var t3 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null;
+              return this.mutableLoading = t3 == null ? !this.mutableLoading : t3;
+            } } };
+            function p(t3, e3, n2, o2, i2, s2, r2, a2) {
+              var l2, c2 = typeof t3 == "function" ? t3.options : t3;
+              if (e3 && (c2.render = e3, c2.staticRenderFns = n2, c2._compiled = true), o2 && (c2.functional = true), s2 && (c2._scopeId = "data-v-" + s2), r2 ? (l2 = function(t4) {
+                (t4 = t4 || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) || typeof __VUE_SSR_CONTEXT__ == "undefined" || (t4 = __VUE_SSR_CONTEXT__), i2 && i2.call(this, t4), t4 && t4._registeredComponents && t4._registeredComponents.add(r2);
+              }, c2._ssrRegister = l2) : i2 && (l2 = a2 ? function() {
+                i2.call(this, (c2.functional ? this.parent : this).$root.$options.shadowRoot);
+              } : i2), l2)
+                if (c2.functional) {
+                  c2._injectStyles = l2;
+                  var u2 = c2.render;
+                  c2.render = function(t4, e4) {
+                    return l2.call(e4), u2(t4, e4);
+                  };
+                } else {
+                  var p2 = c2.beforeCreate;
+                  c2.beforeCreate = p2 ? [].concat(p2, l2) : [l2];
+                }
+              return { exports: t3, options: c2 };
+            }
+            const h = { Deselect: p({}, function() {
+              var t3 = this.$createElement, e3 = this._self._c || t3;
+              return e3("svg", { attrs: { xmlns: "http://www.w3.org/2000/svg", width: "10", height: "10" } }, [e3("path", { attrs: { d: "M6.895455 5l2.842897-2.842898c.348864-.348863.348864-.914488 0-1.263636L9.106534.261648c-.348864-.348864-.914489-.348864-1.263636 0L5 3.104545 2.157102.261648c-.348863-.348864-.914488-.348864-1.263636 0L.261648.893466c-.348864.348864-.348864.914489 0 1.263636L3.104545 5 .261648 7.842898c-.348864.348863-.348864.914488 0 1.263636l.631818.631818c.348864.348864.914773.348864 1.263636 0L5 6.895455l2.842898 2.842897c.348863.348864.914772.348864 1.263636 0l.631818-.631818c.348864-.348864.348864-.914489 0-1.263636L6.895455 5z" } })]);
+            }, [], false, null, null, null).exports, OpenIndicator: p({}, function() {
+              var t3 = this.$createElement, e3 = this._self._c || t3;
+              return e3("svg", { attrs: { xmlns: "http://www.w3.org/2000/svg", width: "14", height: "10" } }, [e3("path", { attrs: { d: "M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z" } })]);
+            }, [], false, null, null, null).exports }, d = { inserted: function(t3, e3, n2) {
+              var o2 = n2.context;
+              if (o2.appendToBody) {
+                var i2 = o2.$refs.toggle.getBoundingClientRect(), s2 = i2.height, r2 = i2.top, a2 = i2.left, l2 = i2.width, c2 = window.scrollX || window.pageXOffset, u2 = window.scrollY || window.pageYOffset;
+                t3.unbindPosition = o2.calculatePosition(t3, o2, { width: l2 + "px", left: c2 + a2 + "px", top: u2 + r2 + s2 + "px" }), document.body.appendChild(t3);
+              }
+            }, unbind: function(t3, e3, n2) {
+              n2.context.appendToBody && (t3.unbindPosition && typeof t3.unbindPosition == "function" && t3.unbindPosition(), t3.parentNode && t3.parentNode.removeChild(t3));
+            } };
+            const f = function(t3) {
+              var e3 = {};
+              return Object.keys(t3).sort().forEach(function(n2) {
+                e3[n2] = t3[n2];
+              }), JSON.stringify(e3);
+            };
+            var y = 0;
+            const b = function() {
+              return ++y;
+            };
+            function g(t3, e3) {
+              var n2 = Object.keys(t3);
+              if (Object.getOwnPropertySymbols) {
+                var o2 = Object.getOwnPropertySymbols(t3);
+                e3 && (o2 = o2.filter(function(e4) {
+                  return Object.getOwnPropertyDescriptor(t3, e4).enumerable;
+                })), n2.push.apply(n2, o2);
+              }
+              return n2;
+            }
+            function v(t3) {
+              for (var e3 = 1; e3 < arguments.length; e3++) {
+                var n2 = arguments[e3] != null ? arguments[e3] : {};
+                e3 % 2 ? g(Object(n2), true).forEach(function(e4) {
+                  a()(t3, e4, n2[e4]);
+                }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(t3, Object.getOwnPropertyDescriptors(n2)) : g(Object(n2)).forEach(function(e4) {
+                  Object.defineProperty(t3, e4, Object.getOwnPropertyDescriptor(n2, e4));
+                });
+              }
+              return t3;
+            }
+            const m = p({ components: v({}, h), directives: { appendToBody: d }, mixins: [l, c, u], props: { value: {}, components: { type: Object, default: function() {
+              return {};
+            } }, options: { type: Array, default: function() {
+              return [];
+            } }, disabled: { type: Boolean, default: false }, clearable: { type: Boolean, default: true }, deselectFromDropdown: { type: Boolean, default: false }, searchable: { type: Boolean, default: true }, multiple: { type: Boolean, default: false }, placeholder: { type: String, default: "" }, transition: { type: String, default: "vs__fade" }, clearSearchOnSelect: { type: Boolean, default: true }, closeOnSelect: { type: Boolean, default: true }, label: { type: String, default: "label" }, autocomplete: { type: String, default: "off" }, reduce: { type: Function, default: function(t3) {
+              return t3;
+            } }, selectable: { type: Function, default: function(t3) {
+              return true;
+            } }, getOptionLabel: { type: Function, default: function(t3) {
+              return s()(t3) === "object" ? t3.hasOwnProperty(this.label) ? t3[this.label] : console.warn('[vue-select warn]: Label key "option.'.concat(this.label, '" does not') + " exist in options object ".concat(JSON.stringify(t3), ".\n") + "https://vue-select.org/api/props.html#getoptionlabel") : t3;
+            } }, getOptionKey: { type: Function, default: function(t3) {
+              if (s()(t3) !== "object")
+                return t3;
+              try {
+                return t3.hasOwnProperty("id") ? t3.id : f(t3);
+              } catch (e3) {
+                return console.warn("[vue-select warn]: Could not stringify this option to generate unique key. Please provide'getOptionKey' prop to return a unique key for each option.\nhttps://vue-select.org/api/props.html#getoptionkey", t3, e3);
+              }
+            } }, onTab: { type: Function, default: function() {
+              this.selectOnTab && !this.isComposing && this.typeAheadSelect();
+            } }, taggable: { type: Boolean, default: false }, tabindex: { type: Number, default: null }, pushTags: { type: Boolean, default: false }, filterable: { type: Boolean, default: true }, filterBy: { type: Function, default: function(t3, e3, n2) {
+              return (e3 || "").toLocaleLowerCase().indexOf(n2.toLocaleLowerCase()) > -1;
+            } }, filter: { type: Function, default: function(t3, e3) {
+              var n2 = this;
+              return t3.filter(function(t4) {
+                var o2 = n2.getOptionLabel(t4);
+                return typeof o2 == "number" && (o2 = o2.toString()), n2.filterBy(t4, o2, e3);
+              });
+            } }, createOption: { type: Function, default: function(t3) {
+              return s()(this.optionList[0]) === "object" ? a()({}, this.label, t3) : t3;
+            } }, resetOnOptionsChange: { default: false, validator: function(t3) {
+              return ["function", "boolean"].includes(s()(t3));
+            } }, clearSearchOnBlur: { type: Function, default: function(t3) {
+              var e3 = t3.clearSearchOnSelect, n2 = t3.multiple;
+              return e3 && !n2;
+            } }, noDrop: { type: Boolean, default: false }, inputId: { type: String }, dir: { type: String, default: "auto" }, selectOnTab: { type: Boolean, default: false }, selectOnKeyCodes: { type: Array, default: function() {
+              return [13];
+            } }, searchInputQuerySelector: { type: String, default: "[type=search]" }, mapKeydown: { type: Function, default: function(t3, e3) {
+              return t3;
+            } }, appendToBody: { type: Boolean, default: false }, calculatePosition: { type: Function, default: function(t3, e3, n2) {
+              var o2 = n2.width, i2 = n2.top, s2 = n2.left;
+              t3.style.top = i2, t3.style.left = s2, t3.style.width = o2;
+            } }, dropdownShouldOpen: { type: Function, default: function(t3) {
+              var e3 = t3.noDrop, n2 = t3.open, o2 = t3.mutableLoading;
+              return !e3 && (n2 && !o2);
+            } }, uid: { type: [String, Number], default: function() {
+              return b();
+            } } }, data: function() {
+              return { search: "", open: false, isComposing: false, pushedTags: [], _value: [] };
+            }, computed: { isTrackingValues: function() {
+              return this.value === void 0 || this.$options.propsData.hasOwnProperty("reduce");
+            }, selectedValue: function() {
+              var t3 = this.value;
+              return this.isTrackingValues && (t3 = this.$data._value), t3 != null && t3 !== "" ? [].concat(t3) : [];
+            }, optionList: function() {
+              return this.options.concat(this.pushTags ? this.pushedTags : []);
+            }, searchEl: function() {
+              return this.$scopedSlots.search ? this.$refs.selectedOptions.querySelector(this.searchInputQuerySelector) : this.$refs.search;
+            }, scope: function() {
+              var t3 = this, e3 = { search: this.search, loading: this.loading, searching: this.searching, filteredOptions: this.filteredOptions };
+              return { search: { attributes: v({ disabled: this.disabled, placeholder: this.searchPlaceholder, tabindex: this.tabindex, readonly: !this.searchable, id: this.inputId, "aria-autocomplete": "list", "aria-labelledby": "vs".concat(this.uid, "__combobox"), "aria-controls": "vs".concat(this.uid, "__listbox"), ref: "search", type: "search", autocomplete: this.autocomplete, value: this.search }, this.dropdownOpen && this.filteredOptions[this.typeAheadPointer] ? { "aria-activedescendant": "vs".concat(this.uid, "__option-").concat(this.typeAheadPointer) } : {}), events: { compositionstart: function() {
+                return t3.isComposing = true;
+              }, compositionend: function() {
+                return t3.isComposing = false;
+              }, keydown: this.onSearchKeyDown, blur: this.onSearchBlur, focus: this.onSearchFocus, input: function(e4) {
+                return t3.search = e4.target.value;
+              } } }, spinner: { loading: this.mutableLoading }, noOptions: { search: this.search, loading: this.mutableLoading, searching: this.searching }, openIndicator: { attributes: { ref: "openIndicator", role: "presentation", class: "vs__open-indicator" } }, listHeader: e3, listFooter: e3, header: v({}, e3, { deselect: this.deselect }), footer: v({}, e3, { deselect: this.deselect }) };
+            }, childComponents: function() {
+              return v({}, h, {}, this.components);
+            }, stateClasses: function() {
+              return { "vs--open": this.dropdownOpen, "vs--single": !this.multiple, "vs--multiple": this.multiple, "vs--searching": this.searching && !this.noDrop, "vs--searchable": this.searchable && !this.noDrop, "vs--unsearchable": !this.searchable, "vs--loading": this.mutableLoading, "vs--disabled": this.disabled };
+            }, searching: function() {
+              return !!this.search;
+            }, dropdownOpen: function() {
+              return this.dropdownShouldOpen(this);
+            }, searchPlaceholder: function() {
+              return this.isValueEmpty && this.placeholder ? this.placeholder : void 0;
+            }, filteredOptions: function() {
+              var t3 = [].concat(this.optionList);
+              if (!this.filterable && !this.taggable)
+                return t3;
+              var e3 = this.search.length ? this.filter(t3, this.search, this) : t3;
+              if (this.taggable && this.search.length) {
+                var n2 = this.createOption(this.search);
+                this.optionExists(n2) || e3.unshift(n2);
+              }
+              return e3;
+            }, isValueEmpty: function() {
+              return this.selectedValue.length === 0;
+            }, showClearButton: function() {
+              return !this.multiple && this.clearable && !this.open && !this.isValueEmpty;
+            } }, watch: { options: function(t3, e3) {
+              var n2 = this;
+              !this.taggable && (typeof n2.resetOnOptionsChange == "function" ? n2.resetOnOptionsChange(t3, e3, n2.selectedValue) : n2.resetOnOptionsChange) && this.clearSelection(), this.value && this.isTrackingValues && this.setInternalValueFromOptions(this.value);
+            }, value: { immediate: true, handler: function(t3) {
+              this.isTrackingValues && this.setInternalValueFromOptions(t3);
+            } }, multiple: function() {
+              this.clearSelection();
+            }, open: function(t3) {
+              this.$emit(t3 ? "open" : "close");
+            } }, created: function() {
+              this.mutableLoading = this.loading, this.$on("option:created", this.pushTag);
+            }, methods: { setInternalValueFromOptions: function(t3) {
+              var e3 = this;
+              Array.isArray(t3) ? this.$data._value = t3.map(function(t4) {
+                return e3.findOptionFromReducedValue(t4);
+              }) : this.$data._value = this.findOptionFromReducedValue(t3);
+            }, select: function(t3) {
+              this.$emit("option:selecting", t3), this.isOptionSelected(t3) ? this.deselectFromDropdown && (this.clearable || this.multiple && this.selectedValue.length > 1) && this.deselect(t3) : (this.taggable && !this.optionExists(t3) && this.$emit("option:created", t3), this.multiple && (t3 = this.selectedValue.concat(t3)), this.updateValue(t3), this.$emit("option:selected", t3)), this.onAfterSelect(t3);
+            }, deselect: function(t3) {
+              var e3 = this;
+              this.$emit("option:deselecting", t3), this.updateValue(this.selectedValue.filter(function(n2) {
+                return !e3.optionComparator(n2, t3);
+              })), this.$emit("option:deselected", t3);
+            }, clearSelection: function() {
+              this.updateValue(this.multiple ? [] : null);
+            }, onAfterSelect: function(t3) {
+              this.closeOnSelect && (this.open = !this.open, this.searchEl.blur()), this.clearSearchOnSelect && (this.search = "");
+            }, updateValue: function(t3) {
+              var e3 = this;
+              this.value === void 0 && (this.$data._value = t3), t3 !== null && (t3 = Array.isArray(t3) ? t3.map(function(t4) {
+                return e3.reduce(t4);
+              }) : this.reduce(t3)), this.$emit("input", t3);
+            }, toggleDropdown: function(t3) {
+              var n2 = t3.target !== this.searchEl;
+              n2 && t3.preventDefault();
+              var o2 = [].concat(e2()(this.$refs.deselectButtons || []), e2()([this.$refs.clearButton]));
+              this.searchEl === void 0 || o2.filter(Boolean).some(function(e3) {
+                return e3.contains(t3.target) || e3 === t3.target;
+              }) ? t3.preventDefault() : this.open && n2 ? this.searchEl.blur() : this.disabled || (this.open = true, this.searchEl.focus());
+            }, isOptionSelected: function(t3) {
+              var e3 = this;
+              return this.selectedValue.some(function(n2) {
+                return e3.optionComparator(n2, t3);
+              });
+            }, isOptionDeselectable: function(t3) {
+              return this.isOptionSelected(t3) && this.deselectFromDropdown;
+            }, optionComparator: function(t3, e3) {
+              return this.getOptionKey(t3) === this.getOptionKey(e3);
+            }, findOptionFromReducedValue: function(t3) {
+              var n2 = this, o2 = [].concat(e2()(this.options), e2()(this.pushedTags)).filter(function(e3) {
+                return JSON.stringify(n2.reduce(e3)) === JSON.stringify(t3);
+              });
+              return o2.length === 1 ? o2[0] : o2.find(function(t4) {
+                return n2.optionComparator(t4, n2.$data._value);
+              }) || t3;
+            }, closeSearchOptions: function() {
+              this.open = false, this.$emit("search:blur");
+            }, maybeDeleteValue: function() {
+              if (!this.searchEl.value.length && this.selectedValue && this.selectedValue.length && this.clearable) {
+                var t3 = null;
+                this.multiple && (t3 = e2()(this.selectedValue.slice(0, this.selectedValue.length - 1))), this.updateValue(t3);
+              }
+            }, optionExists: function(t3) {
+              var e3 = this;
+              return this.optionList.some(function(n2) {
+                return e3.optionComparator(n2, t3);
+              });
+            }, normalizeOptionForSlot: function(t3) {
+              return s()(t3) === "object" ? t3 : a()({}, this.label, t3);
+            }, pushTag: function(t3) {
+              this.pushedTags.push(t3);
+            }, onEscape: function() {
+              this.search.length ? this.search = "" : this.searchEl.blur();
+            }, onSearchBlur: function() {
+              if (!this.mousedown || this.searching) {
+                var t3 = this.clearSearchOnSelect, e3 = this.multiple;
+                return this.clearSearchOnBlur({ clearSearchOnSelect: t3, multiple: e3 }) && (this.search = ""), void this.closeSearchOptions();
+              }
+              this.mousedown = false, this.search.length !== 0 || this.options.length !== 0 || this.closeSearchOptions();
+            }, onSearchFocus: function() {
+              this.open = true, this.$emit("search:focus");
+            }, onMousedown: function() {
+              this.mousedown = true;
+            }, onMouseUp: function() {
+              this.mousedown = false;
+            }, onSearchKeyDown: function(t3) {
+              var e3 = this, n2 = function(t4) {
+                return t4.preventDefault(), !e3.isComposing && e3.typeAheadSelect();
+              }, o2 = { 8: function(t4) {
+                return e3.maybeDeleteValue();
+              }, 9: function(t4) {
+                return e3.onTab();
+              }, 27: function(t4) {
+                return e3.onEscape();
+              }, 38: function(t4) {
+                return t4.preventDefault(), e3.typeAheadUp();
+              }, 40: function(t4) {
+                return t4.preventDefault(), e3.typeAheadDown();
+              } };
+              this.selectOnKeyCodes.forEach(function(t4) {
+                return o2[t4] = n2;
+              });
+              var i2 = this.mapKeydown(o2, this);
+              if (typeof i2[t3.keyCode] == "function")
+                return i2[t3.keyCode](t3);
+            } } }, function() {
+              var t3 = this, e3 = t3.$createElement, n2 = t3._self._c || e3;
+              return n2("div", { staticClass: "v-select", class: t3.stateClasses, attrs: { dir: t3.dir } }, [t3._t("header", null, null, t3.scope.header), t3._v(" "), n2("div", { ref: "toggle", staticClass: "vs__dropdown-toggle", attrs: { id: "vs" + t3.uid + "__combobox", role: "combobox", "aria-expanded": t3.dropdownOpen.toString(), "aria-owns": "vs" + t3.uid + "__listbox", "aria-label": "Search for option" }, on: { mousedown: function(e4) {
+                return t3.toggleDropdown(e4);
+              } } }, [n2("div", { ref: "selectedOptions", staticClass: "vs__selected-options" }, [t3._l(t3.selectedValue, function(e4) {
+                return t3._t("selected-option-container", [n2("span", { key: t3.getOptionKey(e4), staticClass: "vs__selected" }, [t3._t("selected-option", [t3._v("\n            " + t3._s(t3.getOptionLabel(e4)) + "\n          ")], null, t3.normalizeOptionForSlot(e4)), t3._v(" "), t3.multiple ? n2("button", { ref: "deselectButtons", refInFor: true, staticClass: "vs__deselect", attrs: { disabled: t3.disabled, type: "button", title: "Deselect " + t3.getOptionLabel(e4), "aria-label": "Deselect " + t3.getOptionLabel(e4) }, on: { click: function(n3) {
+                  return t3.deselect(e4);
+                } } }, [n2(t3.childComponents.Deselect, { tag: "component" })], 1) : t3._e()], 2)], { option: t3.normalizeOptionForSlot(e4), deselect: t3.deselect, multiple: t3.multiple, disabled: t3.disabled });
+              }), t3._v(" "), t3._t("search", [n2("input", t3._g(t3._b({ staticClass: "vs__search" }, "input", t3.scope.search.attributes, false), t3.scope.search.events))], null, t3.scope.search)], 2), t3._v(" "), n2("div", { ref: "actions", staticClass: "vs__actions" }, [n2("button", { directives: [{ name: "show", rawName: "v-show", value: t3.showClearButton, expression: "showClearButton" }], ref: "clearButton", staticClass: "vs__clear", attrs: { disabled: t3.disabled, type: "button", title: "Clear Selected", "aria-label": "Clear Selected" }, on: { click: t3.clearSelection } }, [n2(t3.childComponents.Deselect, { tag: "component" })], 1), t3._v(" "), t3._t("open-indicator", [t3.noDrop ? t3._e() : n2(t3.childComponents.OpenIndicator, t3._b({ tag: "component" }, "component", t3.scope.openIndicator.attributes, false))], null, t3.scope.openIndicator), t3._v(" "), t3._t("spinner", [n2("div", { directives: [{ name: "show", rawName: "v-show", value: t3.mutableLoading, expression: "mutableLoading" }], staticClass: "vs__spinner" }, [t3._v("Loading...")])], null, t3.scope.spinner)], 2)]), t3._v(" "), n2("transition", { attrs: { name: t3.transition } }, [t3.dropdownOpen ? n2("ul", { directives: [{ name: "append-to-body", rawName: "v-append-to-body" }], key: "vs" + t3.uid + "__listbox", ref: "dropdownMenu", staticClass: "vs__dropdown-menu", attrs: { id: "vs" + t3.uid + "__listbox", role: "listbox", tabindex: "-1" }, on: { mousedown: function(e4) {
+                return e4.preventDefault(), t3.onMousedown(e4);
+              }, mouseup: t3.onMouseUp } }, [t3._t("list-header", null, null, t3.scope.listHeader), t3._v(" "), t3._l(t3.filteredOptions, function(e4, o2) {
+                return n2("li", { key: t3.getOptionKey(e4), staticClass: "vs__dropdown-option", class: { "vs__dropdown-option--deselect": t3.isOptionDeselectable(e4) && o2 === t3.typeAheadPointer, "vs__dropdown-option--selected": t3.isOptionSelected(e4), "vs__dropdown-option--highlight": o2 === t3.typeAheadPointer, "vs__dropdown-option--disabled": !t3.selectable(e4) }, attrs: { id: "vs" + t3.uid + "__option-" + o2, role: "option", "aria-selected": o2 === t3.typeAheadPointer || null }, on: { mouseover: function(n3) {
+                  t3.selectable(e4) && (t3.typeAheadPointer = o2);
+                }, click: function(n3) {
+                  n3.preventDefault(), n3.stopPropagation(), t3.selectable(e4) && t3.select(e4);
+                } } }, [t3._t("option", [t3._v("\n          " + t3._s(t3.getOptionLabel(e4)) + "\n        ")], null, t3.normalizeOptionForSlot(e4))], 2);
+              }), t3._v(" "), t3.filteredOptions.length === 0 ? n2("li", { staticClass: "vs__no-options" }, [t3._t("no-options", [t3._v("\n          Sorry, no matching options.\n        ")], null, t3.scope.noOptions)], 2) : t3._e(), t3._v(" "), t3._t("list-footer", null, null, t3.scope.listFooter)], 2) : n2("ul", { staticStyle: { display: "none", visibility: "hidden" }, attrs: { id: "vs" + t3.uid + "__listbox", role: "listbox" } })]), t3._v(" "), t3._t("footer", null, null, t3.scope.footer)], 2);
+            }, [], false, null, null, null).exports, _ = { ajax: u, pointer: c, pointerScroll: l }, O = m;
+          })(), o;
+        })();
+      });
+    }
+  });
+
   // node_modules/axios/lib/helpers/bind.js
   var require_bind = __commonJS({
     "node_modules/axios/lib/helpers/bind.js"(exports, module) {
@@ -14052,6 +14458,671 @@
     }
   });
 
+  // node_modules/numeral/numeral.js
+  var require_numeral = __commonJS({
+    "node_modules/numeral/numeral.js"(exports, module) {
+      (function(global2, factory) {
+        if (typeof define === "function" && define.amd) {
+          define(factory);
+        } else if (typeof module === "object" && module.exports) {
+          module.exports = factory();
+        } else {
+          global2.numeral = factory();
+        }
+      })(exports, function() {
+        var numeral2, _, VERSION = "2.0.6", formats = {}, locales = {}, defaults = {
+          currentLocale: "en",
+          zeroFormat: null,
+          nullFormat: null,
+          defaultFormat: "0,0",
+          scalePercentBy100: true
+        }, options = {
+          currentLocale: defaults.currentLocale,
+          zeroFormat: defaults.zeroFormat,
+          nullFormat: defaults.nullFormat,
+          defaultFormat: defaults.defaultFormat,
+          scalePercentBy100: defaults.scalePercentBy100
+        };
+        function Numeral(input, number) {
+          this._input = input;
+          this._value = number;
+        }
+        numeral2 = function(input) {
+          var value, kind, unformatFunction, regexp;
+          if (numeral2.isNumeral(input)) {
+            value = input.value();
+          } else if (input === 0 || typeof input === "undefined") {
+            value = 0;
+          } else if (input === null || _.isNaN(input)) {
+            value = null;
+          } else if (typeof input === "string") {
+            if (options.zeroFormat && input === options.zeroFormat) {
+              value = 0;
+            } else if (options.nullFormat && input === options.nullFormat || !input.replace(/[^0-9]+/g, "").length) {
+              value = null;
+            } else {
+              for (kind in formats) {
+                regexp = typeof formats[kind].regexps.unformat === "function" ? formats[kind].regexps.unformat() : formats[kind].regexps.unformat;
+                if (regexp && input.match(regexp)) {
+                  unformatFunction = formats[kind].unformat;
+                  break;
+                }
+              }
+              unformatFunction = unformatFunction || numeral2._.stringToNumber;
+              value = unformatFunction(input);
+            }
+          } else {
+            value = Number(input) || null;
+          }
+          return new Numeral(input, value);
+        };
+        numeral2.version = VERSION;
+        numeral2.isNumeral = function(obj) {
+          return obj instanceof Numeral;
+        };
+        numeral2._ = _ = {
+          numberToFormat: function(value, format3, roundingFunction) {
+            var locale = locales[numeral2.options.currentLocale], negP = false, optDec = false, leadingCount = 0, abbr = "", trillion = 1e12, billion = 1e9, million = 1e6, thousand = 1e3, decimal = "", neg = false, abbrForce, abs, min, max, power, int, precision, signed, thousands, output;
+            value = value || 0;
+            abs = Math.abs(value);
+            if (numeral2._.includes(format3, "(")) {
+              negP = true;
+              format3 = format3.replace(/[\(|\)]/g, "");
+            } else if (numeral2._.includes(format3, "+") || numeral2._.includes(format3, "-")) {
+              signed = numeral2._.includes(format3, "+") ? format3.indexOf("+") : value < 0 ? format3.indexOf("-") : -1;
+              format3 = format3.replace(/[\+|\-]/g, "");
+            }
+            if (numeral2._.includes(format3, "a")) {
+              abbrForce = format3.match(/a(k|m|b|t)?/);
+              abbrForce = abbrForce ? abbrForce[1] : false;
+              if (numeral2._.includes(format3, " a")) {
+                abbr = " ";
+              }
+              format3 = format3.replace(new RegExp(abbr + "a[kmbt]?"), "");
+              if (abs >= trillion && !abbrForce || abbrForce === "t") {
+                abbr += locale.abbreviations.trillion;
+                value = value / trillion;
+              } else if (abs < trillion && abs >= billion && !abbrForce || abbrForce === "b") {
+                abbr += locale.abbreviations.billion;
+                value = value / billion;
+              } else if (abs < billion && abs >= million && !abbrForce || abbrForce === "m") {
+                abbr += locale.abbreviations.million;
+                value = value / million;
+              } else if (abs < million && abs >= thousand && !abbrForce || abbrForce === "k") {
+                abbr += locale.abbreviations.thousand;
+                value = value / thousand;
+              }
+            }
+            if (numeral2._.includes(format3, "[.]")) {
+              optDec = true;
+              format3 = format3.replace("[.]", ".");
+            }
+            int = value.toString().split(".")[0];
+            precision = format3.split(".")[1];
+            thousands = format3.indexOf(",");
+            leadingCount = (format3.split(".")[0].split(",")[0].match(/0/g) || []).length;
+            if (precision) {
+              if (numeral2._.includes(precision, "[")) {
+                precision = precision.replace("]", "");
+                precision = precision.split("[");
+                decimal = numeral2._.toFixed(value, precision[0].length + precision[1].length, roundingFunction, precision[1].length);
+              } else {
+                decimal = numeral2._.toFixed(value, precision.length, roundingFunction);
+              }
+              int = decimal.split(".")[0];
+              if (numeral2._.includes(decimal, ".")) {
+                decimal = locale.delimiters.decimal + decimal.split(".")[1];
+              } else {
+                decimal = "";
+              }
+              if (optDec && Number(decimal.slice(1)) === 0) {
+                decimal = "";
+              }
+            } else {
+              int = numeral2._.toFixed(value, 0, roundingFunction);
+            }
+            if (abbr && !abbrForce && Number(int) >= 1e3 && abbr !== locale.abbreviations.trillion) {
+              int = String(Number(int) / 1e3);
+              switch (abbr) {
+                case locale.abbreviations.thousand:
+                  abbr = locale.abbreviations.million;
+                  break;
+                case locale.abbreviations.million:
+                  abbr = locale.abbreviations.billion;
+                  break;
+                case locale.abbreviations.billion:
+                  abbr = locale.abbreviations.trillion;
+                  break;
+              }
+            }
+            if (numeral2._.includes(int, "-")) {
+              int = int.slice(1);
+              neg = true;
+            }
+            if (int.length < leadingCount) {
+              for (var i = leadingCount - int.length; i > 0; i--) {
+                int = "0" + int;
+              }
+            }
+            if (thousands > -1) {
+              int = int.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1" + locale.delimiters.thousands);
+            }
+            if (format3.indexOf(".") === 0) {
+              int = "";
+            }
+            output = int + decimal + (abbr ? abbr : "");
+            if (negP) {
+              output = (negP && neg ? "(" : "") + output + (negP && neg ? ")" : "");
+            } else {
+              if (signed >= 0) {
+                output = signed === 0 ? (neg ? "-" : "+") + output : output + (neg ? "-" : "+");
+              } else if (neg) {
+                output = "-" + output;
+              }
+            }
+            return output;
+          },
+          stringToNumber: function(string) {
+            var locale = locales[options.currentLocale], stringOriginal = string, abbreviations = {
+              thousand: 3,
+              million: 6,
+              billion: 9,
+              trillion: 12
+            }, abbreviation, value, i, regexp;
+            if (options.zeroFormat && string === options.zeroFormat) {
+              value = 0;
+            } else if (options.nullFormat && string === options.nullFormat || !string.replace(/[^0-9]+/g, "").length) {
+              value = null;
+            } else {
+              value = 1;
+              if (locale.delimiters.decimal !== ".") {
+                string = string.replace(/\./g, "").replace(locale.delimiters.decimal, ".");
+              }
+              for (abbreviation in abbreviations) {
+                regexp = new RegExp("[^a-zA-Z]" + locale.abbreviations[abbreviation] + "(?:\\)|(\\" + locale.currency.symbol + ")?(?:\\))?)?$");
+                if (stringOriginal.match(regexp)) {
+                  value *= Math.pow(10, abbreviations[abbreviation]);
+                  break;
+                }
+              }
+              value *= (string.split("-").length + Math.min(string.split("(").length - 1, string.split(")").length - 1)) % 2 ? 1 : -1;
+              string = string.replace(/[^0-9\.]+/g, "");
+              value *= Number(string);
+            }
+            return value;
+          },
+          isNaN: function(value) {
+            return typeof value === "number" && isNaN(value);
+          },
+          includes: function(string, search) {
+            return string.indexOf(search) !== -1;
+          },
+          insert: function(string, subString, start) {
+            return string.slice(0, start) + subString + string.slice(start);
+          },
+          reduce: function(array, callback) {
+            if (this === null) {
+              throw new TypeError("Array.prototype.reduce called on null or undefined");
+            }
+            if (typeof callback !== "function") {
+              throw new TypeError(callback + " is not a function");
+            }
+            var t = Object(array), len = t.length >>> 0, k = 0, value;
+            if (arguments.length === 3) {
+              value = arguments[2];
+            } else {
+              while (k < len && !(k in t)) {
+                k++;
+              }
+              if (k >= len) {
+                throw new TypeError("Reduce of empty array with no initial value");
+              }
+              value = t[k++];
+            }
+            for (; k < len; k++) {
+              if (k in t) {
+                value = callback(value, t[k], k, t);
+              }
+            }
+            return value;
+          },
+          multiplier: function(x) {
+            var parts = x.toString().split(".");
+            return parts.length < 2 ? 1 : Math.pow(10, parts[1].length);
+          },
+          correctionFactor: function() {
+            var args = Array.prototype.slice.call(arguments);
+            return args.reduce(function(accum, next) {
+              var mn = _.multiplier(next);
+              return accum > mn ? accum : mn;
+            }, 1);
+          },
+          toFixed: function(value, maxDecimals, roundingFunction, optionals) {
+            var splitValue = value.toString().split("."), minDecimals = maxDecimals - (optionals || 0), boundedPrecision, optionalsRegExp, power, output;
+            if (splitValue.length === 2) {
+              boundedPrecision = Math.min(Math.max(splitValue[1].length, minDecimals), maxDecimals);
+            } else {
+              boundedPrecision = minDecimals;
+            }
+            power = Math.pow(10, boundedPrecision);
+            output = (roundingFunction(value + "e+" + boundedPrecision) / power).toFixed(boundedPrecision);
+            if (optionals > maxDecimals - boundedPrecision) {
+              optionalsRegExp = new RegExp("\\.?0{1," + (optionals - (maxDecimals - boundedPrecision)) + "}$");
+              output = output.replace(optionalsRegExp, "");
+            }
+            return output;
+          }
+        };
+        numeral2.options = options;
+        numeral2.formats = formats;
+        numeral2.locales = locales;
+        numeral2.locale = function(key) {
+          if (key) {
+            options.currentLocale = key.toLowerCase();
+          }
+          return options.currentLocale;
+        };
+        numeral2.localeData = function(key) {
+          if (!key) {
+            return locales[options.currentLocale];
+          }
+          key = key.toLowerCase();
+          if (!locales[key]) {
+            throw new Error("Unknown locale : " + key);
+          }
+          return locales[key];
+        };
+        numeral2.reset = function() {
+          for (var property in defaults) {
+            options[property] = defaults[property];
+          }
+        };
+        numeral2.zeroFormat = function(format3) {
+          options.zeroFormat = typeof format3 === "string" ? format3 : null;
+        };
+        numeral2.nullFormat = function(format3) {
+          options.nullFormat = typeof format3 === "string" ? format3 : null;
+        };
+        numeral2.defaultFormat = function(format3) {
+          options.defaultFormat = typeof format3 === "string" ? format3 : "0.0";
+        };
+        numeral2.register = function(type, name, format3) {
+          name = name.toLowerCase();
+          if (this[type + "s"][name]) {
+            throw new TypeError(name + " " + type + " already registered.");
+          }
+          this[type + "s"][name] = format3;
+          return format3;
+        };
+        numeral2.validate = function(val, culture) {
+          var _decimalSep, _thousandSep, _currSymbol, _valArray, _abbrObj, _thousandRegEx, localeData, temp;
+          if (typeof val !== "string") {
+            val += "";
+            if (console.warn) {
+              console.warn("Numeral.js: Value is not string. It has been co-erced to: ", val);
+            }
+          }
+          val = val.trim();
+          if (!!val.match(/^\d+$/)) {
+            return true;
+          }
+          if (val === "") {
+            return false;
+          }
+          try {
+            localeData = numeral2.localeData(culture);
+          } catch (e) {
+            localeData = numeral2.localeData(numeral2.locale());
+          }
+          _currSymbol = localeData.currency.symbol;
+          _abbrObj = localeData.abbreviations;
+          _decimalSep = localeData.delimiters.decimal;
+          if (localeData.delimiters.thousands === ".") {
+            _thousandSep = "\\.";
+          } else {
+            _thousandSep = localeData.delimiters.thousands;
+          }
+          temp = val.match(/^[^\d]+/);
+          if (temp !== null) {
+            val = val.substr(1);
+            if (temp[0] !== _currSymbol) {
+              return false;
+            }
+          }
+          temp = val.match(/[^\d]+$/);
+          if (temp !== null) {
+            val = val.slice(0, -1);
+            if (temp[0] !== _abbrObj.thousand && temp[0] !== _abbrObj.million && temp[0] !== _abbrObj.billion && temp[0] !== _abbrObj.trillion) {
+              return false;
+            }
+          }
+          _thousandRegEx = new RegExp(_thousandSep + "{2}");
+          if (!val.match(/[^\d.,]/g)) {
+            _valArray = val.split(_decimalSep);
+            if (_valArray.length > 2) {
+              return false;
+            } else {
+              if (_valArray.length < 2) {
+                return !!_valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx);
+              } else {
+                if (_valArray[0].length === 1) {
+                  return !!_valArray[0].match(/^\d+$/) && !_valArray[0].match(_thousandRegEx) && !!_valArray[1].match(/^\d+$/);
+                } else {
+                  return !!_valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx) && !!_valArray[1].match(/^\d+$/);
+                }
+              }
+            }
+          }
+          return false;
+        };
+        numeral2.fn = Numeral.prototype = {
+          clone: function() {
+            return numeral2(this);
+          },
+          format: function(inputString, roundingFunction) {
+            var value = this._value, format3 = inputString || options.defaultFormat, kind, output, formatFunction;
+            roundingFunction = roundingFunction || Math.round;
+            if (value === 0 && options.zeroFormat !== null) {
+              output = options.zeroFormat;
+            } else if (value === null && options.nullFormat !== null) {
+              output = options.nullFormat;
+            } else {
+              for (kind in formats) {
+                if (format3.match(formats[kind].regexps.format)) {
+                  formatFunction = formats[kind].format;
+                  break;
+                }
+              }
+              formatFunction = formatFunction || numeral2._.numberToFormat;
+              output = formatFunction(value, format3, roundingFunction);
+            }
+            return output;
+          },
+          value: function() {
+            return this._value;
+          },
+          input: function() {
+            return this._input;
+          },
+          set: function(value) {
+            this._value = Number(value);
+            return this;
+          },
+          add: function(value) {
+            var corrFactor = _.correctionFactor.call(null, this._value, value);
+            function cback(accum, curr, currI, O) {
+              return accum + Math.round(corrFactor * curr);
+            }
+            this._value = _.reduce([this._value, value], cback, 0) / corrFactor;
+            return this;
+          },
+          subtract: function(value) {
+            var corrFactor = _.correctionFactor.call(null, this._value, value);
+            function cback(accum, curr, currI, O) {
+              return accum - Math.round(corrFactor * curr);
+            }
+            this._value = _.reduce([value], cback, Math.round(this._value * corrFactor)) / corrFactor;
+            return this;
+          },
+          multiply: function(value) {
+            function cback(accum, curr, currI, O) {
+              var corrFactor = _.correctionFactor(accum, curr);
+              return Math.round(accum * corrFactor) * Math.round(curr * corrFactor) / Math.round(corrFactor * corrFactor);
+            }
+            this._value = _.reduce([this._value, value], cback, 1);
+            return this;
+          },
+          divide: function(value) {
+            function cback(accum, curr, currI, O) {
+              var corrFactor = _.correctionFactor(accum, curr);
+              return Math.round(accum * corrFactor) / Math.round(curr * corrFactor);
+            }
+            this._value = _.reduce([this._value, value], cback);
+            return this;
+          },
+          difference: function(value) {
+            return Math.abs(numeral2(this._value).subtract(value).value());
+          }
+        };
+        numeral2.register("locale", "en", {
+          delimiters: {
+            thousands: ",",
+            decimal: "."
+          },
+          abbreviations: {
+            thousand: "k",
+            million: "m",
+            billion: "b",
+            trillion: "t"
+          },
+          ordinal: function(number) {
+            var b = number % 10;
+            return ~~(number % 100 / 10) === 1 ? "th" : b === 1 ? "st" : b === 2 ? "nd" : b === 3 ? "rd" : "th";
+          },
+          currency: {
+            symbol: "$"
+          }
+        });
+        (function() {
+          numeral2.register("format", "bps", {
+            regexps: {
+              format: /(BPS)/,
+              unformat: /(BPS)/
+            },
+            format: function(value, format3, roundingFunction) {
+              var space = numeral2._.includes(format3, " BPS") ? " " : "", output;
+              value = value * 1e4;
+              format3 = format3.replace(/\s?BPS/, "");
+              output = numeral2._.numberToFormat(value, format3, roundingFunction);
+              if (numeral2._.includes(output, ")")) {
+                output = output.split("");
+                output.splice(-1, 0, space + "BPS");
+                output = output.join("");
+              } else {
+                output = output + space + "BPS";
+              }
+              return output;
+            },
+            unformat: function(string) {
+              return +(numeral2._.stringToNumber(string) * 1e-4).toFixed(15);
+            }
+          });
+        })();
+        (function() {
+          var decimal = {
+            base: 1e3,
+            suffixes: ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]
+          }, binary = {
+            base: 1024,
+            suffixes: ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
+          };
+          var allSuffixes = decimal.suffixes.concat(binary.suffixes.filter(function(item) {
+            return decimal.suffixes.indexOf(item) < 0;
+          }));
+          var unformatRegex = allSuffixes.join("|");
+          unformatRegex = "(" + unformatRegex.replace("B", "B(?!PS)") + ")";
+          numeral2.register("format", "bytes", {
+            regexps: {
+              format: /([0\s]i?b)/,
+              unformat: new RegExp(unformatRegex)
+            },
+            format: function(value, format3, roundingFunction) {
+              var output, bytes = numeral2._.includes(format3, "ib") ? binary : decimal, suffix = numeral2._.includes(format3, " b") || numeral2._.includes(format3, " ib") ? " " : "", power, min, max;
+              format3 = format3.replace(/\s?i?b/, "");
+              for (power = 0; power <= bytes.suffixes.length; power++) {
+                min = Math.pow(bytes.base, power);
+                max = Math.pow(bytes.base, power + 1);
+                if (value === null || value === 0 || value >= min && value < max) {
+                  suffix += bytes.suffixes[power];
+                  if (min > 0) {
+                    value = value / min;
+                  }
+                  break;
+                }
+              }
+              output = numeral2._.numberToFormat(value, format3, roundingFunction);
+              return output + suffix;
+            },
+            unformat: function(string) {
+              var value = numeral2._.stringToNumber(string), power, bytesMultiplier;
+              if (value) {
+                for (power = decimal.suffixes.length - 1; power >= 0; power--) {
+                  if (numeral2._.includes(string, decimal.suffixes[power])) {
+                    bytesMultiplier = Math.pow(decimal.base, power);
+                    break;
+                  }
+                  if (numeral2._.includes(string, binary.suffixes[power])) {
+                    bytesMultiplier = Math.pow(binary.base, power);
+                    break;
+                  }
+                }
+                value *= bytesMultiplier || 1;
+              }
+              return value;
+            }
+          });
+        })();
+        (function() {
+          numeral2.register("format", "currency", {
+            regexps: {
+              format: /(\$)/
+            },
+            format: function(value, format3, roundingFunction) {
+              var locale = numeral2.locales[numeral2.options.currentLocale], symbols = {
+                before: format3.match(/^([\+|\-|\(|\s|\$]*)/)[0],
+                after: format3.match(/([\+|\-|\)|\s|\$]*)$/)[0]
+              }, output, symbol, i;
+              format3 = format3.replace(/\s?\$\s?/, "");
+              output = numeral2._.numberToFormat(value, format3, roundingFunction);
+              if (value >= 0) {
+                symbols.before = symbols.before.replace(/[\-\(]/, "");
+                symbols.after = symbols.after.replace(/[\-\)]/, "");
+              } else if (value < 0 && (!numeral2._.includes(symbols.before, "-") && !numeral2._.includes(symbols.before, "("))) {
+                symbols.before = "-" + symbols.before;
+              }
+              for (i = 0; i < symbols.before.length; i++) {
+                symbol = symbols.before[i];
+                switch (symbol) {
+                  case "$":
+                    output = numeral2._.insert(output, locale.currency.symbol, i);
+                    break;
+                  case " ":
+                    output = numeral2._.insert(output, " ", i + locale.currency.symbol.length - 1);
+                    break;
+                }
+              }
+              for (i = symbols.after.length - 1; i >= 0; i--) {
+                symbol = symbols.after[i];
+                switch (symbol) {
+                  case "$":
+                    output = i === symbols.after.length - 1 ? output + locale.currency.symbol : numeral2._.insert(output, locale.currency.symbol, -(symbols.after.length - (1 + i)));
+                    break;
+                  case " ":
+                    output = i === symbols.after.length - 1 ? output + " " : numeral2._.insert(output, " ", -(symbols.after.length - (1 + i) + locale.currency.symbol.length - 1));
+                    break;
+                }
+              }
+              return output;
+            }
+          });
+        })();
+        (function() {
+          numeral2.register("format", "exponential", {
+            regexps: {
+              format: /(e\+|e-)/,
+              unformat: /(e\+|e-)/
+            },
+            format: function(value, format3, roundingFunction) {
+              var output, exponential = typeof value === "number" && !numeral2._.isNaN(value) ? value.toExponential() : "0e+0", parts = exponential.split("e");
+              format3 = format3.replace(/e[\+|\-]{1}0/, "");
+              output = numeral2._.numberToFormat(Number(parts[0]), format3, roundingFunction);
+              return output + "e" + parts[1];
+            },
+            unformat: function(string) {
+              var parts = numeral2._.includes(string, "e+") ? string.split("e+") : string.split("e-"), value = Number(parts[0]), power = Number(parts[1]);
+              power = numeral2._.includes(string, "e-") ? power *= -1 : power;
+              function cback(accum, curr, currI, O) {
+                var corrFactor = numeral2._.correctionFactor(accum, curr), num = accum * corrFactor * (curr * corrFactor) / (corrFactor * corrFactor);
+                return num;
+              }
+              return numeral2._.reduce([value, Math.pow(10, power)], cback, 1);
+            }
+          });
+        })();
+        (function() {
+          numeral2.register("format", "ordinal", {
+            regexps: {
+              format: /(o)/
+            },
+            format: function(value, format3, roundingFunction) {
+              var locale = numeral2.locales[numeral2.options.currentLocale], output, ordinal = numeral2._.includes(format3, " o") ? " " : "";
+              format3 = format3.replace(/\s?o/, "");
+              ordinal += locale.ordinal(value);
+              output = numeral2._.numberToFormat(value, format3, roundingFunction);
+              return output + ordinal;
+            }
+          });
+        })();
+        (function() {
+          numeral2.register("format", "percentage", {
+            regexps: {
+              format: /(%)/,
+              unformat: /(%)/
+            },
+            format: function(value, format3, roundingFunction) {
+              var space = numeral2._.includes(format3, " %") ? " " : "", output;
+              if (numeral2.options.scalePercentBy100) {
+                value = value * 100;
+              }
+              format3 = format3.replace(/\s?\%/, "");
+              output = numeral2._.numberToFormat(value, format3, roundingFunction);
+              if (numeral2._.includes(output, ")")) {
+                output = output.split("");
+                output.splice(-1, 0, space + "%");
+                output = output.join("");
+              } else {
+                output = output + space + "%";
+              }
+              return output;
+            },
+            unformat: function(string) {
+              var number = numeral2._.stringToNumber(string);
+              if (numeral2.options.scalePercentBy100) {
+                return number * 0.01;
+              }
+              return number;
+            }
+          });
+        })();
+        (function() {
+          numeral2.register("format", "time", {
+            regexps: {
+              format: /(:)/,
+              unformat: /(:)/
+            },
+            format: function(value, format3, roundingFunction) {
+              var hours = Math.floor(value / 60 / 60), minutes = Math.floor((value - hours * 60 * 60) / 60), seconds = Math.round(value - hours * 60 * 60 - minutes * 60);
+              return hours + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+            },
+            unformat: function(string) {
+              var timeArray = string.split(":"), seconds = 0;
+              if (timeArray.length === 3) {
+                seconds = seconds + Number(timeArray[0]) * 60 * 60;
+                seconds = seconds + Number(timeArray[1]) * 60;
+                seconds = seconds + Number(timeArray[2]);
+              } else if (timeArray.length === 2) {
+                seconds = seconds + Number(timeArray[0]) * 60;
+                seconds = seconds + Number(timeArray[1]);
+              }
+              return Number(seconds);
+            }
+          });
+        })();
+        return numeral2;
+      });
+    }
+  });
+
   // resource/js/components/login/Login.vue
   var Login_exports = {};
   __export(Login_exports, {
@@ -15734,7 +16805,7 @@
             id_product: void 0,
             sku: void 0,
             name: void 0,
-            description: void 0,
+            description: "",
             image: "/assets/images/products/boxed-bg.jpg",
             url_image: "/assets/images/products/boxed-bg.jpg",
             category: void 0,
@@ -16301,7 +17372,7 @@
       __vue_inject_styles__6 = function(inject2) {
         if (!inject2)
           return;
-        inject2("data-v-41ce8e8c_0", { source: "\n.fs-7{\n  font-size: 0.8rem !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\products\\ModalProducts.vue"], "names": [], "mappings": ";AAiWA;EACA,4BAAA;AACA", "file": "ModalProducts.vue", "sourcesContent": [`<template>\r
+        inject2("data-v-1d64e854_0", { source: "\n.fs-7{\n  font-size: 0.8rem !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\products\\ModalProducts.vue"], "names": [], "mappings": ";AAiWA;EACA,4BAAA;AACA", "file": "ModalProducts.vue", "sourcesContent": [`<template>\r
   <div\r
     class="modal fade"\r
     id="create-modal-product"\r
@@ -16532,7 +17603,7 @@ export default {\r
       id_product: undefined,\r
       sku: undefined,\r
       name: undefined,\r
-      description: undefined,\r
+      description: '',\r
       image: "/assets/images/products/boxed-bg.jpg",\r
       url_image: "/assets/images/products/boxed-bg.jpg",\r
       category: undefined,\r
@@ -29300,9 +30371,8 @@ export default {\r
               _vm._v(" "),
               _c("th", { staticClass: "text-center" }, [_vm._v("Total")]),
               _vm._v(" "),
-              _c("th", { staticClass: "text-center" }, [
-                _vm._v("Date/th>\n          ")
-              ]),
+              _c("th", { staticClass: "text-center" }, [_vm._v("Date")]),
+              _vm._v(" "),
               _c("th", { staticClass: "text-center all" }, [_vm._v("Action")])
             ])
           ]);
@@ -29658,13 +30728,14 @@ export default {\r
       }
     };
   }
-  var __vue_script__12, __vue_render__12, __vue_staticRenderFns__12, __vue_inject_styles__12, __vue_scope_id__12, __vue_module_identifier__12, __vue_is_functional_template__12, __vue_component__12, CardCreateSale_default;
+  var import_numeral, __vue_script__12, __vue_render__12, __vue_staticRenderFns__12, __vue_inject_styles__12, __vue_scope_id__12, __vue_module_identifier__12, __vue_is_functional_template__12, __vue_component__12, CardCreateSale_default;
   var init_CardCreateSale = __esm({
     "resource/js/components/sales/CardCreateSale.vue"() {
       init_EventBus();
       init_ModalCustomers();
       init_esm2();
       init_CardAddProduct();
+      import_numeral = __toESM(require_numeral());
       __vue_script__12 = {
         name: "card-create-sale",
         props: {
@@ -29691,11 +30762,12 @@ export default {\r
             authParser: JSON.parse(this.auth),
             customersParser: JSON.parse(this.customers),
             sale: {
-              customer_id: "",
+              customer: "",
               method: "",
               products: [],
               tax: 0,
-              total: 0
+              total: 0,
+              net: 0
             },
             select2: {
               options: []
@@ -29730,9 +30802,11 @@ export default {\r
               total = total + product.price * product.quantity;
             });
             if (this.sale.tax > 0) {
-              this.sale.total = total * this.sale.tax / 100 + total;
+              this.sale.net = (0, import_numeral.default)(total).format("0,0.00");
+              this.sale.total = (0, import_numeral.default)(total * this.sale.tax / 100 + total).format("0,0.00");
             } else {
-              this.sale.total = total;
+              this.sale.net = (0, import_numeral.default)(total).format("0,0.00");
+              this.sale.total = (0, import_numeral.default)(total).format("0,0.00");
             }
           },
           modifyQuantity(id, event) {
@@ -29741,15 +30815,37 @@ export default {\r
               product.quantity = parseInt(event.target.value);
               this.totalize();
             }
+          },
+          numberFormat(price) {
+            return (0, import_numeral.default)(price).format("0,0.00");
+          },
+          sell() {
+            if (this.sale.products > 0) {
+              this.$swal.fire({
+                title: "Are you sure to make this sale?",
+                text: "Are all the data correct?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, sell..."
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire("Success!", "Your sale has been registered.", "success");
+                }
+              });
+            } else {
+              this.$swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "You cannot sell if you have no products added.!"
+              });
+            }
           }
         },
         mounted() {
           this.customersParser.map((customer) => {
-            this.select2.options.push({ id: customer.id, value: customer.name });
-          });
-          $("#select-customer").select2({
-            width: "element",
-            placeholder: "Select Customer"
+            this.select2.options.push({ label: customer.name, code: customer.id });
           });
           EventBus.$on("add", (product) => this.addProductSale(product));
           EventBus.$on("products", (data) => {
@@ -29764,7 +30860,15 @@ export default {\r
         return _c("div", { staticClass: "card border-0 border-top border-4 border-success" }, [
           _c("div", { staticClass: "card-title" }),
           _vm._v(" "),
-          _c("form", { attrs: { role: "form", method: "post", autocomplete: "off" } }, [
+          _c("form", {
+            attrs: { role: "form", method: "post", autocomplete: "off" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault();
+                return _vm.sell.apply(null, arguments);
+              }
+            }
+          }, [
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "form-group" }, [
                 _c("div", { staticClass: "input-group" }, [
@@ -29792,35 +30896,19 @@ export default {\r
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("div", { staticClass: "input-group" }, [
-                  _c("select", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.sale.customer_id,
-                        expression: "sale.customer_id"
-                      }
-                    ],
-                    staticClass: "form-control",
+                  _c("v-select", {
                     attrs: {
-                      name: "customer",
-                      required: "",
-                      id: "select-customer"
+                      options: _vm.select2.options,
+                      placeholder: "Select Customer"
                     },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-                          return o.selected;
-                        }).map(function(o) {
-                          var val = "_value" in o ? o._value : o.value;
-                          return val;
-                        });
-                        _vm.$set(_vm.sale, "customer_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-                      }
+                    model: {
+                      value: _vm.sale.customer_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.sale, "customer_id", $$v);
+                      },
+                      expression: "sale.customer_id"
                     }
-                  }, _vm._l(_vm.customersParser, function(customer, index) {
-                    return _c("option", { key: index, domProps: { value: customer.id } }, [_vm._v(_vm._s(customer.name))]);
-                  }), 0),
+                  }),
                   _vm._v(" "),
                   _c("button", {
                     staticClass: "btn btn-success btn-sm",
@@ -29830,8 +30918,8 @@ export default {\r
                       "data-bs-toggle": "modal",
                       "data-bs-target": "#create-modal-customer"
                     }
-                  }, [_vm._v("Add client\n                        ")])
-                ])
+                  }, [_vm._v("Add client\n                    ")])
+                ], 1)
               ]),
               _vm._v(" "),
               _vm._l(_vm.sale.products, function(product, index) {
@@ -29889,13 +30977,13 @@ export default {\r
                       _c("input", {
                         staticClass: "form-control",
                         attrs: {
-                          type: "number",
+                          type: "text",
                           name: "price",
                           placeholder: "10$",
                           readonly: "",
                           required: ""
                         },
-                        domProps: { value: product.price }
+                        domProps: { value: _vm.numberFormat(product.price) }
                       })
                     ])
                   ])
@@ -29911,7 +30999,7 @@ export default {\r
                     _vm._v(" "),
                     _c("tbody", [
                       _c("tr", [
-                        _c("td", { staticClass: "w-50" }, [
+                        _c("td", [
                           _c("div", { staticClass: "input-group" }, [
                             _c("input", {
                               directives: [
@@ -29947,9 +31035,45 @@ export default {\r
                           ])
                         ]),
                         _vm._v(" "),
-                        _c("td", { staticClass: "w-50" }, [
+                        _c("td", [
                           _c("div", { staticClass: "input-group" }, [
-                            _vm._m(6),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.sale.net,
+                                  expression: "sale.net"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                name: "net",
+                                min: "0",
+                                autocomplete: "off",
+                                placeholder: "0",
+                                required: "",
+                                readonly: ""
+                              },
+                              domProps: { value: _vm.sale.net },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return;
+                                  }
+                                  _vm.$set(_vm.sale, "net", $event.target.value);
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm._m(6)
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("div", { staticClass: "input-group" }, [
+                            _vm._m(7),
                             _vm._v(" "),
                             _c("input", {
                               directives: [
@@ -29962,7 +31086,7 @@ export default {\r
                               ],
                               staticClass: "form-control",
                               attrs: {
-                                type: "number",
+                                type: "text",
                                 name: "total_sale",
                                 min: "1",
                                 autocomplete: "off",
@@ -30037,11 +31161,11 @@ export default {\r
                   ])
                 ]),
                 _vm._v(" "),
-                _vm.verifyMethod ? _c("div", { staticClass: "col-6" }, [_vm._m(7)]) : _vm._e()
+                _vm.verifyMethod ? _c("div", { staticClass: "col-6" }, [_vm._m(8)]) : _vm._e()
               ])
             ], 2),
             _vm._v(" "),
-            _vm._m(8)
+            _vm._m(9)
           ]),
           _vm._v(" "),
           _c("customer-modal", {
@@ -30071,7 +31195,7 @@ export default {\r
                   })
                 ], 1),
                 _vm._v(" "),
-                _vm._m(9)
+                _vm._m(10)
               ])
             ])
           ])
@@ -30130,6 +31254,8 @@ export default {\r
             _c("tr", [
               _c("th", [_vm._v("Tax")]),
               _vm._v(" "),
+              _c("th", [_vm._v("Subtotal")]),
+              _vm._v(" "),
               _c("th", [_vm._v("Total")])
             ])
           ]);
@@ -30140,6 +31266,14 @@ export default {\r
           var _c = _vm._self._c || _h;
           return _c("span", { staticClass: "input-group-text" }, [
             _c("i", { staticClass: "fa fa-percent" })
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-usd" })
           ]);
         },
         function() {
@@ -30196,10 +31330,10 @@ export default {\r
       __vue_inject_styles__12 = function(inject2) {
         if (!inject2)
           return;
-        inject2("data-v-6edad8a7_0", { source: "\n.select2-selection{\n    min-height: 2rem;\n}\n@media (max-width: 768px) {\n#modal-customer-button{\n        width: 100%;\n}\n.select2{\n        width: 100% !important;\n}\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\sales\\CardCreateSale.vue"], "names": [], "mappings": ";AAsQA;IACA,gBAAA;AACA;AACA;AACA;QACA,WAAA;AACA;AACA;QACA,sBAAA;AACA;AACA", "file": "CardCreateSale.vue", "sourcesContent": [`<template>\r
+        inject2("data-v-4d94851f_0", { source: "\n.v-select{\n    position: relative;\n    flex: 1 1 auto;\n}\n@media (max-width: 768px) {\n#modal-customer-button{\n        width: 100%;\n}\n.select2{\n        width: 100% !important;\n}\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\sales\\CardCreateSale.vue"], "names": [], "mappings": ";AAwSA;IACA,kBAAA;IACA,cAAA;AACA;AACA;AACA;QACA,WAAA;AACA;AACA;QACA,sBAAA;AACA;AACA", "file": "CardCreateSale.vue", "sourcesContent": [`<template>\r
     <div class="card border-0 border-top border-4 border-success">\r
         <div class="card-title"></div>\r
-        <form role="form" method="post" autocomplete="off">\r
+        <form v-on:submit.prevent="sell" role="form" method="post" autocomplete="off">\r
             <div class="card-body">\r
                 <div class="form-group">\r
                     <div class="input-group">\r
@@ -30215,17 +31349,15 @@ export default {\r
                 </div>\r
                 <div class="form-group">\r
                     <div class="input-group">\r
-                        <select name="customer" required v-model="sale.customer_id" id="select-customer" class="form-control">\r
-                            <option v-for="(customer, index) in customersParser" :key="index" :value="customer.id" >{{ customer.name }}</option>\r
-                        </select>\r
-                            <button \r
-                                type="button" \r
-                                id="modal-customer-button" \r
-                                class="btn btn-success btn-sm" \r
-                                data-bs-toggle="modal" \r
-                                data-bs-target="#create-modal-customer"\r
-                            >Add client\r
-                            </button>\r
+                        <v-select :options="select2.options" v-model="sale.customer_id" placeholder="Select Customer"></v-select>\r
+                        <button \r
+                            type="button" \r
+                            id="modal-customer-button" \r
+                            class="btn btn-success btn-sm" \r
+                            data-bs-toggle="modal" \r
+                            data-bs-target="#create-modal-customer"\r
+                        >Add client\r
+                        </button>\r
                     </div>\r
                 </div>\r
                 <div class="form-group row" v-for="(product, index) in sale.products" :key="index">\r
@@ -30251,7 +31383,7 @@ export default {\r
                     <div class="col-3 px-0 px-md-3">\r
                         <div class="input-group">\r
                             <span class="input-group-text"><i class="fa fa-usd"></i></span>\r
-                            <input type="number" name="price" class="form-control" placeholder="10$" readonly required :value="product.price">\r
+                            <input type="text" name="price" class="form-control" placeholder="10$" readonly required :value="numberFormat(product.price)">\r
                         </div>\r
                     </div>\r
                 </div>\r
@@ -30276,21 +31408,28 @@ export default {\r
                             <thead>\r
                                 <tr>\r
                                     <th>Tax</th>\r
+                                    <th>Subtotal</th>\r
                                     <th>Total</th>\r
                                 </tr>\r
                             </thead>\r
                             <tbody>\r
                                 <tr>\r
-                                    <td class="w-50">\r
+                                    <td>\r
                                         <div class="input-group">\r
                                             <input type="number" class="form-control" name="tax" min="0" autocomplete="off" placeholder="0" required v-model="sale.tax" @change="totalize">\r
                                             <span class="input-group-text"><i class="fa fa-percent"></i></span>\r
                                         </div>\r
                                     </td>\r
-                                    <td class="w-50">\r
+                                    <td>\r
+                                        <div class="input-group">\r
+                                            <input type="text" class="form-control" name="net" min="0" autocomplete="off" placeholder="0" required v-model="sale.net" readonly>\r
+                                            <span class="input-group-text"><i class="fa fa-usd"></i></span>\r
+                                        </div>\r
+                                    </td>\r
+                                    <td>\r
                                         <div class="input-group">\r
                                             <span class="input-group-text"><i class="fa fa-usd"></i></span>\r
-                                            <input type="number" class="form-control" name="total_sale" min="1" autocomplete="off" placeholder="0.00" readonly required v-model="sale.total">\r
+                                            <input type="text" class="form-control" name="total_sale" min="1" autocomplete="off" placeholder="0.00" readonly required v-model="sale.total">\r
                                         </div>\r
                                     </td>\r
                                 </tr>\r
@@ -30362,6 +31501,7 @@ import { EventBus } from '../EventBus';\r
 import ModalCustomer from '../customers/ModalCustomers.vue';\r
 import { IMaskComponent } from 'vue-imask';\r
 import ModalAddProduct from './CardAddProduct.vue';\r
+import numeral from 'numeral';\r
 export default {\r
     name: 'card-create-sale',\r
     props:{\r
@@ -30388,11 +31528,12 @@ export default {\r
             authParser: JSON.parse(this.auth),\r
             customersParser: JSON.parse(this.customers),\r
             sale:{\r
-                customer_id: '',\r
+                customer: '',\r
                 method: '',\r
                 products: [],\r
                 tax: 0,\r
                 total: 0,\r
+                net: 0,\r
             },\r
             select2:{\r
                 options: []\r
@@ -30426,9 +31567,11 @@ export default {\r
                 total = total + (product.price * product.quantity)\r
             })\r
             if(this.sale.tax > 0){\r
-                this.sale.total = ((total * this.sale.tax) / 100) + total;\r
+                this.sale.net = numeral(total).format('0,0.00');\r
+                this.sale.total = numeral(((total * this.sale.tax) / 100) + total).format('0,0.00');\r
             }else{\r
-                this.sale.total = total;\r
+                this.sale.net = numeral(total).format('0,0.00');\r
+                this.sale.total = numeral(total).format('0,0.00');\r
             }\r
         },\r
         modifyQuantity(id, event){\r
@@ -30437,18 +31580,43 @@ export default {\r
                 product.quantity = parseInt(event.target.value);\r
                 this.totalize();    \r
             }\r
+        },\r
+        numberFormat(price){\r
+            return numeral(price).format('0,0.00')\r
+        },\r
+        sell(){\r
+            if(this.sale.products > 0){\r
+                this.$swal.fire({\r
+                title: 'Are you sure to make this sale?',\r
+                text: "Are all the data correct?",\r
+                icon: 'warning',\r
+                showCancelButton: true,\r
+                confirmButtonColor: '#3085d6',\r
+                cancelButtonColor: '#d33',\r
+                confirmButtonText: 'Yes, sell...'\r
+                }).then((result) => {\r
+                if (result.isConfirmed) {\r
+                    Swal.fire(\r
+                    'Success!',\r
+                    'Your sale has been registered.',\r
+                    'success'\r
+                    )\r
+                }\r
+                })\r
+            }else{\r
+                this.$swal.fire({\r
+                    icon: 'error',\r
+                    title: 'Oops...',\r
+                    text: 'You cannot sell if you have no products added.!',\r
+                    })\r
+            }\r
         }\r
 \r
     },\r
     mounted(){\r
          this.customersParser.map((customer) => {\r
-            this.select2.options.push({id: customer.id, value: customer.name})\r
+            this.select2.options.push({label: customer.name, code: customer.id})\r
         });\r
-        $('#select-customer').select2({\r
-            width: 'element',\r
-            placeholder: "Select Customer",\r
-        });\r
-\r
         EventBus.$on('add', product => this.addProductSale(product));\r
         EventBus.$on('products', data => {\r
             this.$refs.add_product_responsive.addProductResponsive(data);\r
@@ -30458,8 +31626,9 @@ export default {\r
 }\r
 <\/script>\r
 <style>\r
-    .select2-selection{\r
-        min-height: 2rem;\r
+    .v-select{\r
+        position: relative;\r
+        flex: 1 1 auto;\r
     }\r
     @media (max-width: 768px) {\r
         #modal-customer-button{\r
@@ -30482,11 +31651,14 @@ export default {\r
   // resource/js/app.js
   var import_vue3 = __toESM(require_vue());
   var import_vue_sweetalert2 = __toESM(require_vue_sweetalert_umd());
+  var import_vue_select = __toESM(require_vue_select());
   import_vue3.default.config.productionTip = false;
   window.axios = require_axios2();
   window.Vue = require_vue();
   window.moment = require_moment();
+  window.numeral = require_numeral();
   import_vue3.default.use(import_vue_sweetalert2.default);
+  import_vue3.default.component("v-select", import_vue_select.default);
   import_vue3.default.component("login-form", (init_Login(), __toCommonJS(Login_exports)).default);
   import_vue3.default.component("u-table", (init_TableUsers(), __toCommonJS(TableUsers_exports)).default);
   import_vue3.default.component("u-modal", (init_ModalUser(), __toCommonJS(ModalUser_exports)).default);
@@ -30522,6 +31694,13 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
+/*! @preserve
+ * numeral.js
+ * version : 2.0.6
+ * author : Adam Draper
+ * license : MIT
+ * http://adamwdraper.github.com/Numeral-js/
+ */
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! moment.js

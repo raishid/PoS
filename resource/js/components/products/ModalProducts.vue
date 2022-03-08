@@ -229,7 +229,7 @@ export default {
       id_product: undefined,
       sku: undefined,
       name: undefined,
-      description: undefined,
+      description: '',
       image: "/assets/images/products/boxed-bg.jpg",
       url_image: "/assets/images/products/boxed-bg.jpg",
       category: undefined,

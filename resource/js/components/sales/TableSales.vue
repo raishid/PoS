@@ -13,7 +13,7 @@
             <th class="text-center">Seller</th>
             <th class="text-center">Method</th>
             <th class="text-center">Total</th>
-            <th class="text-center">Date/th>
+            <th class="text-center">Date</th>
             <th class="text-center all">Action</th>
           </tr>
         </thead>
