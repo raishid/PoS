@@ -12,12 +12,21 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-text"><i class="fa fa-key"></i></span>
-                        <input type="text" name="sale" class="form-control" :value="id_sale" readonly/>
+                        <input type="text" name="sale" class="form-control" :value="formatInvoce(id_sale)" readonly/>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group">
-                        <v-select :options="select2.options" v-model="sale.customer_id" placeholder="Select Customer"></v-select>
+                        <v-select :options="select2.options" v-model="sale.customer" placeholder="Select Customer">
+                            <template #search="{attributes, events}">
+                                <input
+                                class="vs__search"
+                                :required="!sale.customer"
+                                v-bind="attributes"
+                                v-on="events"
+                                />
+                            </template>
+                        </v-select>
                         <button 
                             type="button" 
                             id="modal-customer-button" 
@@ -44,7 +53,7 @@
                             :min="1"
                             :type="'number'"
                             :max="product.stock"
-                            value="1"
+                            :value="quantityFormat(product)"
                             @change="modifyQuantity(product.id, $event)"
                         />
                     </div>
@@ -119,7 +128,7 @@
                     </div>
                     <div class="col-6" v-if="verifyMethod">
                         <div class="input-group">
-                            <input type="text" name="id_transaction" class="form-control" placeholder="ID transaction" required>
+                            <input type="text" name="id_transaction" class="form-control" placeholder="ID transaction" required v-model="sale.id_transaction">
                             <span class="input-group-text"><i class="fa fa-lock"></i></span>
                         </div>
                     </div>
@@ -127,7 +136,7 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary px-3">Sell</button>
+                    <button type="submit" class="btn btn-primary px-3">{{SellOrEdit}}</button>
                 </div>
             </div>
         </form>
@@ -184,7 +193,14 @@ export default {
         },
         csrf_token:{
             required: true
+        },
+        edit: {
+            default: false
+        },
+        _sale:{
+            default: undefined
         }
+        
     },
     components:{
         ModalCustomer,
@@ -202,6 +218,7 @@ export default {
                 tax: 0,
                 total: 0,
                 net: 0,
+                id_transaction: '',
             },
             select2:{
                 options: []
@@ -212,12 +229,16 @@ export default {
         verifyMethod(){
             return this.sale.method !== 'cash' && this.sale.method !== '';
         },
+        SellOrEdit(){
+            return this.edit ?  'Edit Sale' : 'Sell';
+        }
         
     },
     methods:{
         mutateDataCustomer(data){
             this.customersParser.push(data);
-            this.sale.customer_id = data.id;
+            this.select2.options.push({label: data.name, code: data.id})
+            this.sale.customer = {label: data.name, code: data.id};
         },
         addProductSale(product){
             product.quantity = 1;
@@ -253,7 +274,7 @@ export default {
             return numeral(price).format('0,0.00')
         },
         sell(){
-            if(this.sale.products > 0){
+            if(this.sale.products.length > 0){
                 this.$swal.fire({
                 title: 'Are you sure to make this sale?',
                 text: "Are all the data correct?",
@@ -264,11 +285,75 @@ export default {
                 confirmButtonText: 'Yes, sell...'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire(
-                    'Success!',
-                    'Your sale has been registered.',
-                    'success'
-                    )
+                    if(this.edit){
+                        axios({
+                            method:'post',
+                            url: `/sales/edit/${this._sale.id}`,
+                            data: {
+                                csrf_token: this.csrf_token,
+                                id_sale: this.id_sale,
+                                user_id: this.authParser.id,
+                                customer_id: this.sale.customer.code,
+                                tax: this.sale.tax,
+                                net: this.sale.net,
+                                total: this.sale.total,
+                                method: this.sale.method,
+                                id_transaction: this.sale.id_transaction,
+                                products: JSON.stringify(this.sale.products)
+                            }
+                        }).then(response => {
+                            const { data: { status, response:resp } } = response;
+                            if(status){
+                                this.$swal.fire(
+                                'Success!',
+                                'Your sale has been registered.',
+                                'success'
+                                ).then(() => {
+                                    location.href = '/sales';
+                                })
+                            }else{
+                                this.$swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'there was a problem saving this sale',
+                                })
+                            }
+                        })
+                    }else{
+                        axios({
+                            method:'post',
+                            url: '/sales/sell',
+                            data: {
+                                csrf_token: this.csrf_token,
+                                id_sale: this.id_sale,
+                                user_id: this.authParser.id,
+                                customer_id: this.sale.customer.code,
+                                tax: this.sale.tax,
+                                net: this.sale.net,
+                                total: this.sale.total,
+                                method: this.sale.method,
+                                id_transaction: this.sale.id_transaction,
+                                products: JSON.stringify(this.sale.products)
+                            }
+                        }).then(response => {
+                            const { data: { status, response:resp } } = response;
+                            if(status){
+                                this.$swal.fire(
+                                'Success!',
+                                'Your sale has been registered.',
+                                'success'
+                                ).then(() => {
+                                    location.href = '/sales';
+                                })
+                            }else{
+                                this.$swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'there was a problem saving this sale',
+                                })
+                            }
+                        })
+                    }
                 }
                 })
             }else{
@@ -278,6 +363,13 @@ export default {
                     text: 'You cannot sell if you have no products added.!',
                     })
             }
+        },
+        formatInvoce(invoice){
+          let new_invoice = invoice.toString().substr(0, 2) + '-';
+          return new_invoice = new_invoice + invoice.toString().substr(2, 4);
+        },
+        quantityFormat(product){
+            return product?.pivot ? product.pivot.quantity.toString() : '1';
         }
 
     },
@@ -289,6 +381,17 @@ export default {
         EventBus.$on('products', data => {
             this.$refs.add_product_responsive.addProductResponsive(data);
          })
+
+        if(this.edit){
+            this.sale.customer = { label: this._sale.customer.name, code: this._sale.customer.id };
+            this.sale.method = this._sale.method;
+            this.sale.products = this._sale.products;
+            this.sale.tax = this._sale.tax;
+            this.sale.total = this._sale.total;
+            this.sale.net = this._sale.net;
+            this.sale.id_transaction = this._sale.id_transaction;
+            this.authParser = this._sale.seller;
+        }
     }
     
 }

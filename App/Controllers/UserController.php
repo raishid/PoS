@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controller;
 use App\Models\User;
+use DateTime;
 
 class UserController extends Controller
 {
@@ -45,6 +46,7 @@ class UserController extends Controller
         $user->role = $data['role'];
         $user->pic = $relative_path;
         $user->state = 1;
+        $user->date = new DateTime();
         
         $result = $user->save();
 

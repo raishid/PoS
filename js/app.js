@@ -15935,8 +15935,13 @@
             });
             return this.mutable;
           },
-          formatDate(date) {
-            const datetime = new Date(date);
+          formatDate(date, timestamp = false) {
+            let datetime;
+            if (timestamp) {
+              datetime = new Date(date * 1e3);
+            } else {
+              datetime = new Date(date);
+            }
             return datetime.toLocaleDateString("es-Mx");
           },
           userPic(pic) {
@@ -15961,6 +15966,7 @@
             user.username = data.username;
             user.role = data.role;
             user.pic = data.pic;
+            user.date = data.date;
           },
           mountedDatatable() {
             return this.datatable = $("#datatable-user").DataTable({
@@ -16069,7 +16075,7 @@
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(_vm.formatDate(user.date)))
+                    _vm._v(_vm._s(_vm.formatDate(user.date, true)))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
@@ -16808,7 +16814,7 @@
             description: "",
             image: "/assets/images/products/boxed-bg.jpg",
             url_image: "/assets/images/products/boxed-bg.jpg",
-            category: void 0,
+            category: "",
             stock: void 0,
             cost: void 0,
             price: void 0,
@@ -16829,7 +16835,7 @@
           handleSubmitProduct() {
             const form_data = new FormData();
             form_data.append("csrf_token", this.csrf_token);
-            form_data.append("sku", this.sku);
+            form_data.append("sku", this.sku.toUpperCase());
             form_data.append("name", this.name);
             form_data.append("description", this.description);
             form_data.append("image", this.image);
@@ -17372,7 +17378,7 @@
       __vue_inject_styles__6 = function(inject2) {
         if (!inject2)
           return;
-        inject2("data-v-1d64e854_0", { source: "\n.fs-7{\n  font-size: 0.8rem !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\products\\ModalProducts.vue"], "names": [], "mappings": ";AAiWA;EACA,4BAAA;AACA", "file": "ModalProducts.vue", "sourcesContent": [`<template>\r
+        inject2("data-v-8ce46910_0", { source: "\n.fs-7{\n  font-size: 0.8rem !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\products\\ModalProducts.vue"], "names": [], "mappings": ";AAiWA;EACA,4BAAA;AACA", "file": "ModalProducts.vue", "sourcesContent": [`<template>\r
   <div\r
     class="modal fade"\r
     id="create-modal-product"\r
@@ -17606,7 +17612,7 @@ export default {\r
       description: '',\r
       image: "/assets/images/products/boxed-bg.jpg",\r
       url_image: "/assets/images/products/boxed-bg.jpg",\r
-      category: undefined,\r
+      category: '',\r
       stock: undefined,\r
       cost: undefined,\r
       price: undefined,\r
@@ -17631,7 +17637,7 @@ export default {\r
     handleSubmitProduct() {\r
       const form_data = new FormData();\r
       form_data.append("csrf_token", this.csrf_token);\r
-      form_data.append("sku", this.sku);\r
+      form_data.append("sku", this.sku.toUpperCase());\r
       form_data.append('name', this.name);\r
       form_data.append('description', this.description);\r
       form_data.append('image', this.image);\r
@@ -30160,6 +30166,9 @@ export default {\r
           csrf_token: {
             type: String,
             required: true
+          },
+          auth: {
+            required: true
           }
         },
         data() {
@@ -30169,6 +30178,11 @@ export default {\r
             datatable: void 0,
             editB: false
           };
+        },
+        computed: {
+          authParse() {
+            return !this.auth ? false : JSON.parse(this.auth);
+          }
         },
         methods: {
           dataProducts(page = 2) {
@@ -30233,15 +30247,10 @@ export default {\r
             product.cost = data.cost;
             product.price = data.price;
           },
-          editProd(id) {
-            const data = this.productsParser.find((u) => u.id === id);
-            this.$refs.modal.editProd(data);
-            $("#modal-product-button").click();
-          },
-          deleteProd(id) {
+          deleteSale(id) {
             this.$swal.fire({
               title: "Are you sure?",
-              text: "do you want to delete this product?",
+              text: "do you want to delete this sale?",
               icon: "warning",
               showCancelButton: true,
               confirmButtonColor: "#3085d6",
@@ -30251,7 +30260,7 @@ export default {\r
               if (result.isConfirmed) {
                 axios({
                   method: "post",
-                  url: `/products/delete/${id}`,
+                  url: `/sales/delete/${id}`,
                   data: {
                     csrf_token: this.csrf_token
                   }
@@ -30259,14 +30268,18 @@ export default {\r
                   const { data: { status } } = response;
                   if (status) {
                     this.$swal.fire("Deleted!", "the product was deleted.", "success");
-                    this.productsParser.splice(this.productsParser.findIndex((u) => u.id === id), 1);
+                    this.salesParser.splice(this.salesParser.findIndex((u) => u.id === id), 1);
                   }
                 });
               }
             });
           },
           formatDate(timestamp) {
-            return (0, import_moment3.default)(timestamp).format("l");
+            return (0, import_moment3.default)(timestamp).format("l, h:mm a");
+          },
+          formatInvoce(invoice) {
+            let new_invoice = invoice.toString().substr(0, 2) + "-";
+            return new_invoice = new_invoice + invoice.toString().substr(2, 4);
           }
         },
         mounted() {
@@ -30294,7 +30307,7 @@ export default {\r
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(sale.invoice))
+                    _vm._v(_vm._s(_vm.formatInvoce(sale.id_sale)))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
@@ -30319,20 +30332,18 @@ export default {\r
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
                     _c("div", [
-                      _c("button", {
-                        staticClass: "btn btn-info edit",
-                        on: {
-                          click: function($event) {
-                            return _vm.editProd(sale.id);
-                          }
-                        }
-                      }, [_c("i", { staticClass: "fa fa-print" })]),
+                      _vm._m(2, true),
+                      _vm._v(" "),
+                      _vm.authParse.id == 1 ? _c("a", {
+                        staticClass: "btn btn-warning edit",
+                        attrs: { href: "/sales/edit/" + sale.id }
+                      }, [_c("i", { staticClass: "fa fa-pencil" })]) : _vm._e(),
                       _vm._v(" "),
                       _c("button", {
                         staticClass: "btn btn-danger delete",
                         on: {
                           click: function($event) {
-                            return _vm.deleteProd(sale.id);
+                            return _vm.deleteSale(sale.id);
                           }
                         }
                       }, [_c("i", { staticClass: "fa fa-times" })])
@@ -30375,6 +30386,14 @@ export default {\r
               _vm._v(" "),
               _c("th", { staticClass: "text-center all" }, [_vm._v("Action")])
             ])
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("button", { staticClass: "btn btn-info" }, [
+            _c("i", { staticClass: "fa fa-print" })
           ]);
         }
       ];
@@ -30750,6 +30769,12 @@ export default {\r
           },
           csrf_token: {
             required: true
+          },
+          edit: {
+            default: false
+          },
+          _sale: {
+            default: void 0
           }
         },
         components: {
@@ -30767,7 +30792,8 @@ export default {\r
               products: [],
               tax: 0,
               total: 0,
-              net: 0
+              net: 0,
+              id_transaction: ""
             },
             select2: {
               options: []
@@ -30777,12 +30803,16 @@ export default {\r
         computed: {
           verifyMethod() {
             return this.sale.method !== "cash" && this.sale.method !== "";
+          },
+          SellOrEdit() {
+            return this.edit ? "Edit Sale" : "Sell";
           }
         },
         methods: {
           mutateDataCustomer(data) {
             this.customersParser.push(data);
-            this.sale.customer_id = data.id;
+            this.select2.options.push({ label: data.name, code: data.id });
+            this.sale.customer = { label: data.name, code: data.id };
           },
           addProductSale(product) {
             product.quantity = 1;
@@ -30820,7 +30850,7 @@ export default {\r
             return (0, import_numeral.default)(price).format("0,0.00");
           },
           sell() {
-            if (this.sale.products > 0) {
+            if (this.sale.products.length > 0) {
               this.$swal.fire({
                 title: "Are you sure to make this sale?",
                 text: "Are all the data correct?",
@@ -30831,7 +30861,67 @@ export default {\r
                 confirmButtonText: "Yes, sell..."
               }).then((result) => {
                 if (result.isConfirmed) {
-                  Swal.fire("Success!", "Your sale has been registered.", "success");
+                  if (this.edit) {
+                    axios({
+                      method: "post",
+                      url: `/sales/edit/${this._sale.id}`,
+                      data: {
+                        csrf_token: this.csrf_token,
+                        id_sale: this.id_sale,
+                        user_id: this.authParser.id,
+                        customer_id: this.sale.customer.code,
+                        tax: this.sale.tax,
+                        net: this.sale.net,
+                        total: this.sale.total,
+                        method: this.sale.method,
+                        id_transaction: this.sale.id_transaction,
+                        products: JSON.stringify(this.sale.products)
+                      }
+                    }).then((response) => {
+                      const { data: { status, response: resp } } = response;
+                      if (status) {
+                        this.$swal.fire("Success!", "Your sale has been registered.", "success").then(() => {
+                          location.href = "/sales";
+                        });
+                      } else {
+                        this.$swal.fire({
+                          icon: "error",
+                          title: "Oops...",
+                          text: "there was a problem saving this sale"
+                        });
+                      }
+                    });
+                  } else {
+                    axios({
+                      method: "post",
+                      url: "/sales/sell",
+                      data: {
+                        csrf_token: this.csrf_token,
+                        id_sale: this.id_sale,
+                        user_id: this.authParser.id,
+                        customer_id: this.sale.customer.code,
+                        tax: this.sale.tax,
+                        net: this.sale.net,
+                        total: this.sale.total,
+                        method: this.sale.method,
+                        id_transaction: this.sale.id_transaction,
+                        products: JSON.stringify(this.sale.products)
+                      }
+                    }).then((response) => {
+                      const { data: { status, response: resp } } = response;
+                      if (status) {
+                        this.$swal.fire("Success!", "Your sale has been registered.", "success").then(() => {
+                          location.href = "/sales";
+                        });
+                      } else {
+                        this.$swal.fire({
+                          icon: "error",
+                          title: "Oops...",
+                          text: "there was a problem saving this sale"
+                        });
+                      }
+                    });
+                  }
                 }
               });
             } else {
@@ -30841,6 +30931,13 @@ export default {\r
                 text: "You cannot sell if you have no products added.!"
               });
             }
+          },
+          formatInvoce(invoice) {
+            let new_invoice = invoice.toString().substr(0, 2) + "-";
+            return new_invoice = new_invoice + invoice.toString().substr(2, 4);
+          },
+          quantityFormat(product) {
+            return product?.pivot ? product.pivot.quantity.toString() : "1";
           }
         },
         mounted() {
@@ -30851,6 +30948,16 @@ export default {\r
           EventBus.$on("products", (data) => {
             this.$refs.add_product_responsive.addProductResponsive(data);
           });
+          if (this.edit) {
+            this.sale.customer = { label: this._sale.customer.name, code: this._sale.customer.id };
+            this.sale.method = this._sale.method;
+            this.sale.products = this._sale.products;
+            this.sale.tax = this._sale.tax;
+            this.sale.total = this._sale.total;
+            this.sale.net = this._sale.net;
+            this.sale.id_transaction = this._sale.id_transaction;
+            this.authParser = this._sale.seller;
+          }
         }
       };
       __vue_render__12 = function() {
@@ -30889,7 +30996,7 @@ export default {\r
                   _c("input", {
                     staticClass: "form-control",
                     attrs: { type: "text", name: "sale", readonly: "" },
-                    domProps: { value: _vm.id_sale }
+                    domProps: { value: _vm.formatInvoce(_vm.id_sale) }
                   })
                 ])
               ]),
@@ -30901,12 +31008,27 @@ export default {\r
                       options: _vm.select2.options,
                       placeholder: "Select Customer"
                     },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "search",
+                        fn: function(ref2) {
+                          var attributes = ref2.attributes;
+                          var events = ref2.events;
+                          return [
+                            _c("input", _vm._g(_vm._b({
+                              staticClass: "vs__search",
+                              attrs: { required: !_vm.sale.customer }
+                            }, "input", attributes, false), events))
+                          ];
+                        }
+                      }
+                    ]),
                     model: {
-                      value: _vm.sale.customer_id,
+                      value: _vm.sale.customer,
                       callback: function($$v) {
-                        _vm.$set(_vm.sale, "customer_id", $$v);
+                        _vm.$set(_vm.sale, "customer", $$v);
                       },
-                      expression: "sale.customer_id"
+                      expression: "sale.customer"
                     }
                   }),
                   _vm._v(" "),
@@ -30960,7 +31082,7 @@ export default {\r
                         min: 1,
                         type: "number",
                         max: product.stock,
-                        value: "1"
+                        value: _vm.quantityFormat(product)
                       },
                       on: {
                         change: function($event) {
@@ -31161,11 +31283,49 @@ export default {\r
                   ])
                 ]),
                 _vm._v(" "),
-                _vm.verifyMethod ? _c("div", { staticClass: "col-6" }, [_vm._m(8)]) : _vm._e()
+                _vm.verifyMethod ? _c("div", { staticClass: "col-6" }, [
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.sale.id_transaction,
+                          expression: "sale.id_transaction"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "id_transaction",
+                        placeholder: "ID transaction",
+                        required: ""
+                      },
+                      domProps: { value: _vm.sale.id_transaction },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return;
+                          }
+                          _vm.$set(_vm.sale, "id_transaction", $event.target.value);
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(8)
+                  ])
+                ]) : _vm._e()
               ])
             ], 2),
             _vm._v(" "),
-            _vm._m(9)
+            _c("div", { staticClass: "card-footer" }, [
+              _c("div", { staticClass: "d-flex justify-content-end" }, [
+                _c("button", {
+                  staticClass: "btn btn-primary px-3",
+                  attrs: { type: "submit" }
+                }, [_vm._v(_vm._s(_vm.SellOrEdit))])
+              ])
+            ])
           ]),
           _vm._v(" "),
           _c("customer-modal", {
@@ -31195,7 +31355,7 @@ export default {\r
                   })
                 ], 1),
                 _vm._v(" "),
-                _vm._m(10)
+                _vm._m(9)
               ])
             ])
           ])
@@ -31288,30 +31448,8 @@ export default {\r
           var _vm = this;
           var _h = _vm.$createElement;
           var _c = _vm._self._c || _h;
-          return _c("div", { staticClass: "input-group" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                name: "id_transaction",
-                placeholder: "ID transaction",
-                required: ""
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "input-group-text" }, [
-              _c("i", { staticClass: "fa fa-lock" })
-            ])
-          ]);
-        },
-        function() {
-          var _vm = this;
-          var _h = _vm.$createElement;
-          var _c = _vm._self._c || _h;
-          return _c("div", { staticClass: "card-footer" }, [
-            _c("div", { staticClass: "d-flex justify-content-end" }, [
-              _c("button", { staticClass: "btn btn-primary px-3", attrs: { type: "submit" } }, [_vm._v("Sell")])
-            ])
+          return _c("span", { staticClass: "input-group-text" }, [
+            _c("i", { staticClass: "fa fa-lock" })
           ]);
         },
         function() {
@@ -31330,7 +31468,7 @@ export default {\r
       __vue_inject_styles__12 = function(inject2) {
         if (!inject2)
           return;
-        inject2("data-v-4d94851f_0", { source: "\n.v-select{\n    position: relative;\n    flex: 1 1 auto;\n}\n@media (max-width: 768px) {\n#modal-customer-button{\n        width: 100%;\n}\n.select2{\n        width: 100% !important;\n}\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\sales\\CardCreateSale.vue"], "names": [], "mappings": ";AAwSA;IACA,kBAAA;IACA,cAAA;AACA;AACA;AACA;QACA,WAAA;AACA;AACA;QACA,sBAAA;AACA;AACA", "file": "CardCreateSale.vue", "sourcesContent": [`<template>\r
+        inject2("data-v-5deb4561_0", { source: "\n.v-select{\n    position: relative;\n    flex: 1 1 auto;\n}\n@media (max-width: 768px) {\n#modal-customer-button{\n        width: 100%;\n}\n.select2{\n        width: 100% !important;\n}\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\sales\\CardCreateSale.vue"], "names": [], "mappings": ";AA+YA;IACA,kBAAA;IACA,cAAA;AACA;AACA;AACA;QACA,WAAA;AACA;AACA;QACA,sBAAA;AACA;AACA", "file": "CardCreateSale.vue", "sourcesContent": [`<template>\r
     <div class="card border-0 border-top border-4 border-success">\r
         <div class="card-title"></div>\r
         <form v-on:submit.prevent="sell" role="form" method="post" autocomplete="off">\r
@@ -31344,12 +31482,21 @@ export default {\r
                 <div class="form-group">\r
                     <div class="input-group">\r
                         <span class="input-group-text"><i class="fa fa-key"></i></span>\r
-                        <input type="text" name="sale" class="form-control" :value="id_sale" readonly/>\r
+                        <input type="text" name="sale" class="form-control" :value="formatInvoce(id_sale)" readonly/>\r
                     </div>\r
                 </div>\r
                 <div class="form-group">\r
                     <div class="input-group">\r
-                        <v-select :options="select2.options" v-model="sale.customer_id" placeholder="Select Customer"></v-select>\r
+                        <v-select :options="select2.options" v-model="sale.customer" placeholder="Select Customer">\r
+                            <template #search="{attributes, events}">\r
+                                <input\r
+                                class="vs__search"\r
+                                :required="!sale.customer"\r
+                                v-bind="attributes"\r
+                                v-on="events"\r
+                                />\r
+                            </template>\r
+                        </v-select>\r
                         <button \r
                             type="button" \r
                             id="modal-customer-button" \r
@@ -31376,7 +31523,7 @@ export default {\r
                             :min="1"\r
                             :type="'number'"\r
                             :max="product.stock"\r
-                            value="1"\r
+                            :value="quantityFormat(product)"\r
                             @change="modifyQuantity(product.id, $event)"\r
                         />\r
                     </div>\r
@@ -31451,7 +31598,7 @@ export default {\r
                     </div>\r
                     <div class="col-6" v-if="verifyMethod">\r
                         <div class="input-group">\r
-                            <input type="text" name="id_transaction" class="form-control" placeholder="ID transaction" required>\r
+                            <input type="text" name="id_transaction" class="form-control" placeholder="ID transaction" required v-model="sale.id_transaction">\r
                             <span class="input-group-text"><i class="fa fa-lock"></i></span>\r
                         </div>\r
                     </div>\r
@@ -31459,7 +31606,7 @@ export default {\r
             </div>\r
             <div class="card-footer">\r
                 <div class="d-flex justify-content-end">\r
-                    <button type="submit" class="btn btn-primary px-3">Sell</button>\r
+                    <button type="submit" class="btn btn-primary px-3">{{SellOrEdit}}</button>\r
                 </div>\r
             </div>\r
         </form>\r
@@ -31516,7 +31663,14 @@ export default {\r
         },\r
         csrf_token:{\r
             required: true\r
+        },\r
+        edit: {\r
+            default: false\r
+        },\r
+        _sale:{\r
+            default: undefined\r
         }\r
+        \r
     },\r
     components:{\r
         ModalCustomer,\r
@@ -31534,6 +31688,7 @@ export default {\r
                 tax: 0,\r
                 total: 0,\r
                 net: 0,\r
+                id_transaction: '',\r
             },\r
             select2:{\r
                 options: []\r
@@ -31544,12 +31699,16 @@ export default {\r
         verifyMethod(){\r
             return this.sale.method !== 'cash' && this.sale.method !== '';\r
         },\r
+        SellOrEdit(){\r
+            return this.edit ?  'Edit Sale' : 'Sell';\r
+        }\r
         \r
     },\r
     methods:{\r
         mutateDataCustomer(data){\r
             this.customersParser.push(data);\r
-            this.sale.customer_id = data.id;\r
+            this.select2.options.push({label: data.name, code: data.id})\r
+            this.sale.customer = {label: data.name, code: data.id};\r
         },\r
         addProductSale(product){\r
             product.quantity = 1;\r
@@ -31585,7 +31744,7 @@ export default {\r
             return numeral(price).format('0,0.00')\r
         },\r
         sell(){\r
-            if(this.sale.products > 0){\r
+            if(this.sale.products.length > 0){\r
                 this.$swal.fire({\r
                 title: 'Are you sure to make this sale?',\r
                 text: "Are all the data correct?",\r
@@ -31596,11 +31755,75 @@ export default {\r
                 confirmButtonText: 'Yes, sell...'\r
                 }).then((result) => {\r
                 if (result.isConfirmed) {\r
-                    Swal.fire(\r
-                    'Success!',\r
-                    'Your sale has been registered.',\r
-                    'success'\r
-                    )\r
+                    if(this.edit){\r
+                        axios({\r
+                            method:'post',\r
+                            url: \`/sales/edit/\${this._sale.id}\`,\r
+                            data: {\r
+                                csrf_token: this.csrf_token,\r
+                                id_sale: this.id_sale,\r
+                                user_id: this.authParser.id,\r
+                                customer_id: this.sale.customer.code,\r
+                                tax: this.sale.tax,\r
+                                net: this.sale.net,\r
+                                total: this.sale.total,\r
+                                method: this.sale.method,\r
+                                id_transaction: this.sale.id_transaction,\r
+                                products: JSON.stringify(this.sale.products)\r
+                            }\r
+                        }).then(response => {\r
+                            const { data: { status, response:resp } } = response;\r
+                            if(status){\r
+                                this.$swal.fire(\r
+                                'Success!',\r
+                                'Your sale has been registered.',\r
+                                'success'\r
+                                ).then(() => {\r
+                                    location.href = '/sales';\r
+                                })\r
+                            }else{\r
+                                this.$swal.fire({\r
+                                    icon: 'error',\r
+                                    title: 'Oops...',\r
+                                    text: 'there was a problem saving this sale',\r
+                                })\r
+                            }\r
+                        })\r
+                    }else{\r
+                        axios({\r
+                            method:'post',\r
+                            url: '/sales/sell',\r
+                            data: {\r
+                                csrf_token: this.csrf_token,\r
+                                id_sale: this.id_sale,\r
+                                user_id: this.authParser.id,\r
+                                customer_id: this.sale.customer.code,\r
+                                tax: this.sale.tax,\r
+                                net: this.sale.net,\r
+                                total: this.sale.total,\r
+                                method: this.sale.method,\r
+                                id_transaction: this.sale.id_transaction,\r
+                                products: JSON.stringify(this.sale.products)\r
+                            }\r
+                        }).then(response => {\r
+                            const { data: { status, response:resp } } = response;\r
+                            if(status){\r
+                                this.$swal.fire(\r
+                                'Success!',\r
+                                'Your sale has been registered.',\r
+                                'success'\r
+                                ).then(() => {\r
+                                    location.href = '/sales';\r
+                                })\r
+                            }else{\r
+                                this.$swal.fire({\r
+                                    icon: 'error',\r
+                                    title: 'Oops...',\r
+                                    text: 'there was a problem saving this sale',\r
+                                })\r
+                            }\r
+                        })\r
+                    }\r
                 }\r
                 })\r
             }else{\r
@@ -31610,6 +31833,13 @@ export default {\r
                     text: 'You cannot sell if you have no products added.!',\r
                     })\r
             }\r
+        },\r
+        formatInvoce(invoice){\r
+          let new_invoice = invoice.toString().substr(0, 2) + '-';\r
+          return new_invoice = new_invoice + invoice.toString().substr(2, 4);\r
+        },\r
+        quantityFormat(product){\r
+            return product?.pivot ? product.pivot.quantity.toString() : '1';\r
         }\r
 \r
     },\r
@@ -31621,6 +31851,17 @@ export default {\r
         EventBus.$on('products', data => {\r
             this.$refs.add_product_responsive.addProductResponsive(data);\r
          })\r
+\r
+        if(this.edit){\r
+            this.sale.customer = { label: this._sale.customer.name, code: this._sale.customer.id };\r
+            this.sale.method = this._sale.method;\r
+            this.sale.products = this._sale.products;\r
+            this.sale.tax = this._sale.tax;\r
+            this.sale.total = this._sale.total;\r
+            this.sale.net = this._sale.net;\r
+            this.sale.id_transaction = this._sale.id_transaction;\r
+            this.authParser = this._sale.seller;\r
+        }\r
     }\r
     \r
 }\r

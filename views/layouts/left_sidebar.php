@@ -49,7 +49,7 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage Sales</p>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="<?=url('sales.create')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'sales.create' ? 'active' : ''?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Sell</p>
                 </a>

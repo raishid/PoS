@@ -2,14 +2,15 @@
 
 use App\Middleware;
 use Pecee\Http\Request;
+use App\RoleAdminMiddleware;
 use App\Controllers\HomeController;
+use App\Controllers\SaleController;
 use App\Controllers\UserController;
 use App\Controllers\LoginController;
 use Pecee\SimpleRouter\SimpleRouter;
 use App\Controllers\ClientController;
 use App\Controllers\ProductController;
 use App\Controllers\CategoryController;
-use App\Controllers\SaleController;
 
 SimpleRouter::group(['middleware' => Middleware::class], function () {
     //HOME 
@@ -43,6 +44,13 @@ SimpleRouter::group(['middleware' => Middleware::class], function () {
     //SALES
     SimpleRouter::get('/sales', [SaleController::class, 'index'])->name('sales.index');
     SimpleRouter::get('/sales/create', [SaleController::class, 'create'])->name('sales.create');
+    SimpleRouter::post('/sales/sell', [SaleController::class, 'sell'])->name('sales.sell');
+
+    //EDIT SALE
+    SimpleRouter::get('/sales/edit/{id}', [SaleController::class, 'edit'], ['middleware' => RoleAdminMiddleware::class])->name('sales.edit');
+    SimpleRouter::post('/sales/edit/{id}', [SaleController::class, 'update'], ['middleware' => RoleAdminMiddleware::class])->name('sales.edit');
+    SimpleRouter::post('/sales/delete/{id}', [SaleController::class, 'delete'], ['middleware' => RoleAdminMiddleware::class])->name('sales.delete');
+
 });
 
 

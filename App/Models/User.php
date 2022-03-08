@@ -9,8 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model
 {
     protected $table = 'users';
-    protected $fillable = ['name', 'username', 'role', 'pic', 'state', 'last_login'];
+    protected $fillable = ['name', 'username', 'role', 'pic', 'state', 'last_login', 'date'];
     public $timestamps = false;
+
+    protected $casts = [
+        'date' => 'timestamp'
+    ];
 
     protected $hidden = ['password'];
 

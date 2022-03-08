@@ -232,7 +232,7 @@ export default {
       description: '',
       image: "/assets/images/products/boxed-bg.jpg",
       url_image: "/assets/images/products/boxed-bg.jpg",
-      category: undefined,
+      category: '',
       stock: undefined,
       cost: undefined,
       price: undefined,
@@ -257,7 +257,7 @@ export default {
     handleSubmitProduct() {
       const form_data = new FormData();
       form_data.append("csrf_token", this.csrf_token);
-      form_data.append("sku", this.sku);
+      form_data.append("sku", this.sku.toUpperCase());
       form_data.append('name', this.name);
       form_data.append('description', this.description);
       form_data.append('image', this.image);

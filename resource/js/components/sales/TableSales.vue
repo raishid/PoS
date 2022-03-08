@@ -20,7 +20,7 @@
         <tbody>
           <tr v-for="(sale, index) in salesParser" :key="index">
             <td class="text-center align-middle">{{ index + 1}}</td>
-            <td class="text-center align-middle">{{ sale.invoice }}</td>
+            <td class="text-center align-middle">{{ formatInvoce(sale.id_sale) }}</td>
             <td class="text-center align-middle">{{ sale.customer.name }}</td>
             <td class="text-center align-middle">{{ sale.seller.name }}</td>
             <td class="text-center align-middle">{{ sale.method }}</td>
@@ -28,9 +28,9 @@
             <td class="text-center align-middle">{{ formatDate(sale.created_at) }}</td>
             <td class="text-center align-middle">
                 <div>
-                    <button class="btn btn-info edit" @click="editProd(sale.id)"><i class="fa fa-print"></i></button>
-                    
-                    <button class="btn btn-danger delete" @click="deleteProd(sale.id)"><i class="fa fa-times"></i></button>
+                    <button class="btn btn-info"><i class="fa fa-print"></i></button>
+                    <a :href="`/sales/edit/${sale.id}`" class="btn btn-warning edit" v-if="authParse.id == 1"><i class="fa fa-pencil"></i></a>
+                    <button class="btn btn-danger delete" @click="deleteSale(sale.id)"><i class="fa fa-times"></i></button>
                 </div>
             </td>
           </tr>
@@ -52,6 +52,9 @@ export default {
           type: String,
           required: true
         },
+        auth:{
+          required: true
+        }
     },
     data(){
         return {
@@ -60,6 +63,11 @@ export default {
             datatable: undefined,
             editB: false,
         }
+    },
+    computed:{
+      authParse(){
+        return !this.auth ? false : JSON.parse(this.auth);
+      }
     },
     methods:{
       dataProducts(page=2){
@@ -125,15 +133,10 @@ export default {
           product.cost = data.cost;
           product.price = data.price;
         },
-        editProd(id){
-          const data = this.productsParser.find(u => u.id === id);
-          this.$refs.modal.editProd(data);
-          $('#modal-product-button').click();
-        },
-        deleteProd(id){
+        deleteSale(id){
           this.$swal.fire({
             title: 'Are you sure?',
-            text: "do you want to delete this product?",
+            text: "do you want to delete this sale?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -144,7 +147,7 @@ export default {
               //ajax request delete
               axios({
                 method:'post',
-                url: `/products/delete/${id}`,
+                url: `/sales/delete/${id}`,
                 data: {
                   csrf_token: this.csrf_token
                 }
@@ -157,14 +160,18 @@ export default {
                       'success'
                     )
                     //remove user in dom
-                    this.productsParser.splice(this.productsParser.findIndex(u => u.id === id), 1);
+                    this.salesParser.splice(this.salesParser.findIndex(u => u.id === id), 1);
                   }
               });
             }
           })
         },
         formatDate(timestamp){
-          return moment(timestamp).format('l');
+          return moment(timestamp).format('l, h:mm a');
+        },
+        formatInvoce(invoice){
+          let new_invoice = invoice.toString().substr(0, 2) + '-';
+          return new_invoice = new_invoice + invoice.toString().substr(2, 4);
         },
     },
     mounted(){

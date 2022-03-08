@@ -27,7 +27,7 @@
             <td class="text-center align-middle">{{ defineRole(user.role) }}</td>
             <td class="text-center align-middle"><button :class="StateClass(user.state)" type="button" @click="UpdateState(user.id, user.state)" title="Activate or deactivate user">{{ defineState(user.state) }}</button></td>
             <td class="text-center align-middle">{{ user.last_login }}</td>
-            <td class="text-center align-middle">{{ formatDate(user.date) }}</td>
+            <td class="text-center align-middle">{{ formatDate(user.date, true) }}</td>
             <td class="text-center align-middle">
                 <div>
                     <button class="btn btn-warning edit" @click="editU(user.id)"><i class="fa fa-pencil"></i></button>
@@ -114,8 +114,13 @@ export default {
           });
           return this.mutable;
         },
-        formatDate(date){
-            const datetime = new Date(date);
+        formatDate(date, timestamp=false){
+          let datetime;
+          if(timestamp){
+            datetime = new Date(date * 1000);
+          }else{
+            datetime = new Date(date);
+          }
             return datetime.toLocaleDateString('es-Mx');
         },
         userPic(pic){
@@ -141,6 +146,7 @@ export default {
           user.username = data.username;
           user.role = data.role;
           user.pic = data.pic;
+          user.date = data.date;
         },
         mountedDatatable(){
           return this.datatable = $('#datatable-user').DataTable({
