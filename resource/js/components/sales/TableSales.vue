@@ -4,6 +4,12 @@
       <h3 class="card-title">List sales</h3>
     </div>
     <div class="card-body">
+      <div class="d-flex mb-2">
+        <date-range-picker
+        v-model="dateRange"
+        :date-format="dateFormat"
+        ></date-range-picker>
+      </div>
       <table class="table table-striped" id="datatable-products">
         <thead>
           <tr>
@@ -41,6 +47,7 @@
 </template>
 <script>
 import moment from 'moment';
+import DateRangePicker from 'vue2-daterange-picker'
 export default {
     name: 'sales-table',
     props: {
@@ -56,12 +63,19 @@ export default {
           required: true
         }
     },
+    components:{
+      DateRangePicker
+    },
     data(){
         return {
             u_search: '',
             salesParser: JSON.parse(this.sales),
             datatable: undefined,
             editB: false,
+            dateRange: {
+              startDate: '2022-01-01',
+              endDate: '2022-03-09',
+            }
         }
     },
     computed:{
@@ -70,6 +84,9 @@ export default {
       }
     },
     methods:{
+      dateFormat (classes, date) {
+        return classes
+      },
       dataProducts(page=2){
            axios({
              method:'get',
