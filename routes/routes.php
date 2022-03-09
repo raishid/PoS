@@ -11,6 +11,7 @@ use Pecee\SimpleRouter\SimpleRouter;
 use App\Controllers\ClientController;
 use App\Controllers\ProductController;
 use App\Controllers\CategoryController;
+use App\Controllers\GeneratePDFController;
 
 SimpleRouter::group(['middleware' => Middleware::class], function () {
     //HOME 
@@ -45,6 +46,7 @@ SimpleRouter::group(['middleware' => Middleware::class], function () {
     SimpleRouter::get('/sales', [SaleController::class, 'index'])->name('sales.index');
     SimpleRouter::get('/sales/create', [SaleController::class, 'create'])->name('sales.create');
     SimpleRouter::post('/sales/sell', [SaleController::class, 'sell'])->name('sales.sell');
+    SimpleRouter::get('/sales/print/invoice/{id}', [GeneratePDFController::class, 'generate'])->name('sales.print.invoice');
 
     //EDIT SALE
     SimpleRouter::get('/sales/edit/{id}', [SaleController::class, 'edit'], ['middleware' => RoleAdminMiddleware::class])->name('sales.edit');

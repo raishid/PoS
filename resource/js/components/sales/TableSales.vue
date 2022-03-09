@@ -28,7 +28,7 @@
             <td class="text-center align-middle">{{ formatDate(sale.created_at) }}</td>
             <td class="text-center align-middle">
                 <div>
-                    <button class="btn btn-info"><i class="fa fa-print"></i></button>
+                    <a :href="`/sales/print/invoice/${sale.id}`" target="_blank" class="btn btn-info"><i class="fa fa-print"></i></a>
                     <a :href="`/sales/edit/${sale.id}`" class="btn btn-warning edit" v-if="authParse.id == 1"><i class="fa fa-pencil"></i></a>
                     <button class="btn btn-danger delete" @click="deleteSale(sale.id)"><i class="fa fa-times"></i></button>
                 </div>

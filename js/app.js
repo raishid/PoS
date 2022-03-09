@@ -30332,7 +30332,13 @@ export default {\r
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
                     _c("div", [
-                      _vm._m(2, true),
+                      _c("a", {
+                        staticClass: "btn btn-info",
+                        attrs: {
+                          href: "/sales/print/invoice/" + sale.id,
+                          target: "_blank"
+                        }
+                      }, [_c("i", { staticClass: "fa fa-print" })]),
                       _vm._v(" "),
                       _vm.authParse.id == 1 ? _c("a", {
                         staticClass: "btn btn-warning edit",
@@ -30386,14 +30392,6 @@ export default {\r
               _vm._v(" "),
               _c("th", { staticClass: "text-center all" }, [_vm._v("Action")])
             ])
-          ]);
-        },
-        function() {
-          var _vm = this;
-          var _h = _vm.$createElement;
-          var _c = _vm._self._c || _h;
-          return _c("button", { staticClass: "btn btn-info" }, [
-            _c("i", { staticClass: "fa fa-print" })
           ]);
         }
       ];
