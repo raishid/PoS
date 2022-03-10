@@ -4,11 +4,18 @@
       <h3 class="card-title">List sales</h3>
     </div>
     <div class="card-body">
-      <div class="d-flex mb-2">
+      <div class="d-flex mb-2 align-items-center">
+        <div class="mr-3">
+          <span>Select Range Sales:</span>
+        </div>
         <date-range-picker
         v-model="dateRange"
-        :date-format="dateFormat"
-        ></date-range-picker>
+        @update="changeDateRange"
+        >
+        <template #input="picker" style="min-width: 350px;">
+          {{ picker.startDate | date }} - {{ picker.endDate | date }}
+        </template>
+      </date-range-picker>
       </div>
       <table class="table table-striped" id="datatable-products">
         <thead>
@@ -30,7 +37,7 @@
             <td class="text-center align-middle">{{ sale.customer.name }}</td>
             <td class="text-center align-middle">{{ sale.seller.name }}</td>
             <td class="text-center align-middle">{{ sale.method }}</td>
-            <td class="text-center align-middle">{{ sale.total }}</td>
+            <td class="text-center align-middle">{{ sale.total | formatTotal }}</td>
             <td class="text-center align-middle">{{ formatDate(sale.created_at) }}</td>
             <td class="text-center align-middle">
                 <div>
@@ -67,16 +74,30 @@ export default {
       DateRangePicker
     },
     data(){
-        return {
-            u_search: '',
-            salesParser: JSON.parse(this.sales),
-            datatable: undefined,
-            editB: false,
-            dateRange: {
-              startDate: '2022-01-01',
-              endDate: '2022-03-09',
-            }
-        }
+      let last_week = moment().subtract(1, 'months').format('Y-MM-DD');
+      let today = moment().format('Y-MM-DD');
+      return {
+          u_search: '',
+          salesParser: JSON.parse(this.sales),
+          datatable: undefined,
+          editB: false,
+          dateRange: {
+            startDate: last_week,
+            endDate: today,
+          }
+      }
+    },
+    filters:{
+      date (val) {
+        return val ? moment(val).format('Y-MM-DD') : ''
+      },
+      formatTotal(val){
+        const formatter = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        });
+        return formatter.format(val);
+      }
     },
     computed:{
       authParse(){
@@ -84,9 +105,6 @@ export default {
       }
     },
     methods:{
-      dateFormat (classes, date) {
-        return classes
-      },
       dataProducts(page=2){
            axios({
              method:'get',
@@ -190,6 +208,29 @@ export default {
           let new_invoice = invoice.toString().substr(0, 2) + '-';
           return new_invoice = new_invoice + invoice.toString().substr(2, 4);
         },
+        changeDateRange(){
+          const start_time = moment(this.dateRange.startDate).format('Y-MM-DD 00:00:00')
+          const end_time = moment(this.dateRange.endDate).format('Y-MM-DD 23:59:59');
+          axios({
+            method:'post',
+            url: '/sales/ranges',
+            data: {
+              csrf_token: this.csrf_token,
+              start_date: start_time,
+              end_date: end_time
+            }
+          }).then(response =>{
+            const { data } = response;
+            this.salesParser = data;
+            new Promise(res =>{
+              this.datatable.destroy();
+              res(true)
+            }).then(() =>{
+              this.mountedDatatable();
+            })
+
+          })
+        }
     },
     mounted(){
       this.mountedDatatable();
@@ -197,3 +238,8 @@ export default {
     
 };
 </script>
+<style>
+  .reportrange-text{
+    background-color: #f2f2f2 !important;
+  }
+</style>

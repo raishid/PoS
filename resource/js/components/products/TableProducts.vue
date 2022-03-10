@@ -29,8 +29,8 @@
             <td class="text-center align-middle"><img :src="prodPic(product.image)" class="img-thumbnail rounded" width="50" /></td>
             <td class="text-center align-middle">{{ product.category.name }}</td>
             <td class="text-center align-middle">{{ product.stock }}</td>
-            <td class="text-center align-middle">{{ product.cost }}</td>
-            <td class="text-center align-middle">{{ product.price }}</td>
+            <td class="text-center align-middle">{{ product.cost | formatTotal}}</td>
+            <td class="text-center align-middle">{{ product.price | formatTotal }}</td>
             <td class="text-center align-middle">{{ formatDate(product.created_at) }}</td>
             <td class="text-center align-middle">
                 <div>
@@ -83,6 +83,15 @@ export default {
             getProduct: true,
             mutable_data: undefined,
         }
+    },
+    filters: {
+      formatTotal(val){
+        const formatter = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        });
+        return formatter.format(val);
+      }
     },
     methods:{
       dataProducts(page=2){

@@ -6,18 +6,44 @@ use App\Controller;
 use App\Models\Client;
 use App\Models\Product;
 use App\Models\Sale;
+use Carbon\Carbon;
 use DateTime;
 
 class SaleController extends Controller
 {
     public function index()
-    {      
-        $sales = Sale::with('customer')->with('products')->with('seller')->orderBy('id', 'desc')->get();
+    {   
+        $last_month = Carbon::now()->subMonth(1);
+        $now = Carbon::now();
+
+        $sales = Sale::with('customer')
+                    ->with('products')
+                    ->with('seller')
+                    ->whereBetween('created_at', [$last_month, $now])
+                    ->orderBy('id', 'desc')
+                    ->get();
 
         //load datable scripts
         loadDatatable();
 
         return $this->view->loadView('sales.index', true, ['sales' => $sales]);
+    }
+
+    public function rangeSale()
+    {
+        if(!input()->exists(['start_date', 'end_date'])){
+            return http_response_code(400);
+        }
+        $data = input()->all();
+        $start_date = Carbon::createFromTimeString($data['start_date']);
+        $end_date = Carbon::createFromTimeString($data['end_date']);
+
+        return Sale::with('customer')
+                ->with('products')
+                ->with('seller')
+                ->whereBetween('created_at', [$start_date, $end_date])
+                ->orderBy('id', 'desc')
+                ->get();
     }
 
     public function create()

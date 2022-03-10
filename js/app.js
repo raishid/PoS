@@ -17833,6 +17833,15 @@ export default {\r
             mutable_data: void 0
           };
         },
+        filters: {
+          formatTotal(val) {
+            const formatter = new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD"
+            });
+            return formatter.format(val);
+          }
+        },
         methods: {
           dataProducts(page = 2) {
             axios({
@@ -17985,11 +17994,11 @@ export default {\r
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(product.cost))
+                    _vm._v(_vm._s(_vm._f("formatTotal")(product.cost)))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(product.price))
+                    _vm._v(_vm._s(_vm._f("formatTotal")(product.price)))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
@@ -31886,7 +31895,7 @@ export default {\r
         component2.functional = true;
     }
     component2._scopeId = scope;
-    if (false) {
+    if (true) {
       let hook;
       if (false) {
         hook = function(context) {
@@ -31924,6 +31933,57 @@ export default {\r
     }
     return component2;
   }
+  function __vue_create_injector__2() {
+    const styles = __vue_create_injector__2.styles || (__vue_create_injector__2.styles = {});
+    const isOldIE = typeof navigator !== "undefined" && /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
+    return function addStyle(id, css) {
+      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]'))
+        return;
+      const group = isOldIE ? css.media || "default" : id;
+      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: void 0 });
+      if (!style.ids.includes(id)) {
+        let code = css.source;
+        let index = style.ids.length;
+        style.ids.push(id);
+        if (false) {
+          code += "\n/*# sourceURL=" + css.map.sources[0] + " */";
+          code += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) + " */";
+        }
+        if (isOldIE) {
+          style.element = style.element || document.querySelector("style[data-group=" + group + "]");
+        }
+        if (!style.element) {
+          const head = document.head || document.getElementsByTagName("head")[0];
+          const el = style.element = document.createElement("style");
+          el.type = "text/css";
+          if (css.media)
+            el.setAttribute("media", css.media);
+          if (isOldIE) {
+            el.setAttribute("data-group", group);
+            el.setAttribute("data-next-index", "0");
+          }
+          head.appendChild(el);
+        }
+        if (isOldIE) {
+          index = parseInt(style.element.getAttribute("data-next-index"));
+          style.element.setAttribute("data-next-index", index + 1);
+        }
+        if (style.element.styleSheet) {
+          style.parts.push(code);
+          style.element.styleSheet.cssText = style.parts.filter(Boolean).join("\n");
+        } else {
+          const textNode = document.createTextNode(code);
+          const nodes = style.element.childNodes;
+          if (nodes[index])
+            style.element.removeChild(nodes[index]);
+          if (nodes.length)
+            style.element.insertBefore(textNode, nodes[index]);
+          else
+            style.element.appendChild(textNode);
+        }
+      }
+    };
+  }
   var import_moment3, import_vue2_daterange_picker, __vue_script__10, __vue_render__10, __vue_staticRenderFns__10, __vue_inject_styles__10, __vue_scope_id__10, __vue_module_identifier__10, __vue_is_functional_template__10, __vue_component__10, TableSales_default;
   var init_TableSales = __esm({
     "resource/js/components/sales/TableSales.vue"() {
@@ -31948,16 +32008,30 @@ export default {\r
           DateRangePicker: import_vue2_daterange_picker.default
         },
         data() {
+          let last_week = (0, import_moment3.default)().subtract(1, "months").format("Y-MM-DD");
+          let today = (0, import_moment3.default)().format("Y-MM-DD");
           return {
             u_search: "",
             salesParser: JSON.parse(this.sales),
             datatable: void 0,
             editB: false,
             dateRange: {
-              startDate: "2022-01-01",
-              endDate: "2022-03-09"
+              startDate: last_week,
+              endDate: today
             }
           };
+        },
+        filters: {
+          date(val) {
+            return val ? (0, import_moment3.default)(val).format("Y-MM-DD") : "";
+          },
+          formatTotal(val) {
+            const formatter = new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD"
+            });
+            return formatter.format(val);
+          }
         },
         computed: {
           authParse() {
@@ -31965,9 +32039,6 @@ export default {\r
           }
         },
         methods: {
-          dateFormat(classes, date) {
-            return classes;
-          },
           dataProducts(page = 2) {
             axios({
               method: "get",
@@ -32063,6 +32134,28 @@ export default {\r
           formatInvoce(invoice) {
             let new_invoice = invoice.toString().substr(0, 2) + "-";
             return new_invoice = new_invoice + invoice.toString().substr(2, 4);
+          },
+          changeDateRange() {
+            const start_time = (0, import_moment3.default)(this.dateRange.startDate).format("Y-MM-DD 00:00:00");
+            const end_time = (0, import_moment3.default)(this.dateRange.endDate).format("Y-MM-DD 23:59:59");
+            axios({
+              method: "post",
+              url: "/sales/ranges",
+              data: {
+                csrf_token: this.csrf_token,
+                start_date: start_time,
+                end_date: end_time
+              }
+            }).then((response) => {
+              const { data } = response;
+              this.salesParser = data;
+              new Promise((res) => {
+                this.datatable.destroy();
+                res(true);
+              }).then(() => {
+                this.mountedDatatable();
+              });
+            });
           }
         },
         mounted() {
@@ -32077,9 +32170,21 @@ export default {\r
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "d-flex mb-2" }, [
+            _c("div", { staticClass: "d-flex mb-2 align-items-center" }, [
+              _vm._m(1),
+              _vm._v(" "),
               _c("date-range-picker", {
-                attrs: { "date-format": _vm.dateFormat },
+                on: { update: _vm.changeDateRange },
+                scopedSlots: _vm._u([
+                  {
+                    key: "input",
+                    fn: function(picker) {
+                      return [
+                        _vm._v("\n        " + _vm._s(_vm._f("date")(picker.startDate)) + " - " + _vm._s(_vm._f("date")(picker.endDate)) + "\n      ")
+                      ];
+                    }
+                  }
+                ]),
                 model: {
                   value: _vm.dateRange,
                   callback: function($$v) {
@@ -32094,7 +32199,7 @@ export default {\r
               staticClass: "table table-striped",
               attrs: { id: "datatable-products" }
             }, [
-              _vm._m(1),
+              _vm._m(2),
               _vm._v(" "),
               _c("tbody", _vm._l(_vm.salesParser, function(sale, index) {
                 return _c("tr", { key: index }, [
@@ -32119,7 +32224,7 @@ export default {\r
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
-                    _vm._v(_vm._s(sale.total))
+                    _vm._v(_vm._s(_vm._f("formatTotal")(sale.total)))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center align-middle" }, [
@@ -32170,6 +32275,14 @@ export default {\r
           var _vm = this;
           var _h = _vm.$createElement;
           var _c = _vm._self._c || _h;
+          return _c("div", { staticClass: "mr-3" }, [
+            _c("span", [_vm._v("Select Range Sales:")])
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
           return _c("thead", [
             _c("tr", [
               _c("th", { staticClass: "text-center" }, [_vm._v("#")]),
@@ -32192,11 +32305,259 @@ export default {\r
         }
       ];
       __vue_render__10._withStripped = true;
-      __vue_inject_styles__10 = void 0;
+      __vue_inject_styles__10 = function(inject2) {
+        if (!inject2)
+          return;
+        inject2("data-v-507ce139_0", { source: "\n.reportrange-text{\n  background-color: #f2f2f2 !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\sales\\TableSales.vue"], "names": [], "mappings": ";AAiPA;EACA,oCAAA;AACA", "file": "TableSales.vue", "sourcesContent": [`<template>\r
+  <div class="card">\r
+    <div class="card-header">\r
+      <h3 class="card-title">List sales</h3>\r
+    </div>\r
+    <div class="card-body">\r
+      <div class="d-flex mb-2 align-items-center">\r
+        <div class="mr-3">\r
+          <span>Select Range Sales:</span>\r
+        </div>\r
+        <date-range-picker\r
+        v-model="dateRange"\r
+        @update="changeDateRange"\r
+        >\r
+        <template #input="picker" style="min-width: 350px;">\r
+          {{ picker.startDate | date }} - {{ picker.endDate | date }}\r
+        </template>\r
+      </date-range-picker>\r
+      </div>\r
+      <table class="table table-striped" id="datatable-products">\r
+        <thead>\r
+          <tr>\r
+            <th class="text-center">#</th>\r
+            <th class="text-center">Invoice</th>\r
+            <th class="text-center">Customer</th>\r
+            <th class="text-center">Seller</th>\r
+            <th class="text-center">Method</th>\r
+            <th class="text-center">Total</th>\r
+            <th class="text-center">Date</th>\r
+            <th class="text-center all">Action</th>\r
+          </tr>\r
+        </thead>\r
+        <tbody>\r
+          <tr v-for="(sale, index) in salesParser" :key="index">\r
+            <td class="text-center align-middle">{{ index + 1}}</td>\r
+            <td class="text-center align-middle">{{ formatInvoce(sale.id_sale) }}</td>\r
+            <td class="text-center align-middle">{{ sale.customer.name }}</td>\r
+            <td class="text-center align-middle">{{ sale.seller.name }}</td>\r
+            <td class="text-center align-middle">{{ sale.method }}</td>\r
+            <td class="text-center align-middle">{{ sale.total | formatTotal }}</td>\r
+            <td class="text-center align-middle">{{ formatDate(sale.created_at) }}</td>\r
+            <td class="text-center align-middle">\r
+                <div>\r
+                    <a :href="\`/sales/print/invoice/\${sale.id}\`" target="_blank" class="btn btn-info"><i class="fa fa-print"></i></a>\r
+                    <a :href="\`/sales/edit/\${sale.id}\`" class="btn btn-warning edit" v-if="authParse.id == 1"><i class="fa fa-pencil"></i></a>\r
+                    <button class="btn btn-danger delete" @click="deleteSale(sale.id)"><i class="fa fa-times"></i></button>\r
+                </div>\r
+            </td>\r
+          </tr>\r
+        </tbody>\r
+      </table>\r
+    </div>\r
+  </div>\r
+</template>\r
+<script>\r
+import moment from 'moment';\r
+import DateRangePicker from 'vue2-daterange-picker'\r
+export default {\r
+    name: 'sales-table',\r
+    props: {\r
+        sales: {\r
+            type: String,\r
+            required: true\r
+        },\r
+        csrf_token: {\r
+          type: String,\r
+          required: true\r
+        },\r
+        auth:{\r
+          required: true\r
+        }\r
+    },\r
+    components:{\r
+      DateRangePicker\r
+    },\r
+    data(){\r
+      let last_week = moment().subtract(1, 'months').format('Y-MM-DD');\r
+      let today = moment().format('Y-MM-DD');\r
+      return {\r
+          u_search: '',\r
+          salesParser: JSON.parse(this.sales),\r
+          datatable: undefined,\r
+          editB: false,\r
+          dateRange: {\r
+            startDate: last_week,\r
+            endDate: today,\r
+          }\r
+      }\r
+    },\r
+    filters:{\r
+      date (val) {\r
+        return val ? moment(val).format('Y-MM-DD') : ''\r
+      },\r
+      formatTotal(val){\r
+        const formatter = new Intl.NumberFormat('en-US', {\r
+          style: 'currency',\r
+          currency: 'USD',\r
+        });\r
+        return formatter.format(val);\r
+      }\r
+    },\r
+    computed:{\r
+      authParse(){\r
+        return !this.auth ? false : JSON.parse(this.auth);\r
+      }\r
+    },\r
+    methods:{\r
+      dataProducts(page=2){\r
+           axios({\r
+             method:'get',\r
+             url: \`/api/products/all/page/\${page}\`,\r
+             data: {\r
+               csrf_token: this.csrf_token,\r
+             }\r
+           }).then(response => {\r
+              const { data: { products } } = response;\r
+              if(!response.data.status){\r
+                this.getProduct = false;\r
+                this.mutable_data = undefined;\r
+              }\r
+              if(this.getProduct){\r
+                this.mutable_data = response.data; \r
+                products.map((value, index) => {\r
+                  this.productsParser.push(value);\r
+               });\r
+              }\r
+           }).then(() =>{\r
+             if(this.getProduct){\r
+               this.dataProducts(this.mutable_data.next_page);\r
+             }\r
+           })\r
+        },\r
+        mountedDatatable(){\r
+          return this.datatable = $('#datatable-products').DataTable({\r
+                                          responsive: true,\r
+                                          destroy: true,\r
+                                          lengthChange: false, \r
+                                          autoWidth: false,\r
+                                          rowReorder: {\r
+                                              selector: 'td:nth-child(2)'\r
+                                        }\r
+                  \r
+          });\r
+        },\r
+        mutateData(data){\r
+          this.productsParser.push(data);\r
+          new Promise(res =>{\r
+            this.datatable.destroy();\r
+            res(true);\r
+          }).then( () =>{\r
+              this.mountedDatatable();\r
+          })\r
+        },\r
+        prodPic(image){\r
+          if(image){\r
+            return image;\r
+          }else{\r
+            return '/assets/images/products/boxed-bg.jpg';\r
+          }\r
+        },\r
+        editData(data){\r
+          const product = this.productsParser.find(u => u.id === data.id);\r
+          product.sku = data.sku;\r
+          product.name = data.name;\r
+          product.description = data.description;\r
+          product.image = data.image;\r
+          product.stock = data.stock;\r
+          product.cost = data.cost;\r
+          product.price = data.price;\r
+        },\r
+        deleteSale(id){\r
+          this.$swal.fire({\r
+            title: 'Are you sure?',\r
+            text: "do you want to delete this sale?",\r
+            icon: 'warning',\r
+            showCancelButton: true,\r
+            confirmButtonColor: '#3085d6',\r
+            cancelButtonColor: '#d33',\r
+            confirmButtonText: 'Yes, delete it!'\r
+          }).then((result) => {\r
+            if (result.isConfirmed) {\r
+              //ajax request delete\r
+              axios({\r
+                method:'post',\r
+                url: \`/sales/delete/\${id}\`,\r
+                data: {\r
+                  csrf_token: this.csrf_token\r
+                }\r
+              }).then(response =>{\r
+                  const { data: { status } } = response;\r
+                  if(status){\r
+                    this.$swal.fire(\r
+                      'Deleted!',\r
+                      'the product was deleted.',\r
+                      'success'\r
+                    )\r
+                    //remove user in dom\r
+                    this.salesParser.splice(this.salesParser.findIndex(u => u.id === id), 1);\r
+                  }\r
+              });\r
+            }\r
+          })\r
+        },\r
+        formatDate(timestamp){\r
+          return moment(timestamp).format('l, h:mm a');\r
+        },\r
+        formatInvoce(invoice){\r
+          let new_invoice = invoice.toString().substr(0, 2) + '-';\r
+          return new_invoice = new_invoice + invoice.toString().substr(2, 4);\r
+        },\r
+        changeDateRange(){\r
+          const start_time = moment(this.dateRange.startDate).format('Y-MM-DD 00:00:00')\r
+          const end_time = moment(this.dateRange.endDate).format('Y-MM-DD 23:59:59');\r
+          axios({\r
+            method:'post',\r
+            url: '/sales/ranges',\r
+            data: {\r
+              csrf_token: this.csrf_token,\r
+              start_date: start_time,\r
+              end_date: end_time\r
+            }\r
+          }).then(response =>{\r
+            const { data } = response;\r
+            this.salesParser = data;\r
+            new Promise(res =>{\r
+              this.datatable.destroy();\r
+              res(true)\r
+            }).then(() =>{\r
+              this.mountedDatatable();\r
+            })\r
+\r
+          })\r
+        }\r
+    },\r
+    mounted(){\r
+      this.mountedDatatable();\r
+    }\r
+    \r
+};\r
+<\/script>\r
+<style>\r
+  .reportrange-text{\r
+    background-color: #f2f2f2 !important;\r
+  }\r
+</style>`] }, media: void 0 });
+      };
       __vue_scope_id__10 = void 0;
       __vue_module_identifier__10 = void 0;
       __vue_is_functional_template__10 = false;
-      __vue_component__10 = /* @__PURE__ */ __vue_normalize__10({ render: __vue_render__10, staticRenderFns: __vue_staticRenderFns__10 }, __vue_inject_styles__10, __vue_script__10, __vue_scope_id__10, __vue_is_functional_template__10, __vue_module_identifier__10, false, void 0, void 0, void 0);
+      __vue_component__10 = /* @__PURE__ */ __vue_normalize__10({ render: __vue_render__10, staticRenderFns: __vue_staticRenderFns__10 }, __vue_inject_styles__10, __vue_script__10, __vue_scope_id__10, __vue_is_functional_template__10, __vue_module_identifier__10, false, __vue_create_injector__2, void 0, void 0);
       TableSales_default = __vue_component__10;
     }
   });
@@ -32490,8 +32851,8 @@ export default {\r
     }
     return component2;
   }
-  function __vue_create_injector__2() {
-    const styles = __vue_create_injector__2.styles || (__vue_create_injector__2.styles = {});
+  function __vue_create_injector__3() {
+    const styles = __vue_create_injector__3.styles || (__vue_create_injector__3.styles = {});
     const isOldIE = typeof navigator !== "undefined" && /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
     return function addStyle(id, css) {
       if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]'))
@@ -33678,7 +34039,7 @@ export default {\r
       __vue_scope_id__12 = void 0;
       __vue_module_identifier__12 = void 0;
       __vue_is_functional_template__12 = false;
-      __vue_component__12 = /* @__PURE__ */ __vue_normalize__12({ render: __vue_render__12, staticRenderFns: __vue_staticRenderFns__12 }, __vue_inject_styles__12, __vue_script__12, __vue_scope_id__12, __vue_is_functional_template__12, __vue_module_identifier__12, false, __vue_create_injector__2, void 0, void 0);
+      __vue_component__12 = /* @__PURE__ */ __vue_normalize__12({ render: __vue_render__12, staticRenderFns: __vue_staticRenderFns__12 }, __vue_inject_styles__12, __vue_script__12, __vue_scope_id__12, __vue_is_functional_template__12, __vue_module_identifier__12, false, __vue_create_injector__3, void 0, void 0);
       CardCreateSale_default = __vue_component__12;
     }
   });

@@ -44,6 +44,7 @@ SimpleRouter::group(['middleware' => Middleware::class], function () {
 
     //SALES
     SimpleRouter::get('/sales', [SaleController::class, 'index'])->name('sales.index');
+    SimpleRouter::post('/sales/ranges', [SaleController::class, 'rangeSale']);
     SimpleRouter::get('/sales/create', [SaleController::class, 'create'])->name('sales.create');
     SimpleRouter::post('/sales/sell', [SaleController::class, 'sell'])->name('sales.sell');
     SimpleRouter::get('/sales/print/invoice/{id}', [GeneratePDFController::class, 'generate'])->name('sales.print.invoice');
