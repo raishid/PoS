@@ -34,7 +34,8 @@ Vue.component('customer-modal', require('./components/customers/ModalCustomers.v
 Vue.component('sales-table', require('./components/sales/TableSales.vue').default);
 Vue.component('card-create-sale', require('./components/sales/CardCreateSale.vue').default);
 Vue.component('table-add-product', require('./components/sales/CardAddProduct.vue').default);
-
+Vue.component('report-sale', require('./components/sales/CardReportSale.vue').default);
+Vue.component('sale-linechart', require('./components/sales/charts/ChartLineSale.vue').default);
 
 const app = new Vue({
     el: '#app'

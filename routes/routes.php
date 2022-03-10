@@ -48,6 +48,10 @@ SimpleRouter::group(['middleware' => Middleware::class], function () {
     SimpleRouter::get('/sales/create', [SaleController::class, 'create'])->name('sales.create');
     SimpleRouter::post('/sales/sell', [SaleController::class, 'sell'])->name('sales.sell');
     SimpleRouter::get('/sales/print/invoice/{id}', [GeneratePDFController::class, 'generate'])->name('sales.print.invoice');
+    SimpleRouter::get('/sales/report', [SaleController::class, 'report'])->name('sales.report');
+
+    //Charts sales
+    SimpleRouter::post('/sales/ranges/charts', [SaleController::class, 'rangeDaySales']);
 
     //EDIT SALE
     SimpleRouter::get('/sales/edit/{id}', [SaleController::class, 'edit'], ['middleware' => RoleAdminMiddleware::class])->name('sales.edit');

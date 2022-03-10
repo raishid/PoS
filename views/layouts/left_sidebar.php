@@ -53,7 +53,7 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Sell</p>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="<?=url('sales.report')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'sales.report' ? 'active' : ''?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Sales report</p>
                 </a>

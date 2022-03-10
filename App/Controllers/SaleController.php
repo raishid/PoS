@@ -46,6 +46,29 @@ class SaleController extends Controller
                 ->get();
     }
 
+    public function rangeDaySales()
+    {
+        if(!input()->exists(['start_date', 'end_date'])){
+            return http_response_code(400);
+        }
+        $data = input()->all();
+        $start_date = Carbon::createFromTimeString($data['start_date']);
+        $end_date = Carbon::createFromTimeString($data['end_date']);
+
+        $sales = Sale::select('total', 'created_at')->whereBetween('created_at', [$start_date, $end_date])->get();
+        $parseSales = array();
+        foreach($sales as $sale){
+            $format_to_day = Carbon::createFromTimeString($sale->created_at)->format('F_d_Y');
+            $parseSales[$format_to_day] = 0;
+        }
+        foreach($sales as $sale){
+            $format_to_day = Carbon::createFromTimeString($sale->created_at)->format('F_d_Y');
+            $parseSales[$format_to_day] += $sale->total;
+        }
+        
+        return response()->json($parseSales);
+    }
+
     public function create()
     {
         $products = Product::all();
@@ -189,5 +212,13 @@ class SaleController extends Controller
         }
 
         return response()->json(array('status' => true, 'response' => $result));
+    }
+
+    public function report()
+    {
+        //load datable scripts
+        loadDatatable();
+        
+        return $this->view->loadView('sales.report', true, []);
     }
 }
