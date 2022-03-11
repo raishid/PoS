@@ -45780,17 +45780,6 @@ export default {\r
             chartData: this.data,
             chartOptions: this.options
           };
-        },
-        watch: {
-          chartData: () => {
-            console.log("cambiando");
-          }
-        },
-        methods: {},
-        mounted() {
-          setTimeout(() => {
-            this.chartData.data = [1, 2, 3, 10];
-          }, 5e3);
         }
       };
       __vue_render__13 = function() {
@@ -45809,7 +45798,7 @@ export default {\r
       __vue_inject_styles__14 = function(inject2) {
         if (!inject2)
           return;
-        inject2("data-v-682f1c1c_0", { source: "\n.small {\n  max-width: 700px;\n  margin:  150px auto;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\sales\\charts\\ChartLineSale.vue"], "names": [], "mappings": ";AA2CA;EACA,gBAAA;EACA,mBAAA;AACA", "file": "ChartLineSale.vue", "sourcesContent": [`<template>\r
+        inject2("data-v-6781671e_0", { source: "\n.small {\n  max-width: 700px;\n  margin: 50px auto;\n}\n@media (min-width: 796px) {\n.small {\n          margin:  150px auto;\n}\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\sales\\charts\\ChartLineSale.vue"], "names": [], "mappings": ";AA8BA;EACA,gBAAA;EACA,iBAAA;AACA;AACA;AACA;UACA,mBAAA;AACA;AACA", "file": "ChartLineSale.vue", "sourcesContent": [`<template>\r
     <div class="small">\r
         <line-chart ref="chart" :chartData="chartData" :options="chartOptions"/>\r
     </div>\r
@@ -45836,26 +45825,18 @@ export default {\r
         }\r
         \r
     },\r
-    watch: {\r
-        chartData: () => {\r
-            console.log('cambiando');\r
-        },\r
-    },\r
-    methods: {\r
-        \r
-    },\r
-    mounted(){\r
-        setTimeout(()=>{\r
-            this.chartData.data = [1, 2, 3, 10 ];\r
-        }, 5000)\r
-    }\r
 }\r
 <\/script>\r
 <style>\r
     .small {\r
     max-width: 700px;\r
-    margin:  150px auto;\r
+    margin: 50px auto;\r
   }\r
+    @media (min-width: 796px) {\r
+        .small {\r
+            margin:  150px auto;\r
+        }\r
+    }\r
 </style>`] }, media: void 0 });
       };
       __vue_scope_id__14 = void 0;
@@ -45947,6 +45928,7 @@ export default {\r
               startDate: last_week,
               endDate: today
             },
+            total_sale: 0,
             data: {
               labels: days_last_week,
               datasets: [{
@@ -45961,7 +45943,14 @@ export default {\r
               }]
             },
             options: {
-              responsive: true
+              responsive: true,
+              scales: {
+                y: {
+                  min: 0,
+                  suggestedMin: 100,
+                  display: true
+                }
+              }
             },
             loaded: false
           };
@@ -45969,6 +45958,16 @@ export default {\r
         filters: {
           date(val) {
             return val ? (0, import_moment4.default)(val).format("Y-MM-DD") : "";
+          },
+          date2(val) {
+            return val ? (0, import_moment4.default)(val).format("MMMM DD, Y") : "";
+          },
+          addedSales(val) {
+            let total = 0;
+            val.map((sale) => {
+              total += sale;
+            });
+            return total;
           }
         },
         components: {
@@ -46003,6 +46002,49 @@ export default {\r
               });
               this.loaded = true;
             });
+          },
+          getDaysDiff(startDate, stopDate) {
+            const dateArray = [];
+            let currentDate = (0, import_moment4.default)(startDate);
+            stopDate = (0, import_moment4.default)(stopDate);
+            while (currentDate <= stopDate) {
+              dateArray.push((0, import_moment4.default)(currentDate).format("MMMM DD"));
+              currentDate = (0, import_moment4.default)(currentDate).add(1, "days");
+            }
+            return dateArray;
+          },
+          changeDateRange() {
+            const start_time = (0, import_moment4.default)(this.dateRange.startDate).format("Y-MM-DD 00:00:00");
+            const end_time = (0, import_moment4.default)(this.dateRange.endDate).format("Y-MM-DD 23:59:59");
+            this.data.labels = this.getDaysDiff(this.dateRange.startDate, this.dateRange.endDate);
+            this.loaded = false;
+            this.data.datasets[0].data = [];
+            axios({
+              method: "post",
+              url: "/sales/ranges/charts",
+              data: {
+                csrf_token: this.csrf_token,
+                start_date: start_time,
+                end_date: end_time
+              }
+            }).then((response) => {
+              const { data: salesDays } = response;
+              const keysDays = Object.keys(salesDays);
+              this.data.labels.map((d) => {
+                let isAdd = false;
+                keysDays.map((k) => {
+                  let newkey = k.substring(0, k.length - 5).replace("_", " ");
+                  if (d == newkey) {
+                    this.data.datasets[0].data.push(salesDays[k]);
+                    isAdd = true;
+                  }
+                });
+                if (!isAdd) {
+                  this.data.datasets[0].data.push(0);
+                }
+              });
+              this.loaded = true;
+            });
           }
         },
         async mounted() {
@@ -46016,6 +46058,7 @@ export default {\r
         return _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
             _c("date-range-picker", {
+              on: { update: _vm.changeDateRange },
               scopedSlots: _vm._u([
                 {
                   key: "input",
@@ -46038,12 +46081,28 @@ export default {\r
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "col-sm-12 col-md-8" }, [
                 _vm.loaded ? _c("sale-linechart", {
                   ref: "chart",
                   attrs: { data: _vm.data, options: _vm.options }
                 }) : _vm._e()
-              ], 1)
+              ], 1),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-12 col-md-4 py-5 m-auto" }, [
+                _vm.loaded ? _c("div", {
+                  staticClass: "d-flex flex-column animate__animated animate__backInRight"
+                }, [
+                  _c("span", {
+                    staticClass: "text-center text-success fw-bold fs-2 mb-3 mb-md-0"
+                  }, [
+                    _vm._v("Total: $ " + _vm._s(_vm._f("addedSales")(_vm.data.datasets[0].data)))
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "text-center" }, [
+                    _vm._v("Sales report from " + _vm._s(_vm._f("date2")(_vm.dateRange.startDate)) + " to " + _vm._s(_vm._f("date2")(_vm.dateRange.endDate)))
+                  ])
+                ]) : _vm._e()
+              ])
             ])
           ])
         ]);

@@ -25,24 +25,16 @@ export default {
         }
         
     },
-    watch: {
-        chartData: () => {
-            console.log('cambiando');
-        },
-    },
-    methods: {
-        
-    },
-    mounted(){
-        setTimeout(()=>{
-            this.chartData.data = [1, 2, 3, 10 ];
-        }, 5000)
-    }
 }
 </script>
 <style>
     .small {
     max-width: 700px;
-    margin:  150px auto;
+    margin: 50px auto;
   }
+    @media (min-width: 796px) {
+        .small {
+            margin:  150px auto;
+        }
+    }
 </style>

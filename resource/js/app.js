@@ -4,6 +4,7 @@ import vSelect from 'vue-select'
 import 'sweetalert2/dist/sweetalert2.min.css';
 import 'vue-select/dist/vue-select.css';
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
+import 'animate.css';
 
 Vue.config.productionTip = false;
 
