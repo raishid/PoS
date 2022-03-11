@@ -1,6 +1,6 @@
 <template>
     <div class="small">
-        <line-chart ref="line_chart" :chartData="chartData" :options="chartOptions"/>
+        <line-chart ref="chart" :chartData="chartData" :options="chartOptions"/>
     </div>
 </template>
 <script>
@@ -21,22 +21,28 @@ export default {
     data() {
         return {
             chartData: this.data,
-            chartOptions: this.options
+            chartOptions: this.options,
         }
+        
     },
     watch: {
-    chartData () {
-        this.$data._chart.update()
-    }
+        chartData: () => {
+            console.log('cambiando');
+        },
     },
     methods: {
         
     },
+    mounted(){
+        setTimeout(()=>{
+            this.chartData.data = [1, 2, 3, 10 ];
+        }, 5000)
+    }
 }
 </script>
 <style>
     .small {
-    max-width: 600px;
+    max-width: 700px;
     margin:  150px auto;
   }
 </style>

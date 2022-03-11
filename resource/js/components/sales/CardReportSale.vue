@@ -9,7 +9,13 @@
             </template>
             </date-range-picker>
         </div>
-        <sale-linechart :data="data" :options="options"></sale-linechart>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <sale-linechart ref="chart" v-if="loaded" :data="data" :options="options"></sale-linechart>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -39,13 +45,20 @@ export default {
             data:{
                 labels: days_last_week,
                 datasets: [{
-                    data: [100, 200, 300],
+                    data: [],
                     label: 'Sales',
+                    borderColor: 'green',
+                    backgroundColor: 'transparent',
+                    pointRadius: 10,
+                    pointHoverRadius: 15,
+                    fill: false,
+                    tension: 0.1
                 }]
             },
             options:{
                 responsive: true,
-            }
+            },
+            loaded: false,
         }
     },
     filters:{
@@ -83,11 +96,12 @@ export default {
                         this.data.datasets[0].data.push(0);
                     }
                 });
+                this.loaded = true;
             })
         }
     },
-    mounted(){
-        /* this.lastWeekDate(); */
+    async mounted(){
+        this.lastWeekDate();
     }
 }
 </script>

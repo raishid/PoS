@@ -45642,12 +45642,6 @@ export default {\r
         mixins: [mixins_default.reactiveProp],
         mounted() {
           this.renderChart(this.chartData, this.options);
-          console.log(this.$data._chart);
-        },
-        watch: {
-          chartData() {
-            this.$data._chart.update();
-          }
         }
       };
       __vue_inject_styles__13 = void 0;
@@ -45788,11 +45782,16 @@ export default {\r
           };
         },
         watch: {
-          chartData() {
-            this.$data._chart.update();
+          chartData: () => {
+            console.log("cambiando");
           }
         },
-        methods: {}
+        methods: {},
+        mounted() {
+          setTimeout(() => {
+            this.chartData.data = [1, 2, 3, 10];
+          }, 5e3);
+        }
       };
       __vue_render__13 = function() {
         var _vm = this;
@@ -45800,7 +45799,7 @@ export default {\r
         var _c = _vm._self._c || _h;
         return _c("div", { staticClass: "small" }, [
           _c("line-chart", {
-            ref: "line_chart",
+            ref: "chart",
             attrs: { chartData: _vm.chartData, options: _vm.chartOptions }
           })
         ], 1);
@@ -45810,9 +45809,9 @@ export default {\r
       __vue_inject_styles__14 = function(inject2) {
         if (!inject2)
           return;
-        inject2("data-v-1b33c450_0", { source: "\n.small {\n  max-width: 600px;\n  margin:  150px auto;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\sales\\charts\\ChartLineSale.vue"], "names": [], "mappings": ";AAqCA;EACA,gBAAA;EACA,mBAAA;AACA", "file": "ChartLineSale.vue", "sourcesContent": [`<template>\r
+        inject2("data-v-682f1c1c_0", { source: "\n.small {\n  max-width: 700px;\n  margin:  150px auto;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\sales\\charts\\ChartLineSale.vue"], "names": [], "mappings": ";AA2CA;EACA,gBAAA;EACA,mBAAA;AACA", "file": "ChartLineSale.vue", "sourcesContent": [`<template>\r
     <div class="small">\r
-        <line-chart ref="line_chart" :chartData="chartData" :options="chartOptions"/>\r
+        <line-chart ref="chart" :chartData="chartData" :options="chartOptions"/>\r
     </div>\r
 </template>\r
 <script>\r
@@ -45833,22 +45832,28 @@ export default {\r
     data() {\r
         return {\r
             chartData: this.data,\r
-            chartOptions: this.options\r
+            chartOptions: this.options,\r
         }\r
+        \r
     },\r
     watch: {\r
-    chartData () {\r
-        this.$data._chart.update()\r
-    }\r
+        chartData: () => {\r
+            console.log('cambiando');\r
+        },\r
     },\r
     methods: {\r
         \r
     },\r
+    mounted(){\r
+        setTimeout(()=>{\r
+            this.chartData.data = [1, 2, 3, 10 ];\r
+        }, 5000)\r
+    }\r
 }\r
 <\/script>\r
 <style>\r
     .small {\r
-    max-width: 600px;\r
+    max-width: 700px;\r
     margin:  150px auto;\r
   }\r
 </style>`] }, media: void 0 });
@@ -45945,13 +45950,20 @@ export default {\r
             data: {
               labels: days_last_week,
               datasets: [{
-                data: [100, 200, 300],
-                label: "Sales"
+                data: [],
+                label: "Sales",
+                borderColor: "green",
+                backgroundColor: "transparent",
+                pointRadius: 10,
+                pointHoverRadius: 15,
+                fill: false,
+                tension: 0.1
               }]
             },
             options: {
               responsive: true
-            }
+            },
+            loaded: false
           };
         },
         filters: {
@@ -45989,10 +46001,12 @@ export default {\r
                   this.data.datasets[0].data.push(0);
                 }
               });
+              this.loaded = true;
             });
           }
         },
-        mounted() {
+        async mounted() {
+          this.lastWeekDate();
         }
       };
       __vue_render__14 = function() {
@@ -46022,8 +46036,17 @@ export default {\r
             })
           ], 1),
           _vm._v(" "),
-          _c("sale-linechart", { attrs: { data: _vm.data, options: _vm.options } })
-        ], 1);
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _vm.loaded ? _c("sale-linechart", {
+                  ref: "chart",
+                  attrs: { data: _vm.data, options: _vm.options }
+                }) : _vm._e()
+              ], 1)
+            ])
+          ])
+        ]);
       };
       __vue_staticRenderFns__14 = [];
       __vue_render__14._withStripped = true;
