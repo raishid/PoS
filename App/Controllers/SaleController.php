@@ -2,12 +2,12 @@
 
 namespace App\Controllers;
 
+use DateTime;
+use Carbon\Carbon;
 use App\Controller;
+use App\Models\Sale;
 use App\Models\Client;
 use App\Models\Product;
-use App\Models\Sale;
-use Carbon\Carbon;
-use DateTime;
 
 class SaleController extends Controller
 {
@@ -220,5 +220,15 @@ class SaleController extends Controller
         loadDatatable();
         
         return $this->view->loadView('sales.report', true, []);
+    }
+
+    public function productMostSell()
+    {
+        return Product::join('sales_products', 'products.id', '=', 'sales_products.product_id')
+                ->selectRaw('products.*, sum(sales_products.quantity) as sold')
+                ->groupBy('products.id')
+                ->orderby('sold', 'desc')
+                ->take(10)
+                ->get();
     }
 }

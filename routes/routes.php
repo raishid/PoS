@@ -52,6 +52,7 @@ SimpleRouter::group(['middleware' => Middleware::class], function () {
 
     //Charts sales
     SimpleRouter::post('/sales/ranges/charts', [SaleController::class, 'rangeDaySales']);
+    SimpleRouter::get('/sales/products/mostsales', [SaleController::class, 'productMostSell']);
 
     //EDIT SALE
     SimpleRouter::get('/sales/edit/{id}', [SaleController::class, 'edit'], ['middleware' => RoleAdminMiddleware::class])->name('sales.edit');
