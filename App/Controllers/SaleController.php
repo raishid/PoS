@@ -224,11 +224,53 @@ class SaleController extends Controller
 
     public function productMostSell()
     {
+
+        if(!input()->exists(['start_date', 'end_date'])){
+            return http_response_code(400);
+        }
+        $data = input()->all();
+        $start_date = Carbon::createFromTimeString($data['start_date']);
+        $end_date = Carbon::createFromTimeString($data['end_date']);
+
         return Product::join('sales_products', 'products.id', '=', 'sales_products.product_id')
+                ->join('sales', 'sales.id', '=', 'sales_products.sale_id')
                 ->selectRaw('products.*, sum(sales_products.quantity) as sold')
+                ->whereBetween('sales.created_at', [$start_date, $end_date])
                 ->groupBy('products.id')
                 ->orderby('sold', 'desc')
                 ->take(10)
+                ->get();
+    }
+
+    public function bestSeller()
+    {
+        if(!input()->exists(['start_date', 'end_date'])){
+            return http_response_code(400);
+        }
+        $data = input()->all();
+        $start_date = Carbon::createFromTimeString($data['start_date']);
+        $end_date = Carbon::createFromTimeString($data['end_date']);
+
+        return Sale::join('users', 'sales.user_id', '=', 'users.id')
+                ->selectRaw('users.name, sum(sales.total) as sold')
+                ->whereBetween('sales.created_at', [$start_date, $end_date])
+                ->groupBy('user_id')
+                ->get();
+    }
+
+    public function bestClient()
+    {
+        if(!input()->exists(['start_date', 'end_date'])){
+            return http_response_code(400);
+        }
+        $data = input()->all();
+        $start_date = Carbon::createFromTimeString($data['start_date']);
+        $end_date = Carbon::createFromTimeString($data['end_date']);
+
+        return Sale::join('customers', 'sales.customer_id', '=', 'customers.id')
+                ->selectRaw('customers.name, sum(sales.total) as sold')
+                ->whereBetween('sales.created_at', [$start_date, $end_date])
+                ->groupBy('customer_id')
                 ->get();
     }
 }

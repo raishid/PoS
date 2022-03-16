@@ -34,6 +34,18 @@
                 <div class="col-sm-12 col-md-6">
                     <sale-doughnut ref="chart_doughnut" v-if="loadedDoughnut" :data="dataDoughnut" :options="optionsDoughnut"></sale-doughnut>
                 </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="d-flex flex-column animate__animated animate__backInLeft">
+                        <span class="text-center text-success fw-bold fs-2 mb-md-0">Best Seller</span>
+                        <sale-bar v-if="loadedBar" :data="dataBar" :options="optionsBar" :classes="'mt-2 m-auto w-75'"></sale-bar>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="d-flex flex-column">
+                        <span class="text-center text-success fw-bold fs-2 mb-md-0">Best Customer</span>
+                        <sale-bar v-if="loadedBarClient" :data="dataBarClient" :options="optionsBarClient" :classes="'mt-2 m-auto w-75'"></sale-bar>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -43,7 +55,8 @@ import moment from 'moment';
 import DateRangePicker from 'vue2-daterange-picker';
 import SaleChart from './charts/ChartLineSale.vue';
 import DoughnutSale from './charts/ChartDoughnutSales.vue';
-import randomColor from 'randomcolor'
+import randomColor from 'randomcolor';
+import BarSale from './charts/BarChart.vue';
 
 export default {
     name: 'report-sale',
@@ -104,6 +117,25 @@ export default {
             },
             loadedDoughnut: false,
             doughnutTotal: 0,
+            dataBar:{
+                labels: [],
+                datasets: [],
+            },
+            optionsBar:{
+                responsive: true,
+
+            },
+            loadedBar: false,
+            dataBarClient:{
+                labels: [],
+                datasets: [],
+            },
+            optionsBarClient:{
+                responsive: true,
+
+            },
+            loadedBarClient: false,
+
         }
     },
     filters:{
@@ -124,17 +156,21 @@ export default {
     components:{
       DateRangePicker,
       SaleChart,
-      DoughnutSale
+      DoughnutSale,
+      BarSale
     },
     methods: {
-        lastWeekDate(){
+        salesReport(){
+            const start_time = moment(this.dateRange.startDate).format('Y-MM-DD 00:00:00')
+            const end_time = moment(this.dateRange.endDate).format('Y-MM-DD 23:59:59');
+            this.loadedLine = false;
             axios({
                 method:'post',
                 url: '/sales/ranges/charts',
                 data: {
                     csrf_token: this.csrf_token,
-                    start_date: this.dateRange.startDate,
-                    end_date: this.dateRange.endDate,
+                    start_date: start_time,
+                    end_date: end_time,
                 }
             }).then(response =>{
                 const { data:salesDays } = response;
@@ -166,42 +202,36 @@ export default {
             return dateArray;
         },
         changeDateRange(){
-            const start_time = moment(this.dateRange.startDate).format('Y-MM-DD 00:00:00')
-            const end_time = moment(this.dateRange.endDate).format('Y-MM-DD 23:59:59');
             this.dataLine.labels = this.getDaysDiff(this.dateRange.startDate, this.dateRange.endDate);
             this.loadedLine = false;
             this.dataLine.datasets[0].data = [];
-            axios({
-                method:'post',
-                url: '/sales/ranges/charts',
-                data: {
-                csrf_token: this.csrf_token,
-                start_date: start_time,
-                end_date: end_time
-            }
-            }).then(response =>{
-                const { data:salesDays } = response;
-                const keysDays = Object.keys(salesDays);
-                this.dataLine.labels.map(d => {
-                    let isAdd = false;
-                    keysDays.map(k => {
-                        let newkey = k.substring(0, k.length - 5).replace('_', ' ');
-                        if(d == newkey){
-                            this.dataLine.datasets[0].data.push(salesDays[k]);
-                            isAdd = true;
-                        }
-                    });
-                    if(!isAdd){
-                        this.dataLine.datasets[0].data.push(0);
-                    }
-                });
-                this.loadedLine = true;
-            })
+            this.salesReport();
+
+            this.dataDoughnut.datasets[0].data = [];
+            this.dataDoughnut.labels = [];
+            this.doughnutTotal = 0;
+            this.productMostSell();
+
+            this.dataBar.labels = [];
+            this.dataBar.datasets = [];
+            this.bestSeller();
+
+            this.dataBarClient.labels = [];
+            this.dataBarClient.datasets = [];
+            this.bestSeller();
         },
         productMostSell(){
+            this.loadedDoughnut = false;
+            const start_time = moment(this.dateRange.startDate).format('Y-MM-DD 00:00:00')
+            const end_time = moment(this.dateRange.endDate).format('Y-MM-DD 23:59:59');
             axios({
-                method:'get',
+                method:'post',
                 url: '/sales/products/mostsales',
+                data:{
+                    csrf_token: this.csrf_token,
+                    start_date: start_time,
+                    end_date: end_time 
+                }
             }).then(response => {
                 const { data:products } = response;
                 products.map((product) =>{
@@ -210,16 +240,72 @@ export default {
                     this.dataDoughnut.datasets[0].data.push(parseInt(product.sold))
                     this.dataDoughnut.datasets[0].backgroundColor.push(randomColor())
                 })
+                if(products.length > 0){
+                    this.loadedDoughnut = true;
+                }
             });
-            this.loadedDoughnut = true;
         },
         percentVal(val){
             return parseFloat((val / this.doughnutTotal) * 100).toFixed(2);
+        },
+        bestSeller(){
+            this.loadedBar = false;
+            const start_time = moment(this.dateRange.startDate).format('Y-MM-DD 00:00:00')
+            const end_time = moment(this.dateRange.endDate).format('Y-MM-DD 23:59:59');
+            axios({
+                method:'post',
+                url: '/sales/report/bestseller',
+                data:{
+                    csrf_token: this.csrf_token,
+                    start_date: start_time,
+                    end_date: end_time 
+                }
+            }).then(response => {
+                const { data:seller } = response;
+                this.dataBar.labels = [`${moment(start_time).format('MMMM DD')} to ${moment(end_time).format('MMMM DD')}`]
+                seller.map((sel) =>{
+                    this.dataBar.datasets.push({
+                        label: sel.name,
+                        data: [parseFloat(sel.sold).toFixed(2)],
+                        backgroundColor: [randomColor()],
+                    })
+                })
+                this.loadedBar = true;
+                
+            });
+        },
+        bestClient(){
+            this.loadedBarClient = false;
+            const start_time = moment(this.dateRange.startDate).format('Y-MM-DD 00:00:00')
+            const end_time = moment(this.dateRange.endDate).format('Y-MM-DD 23:59:59');
+            axios({
+                method:'post',
+                url: '/sales/report/bestclient',
+                data:{
+                    csrf_token: this.csrf_token,
+                    start_date: start_time,
+                    end_date: end_time 
+                }
+            }).then(response => {
+                const { data:client } = response;
+                this.dataBarClient.labels = [`${moment(start_time).format('MMMM DD')} to ${moment(end_time).format('MMMM DD')}`]
+                client.map((cs) =>{
+                    this.dataBarClient.datasets.push({
+                        label: cs.name,
+                        data: [parseFloat(cs.sold).toFixed(2)],
+                        backgroundColor: [randomColor()],
+                    })
+                })
+                this.loadedBarClient = true;
+                
+            });
         }
     },
     async mounted(){
-        this.lastWeekDate();
+        this.salesReport();
         this.productMostSell();
+        this.bestSeller();
+        this.bestClient();
     }
 }
 </script>

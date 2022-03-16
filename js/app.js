@@ -46351,12 +46351,82 @@ export default {\r
     }
   });
 
+  // resource/js/components/sales/charts/BarChart.vue
+  function __vue_normalize__17(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script === "function" ? script.options : script) || {};
+    component2.__file = "resource\\js\\components\\sales\\charts\\BarChart.vue";
+    if (!component2.render) {
+      component2.render = template.render;
+      component2.staticRenderFns = template.staticRenderFns;
+      component2._compiled = true;
+      if (functional)
+        component2.functional = true;
+    }
+    component2._scopeId = scope;
+    if (false) {
+      let hook;
+      if (false) {
+        hook = function(context) {
+          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+            context = __VUE_SSR_CONTEXT__;
+          }
+          if (style) {
+            style.call(this, createInjectorSSR(context));
+          }
+          if (context && context._registeredComponents) {
+            context._registeredComponents.add(moduleIdentifier);
+          }
+        };
+        component2._ssrRegister = hook;
+      } else if (style) {
+        hook = shadowMode ? function(context) {
+          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+        } : function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+      if (hook !== void 0) {
+        if (component2.functional) {
+          const originalRender = component2.render;
+          component2.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context);
+          };
+        } else {
+          const existing = component2.beforeCreate;
+          component2.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+    return component2;
+  }
+  var __vue_script__17, __vue_inject_styles__17, __vue_scope_id__17, __vue_module_identifier__17, __vue_is_functional_template__17, __vue_component__17, BarChart_default;
+  var init_BarChart = __esm({
+    "resource/js/components/sales/charts/BarChart.vue"() {
+      init_es();
+      __vue_script__17 = {
+        extends: Bar,
+        mixins: [mixins_default.reactiveProp],
+        mounted() {
+          this.renderChart(this.chartData, this.options);
+        }
+      };
+      __vue_inject_styles__17 = void 0;
+      __vue_scope_id__17 = void 0;
+      __vue_module_identifier__17 = void 0;
+      __vue_is_functional_template__17 = void 0;
+      __vue_component__17 = /* @__PURE__ */ __vue_normalize__17({}, __vue_inject_styles__17, __vue_script__17, __vue_scope_id__17, __vue_is_functional_template__17, __vue_module_identifier__17, false, void 0, void 0, void 0);
+      BarChart_default = __vue_component__17;
+    }
+  });
+
   // resource/js/components/sales/CardReportSale.vue
   var CardReportSale_exports = {};
   __export(CardReportSale_exports, {
     default: () => CardReportSale_default
   });
-  function __vue_normalize__17(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+  function __vue_normalize__18(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
     const component2 = (typeof script === "function" ? script.options : script) || {};
     component2.__file = "resource\\js\\components\\sales\\CardReportSale.vue";
     if (!component2.render) {
@@ -46405,7 +46475,7 @@ export default {\r
     }
     return component2;
   }
-  var import_moment4, import_vue2_daterange_picker2, import_randomcolor, __vue_script__17, __vue_render__15, __vue_staticRenderFns__15, __vue_inject_styles__17, __vue_scope_id__17, __vue_module_identifier__17, __vue_is_functional_template__17, __vue_component__17, CardReportSale_default;
+  var import_moment4, import_vue2_daterange_picker2, import_randomcolor, __vue_script__18, __vue_render__15, __vue_staticRenderFns__15, __vue_inject_styles__18, __vue_scope_id__18, __vue_module_identifier__18, __vue_is_functional_template__18, __vue_component__18, CardReportSale_default;
   var init_CardReportSale = __esm({
     "resource/js/components/sales/CardReportSale.vue"() {
       import_moment4 = __toESM(require_moment());
@@ -46413,7 +46483,8 @@ export default {\r
       init_ChartLineSale();
       init_ChartDoughnutSales();
       import_randomcolor = __toESM(require_randomColor());
-      __vue_script__17 = {
+      init_BarChart();
+      __vue_script__18 = {
         name: "report-sale",
         props: ["csrf_token"],
         data() {
@@ -46471,7 +46542,23 @@ export default {\r
               responsive: true
             },
             loadedDoughnut: false,
-            doughnutTotal: 0
+            doughnutTotal: 0,
+            dataBar: {
+              labels: [],
+              datasets: []
+            },
+            optionsBar: {
+              responsive: true
+            },
+            loadedBar: false,
+            dataBarClient: {
+              labels: [],
+              datasets: []
+            },
+            optionsBarClient: {
+              responsive: true
+            },
+            loadedBarClient: false
           };
         },
         filters: {
@@ -46492,17 +46579,21 @@ export default {\r
         components: {
           DateRangePicker: import_vue2_daterange_picker2.default,
           SaleChart: ChartLineSale_default,
-          DoughnutSale: ChartDoughnutSales_default
+          DoughnutSale: ChartDoughnutSales_default,
+          BarSale: BarChart_default
         },
         methods: {
-          lastWeekDate() {
+          salesReport() {
+            const start_time = (0, import_moment4.default)(this.dateRange.startDate).format("Y-MM-DD 00:00:00");
+            const end_time = (0, import_moment4.default)(this.dateRange.endDate).format("Y-MM-DD 23:59:59");
+            this.loadedLine = false;
             axios({
               method: "post",
               url: "/sales/ranges/charts",
               data: {
                 csrf_token: this.csrf_token,
-                start_date: this.dateRange.startDate,
-                end_date: this.dateRange.endDate
+                start_date: start_time,
+                end_date: end_time
               }
             }).then((response) => {
               const { data: salesDays } = response;
@@ -46534,42 +46625,33 @@ export default {\r
             return dateArray;
           },
           changeDateRange() {
-            const start_time = (0, import_moment4.default)(this.dateRange.startDate).format("Y-MM-DD 00:00:00");
-            const end_time = (0, import_moment4.default)(this.dateRange.endDate).format("Y-MM-DD 23:59:59");
             this.dataLine.labels = this.getDaysDiff(this.dateRange.startDate, this.dateRange.endDate);
             this.loadedLine = false;
             this.dataLine.datasets[0].data = [];
+            this.salesReport();
+            this.dataDoughnut.datasets[0].data = [];
+            this.dataDoughnut.labels = [];
+            this.doughnutTotal = 0;
+            this.productMostSell();
+            this.dataBar.labels = [];
+            this.dataBar.datasets = [];
+            this.bestSeller();
+            this.dataBarClient.labels = [];
+            this.dataBarClient.datasets = [];
+            this.bestSeller();
+          },
+          productMostSell() {
+            this.loadedDoughnut = false;
+            const start_time = (0, import_moment4.default)(this.dateRange.startDate).format("Y-MM-DD 00:00:00");
+            const end_time = (0, import_moment4.default)(this.dateRange.endDate).format("Y-MM-DD 23:59:59");
             axios({
               method: "post",
-              url: "/sales/ranges/charts",
+              url: "/sales/products/mostsales",
               data: {
                 csrf_token: this.csrf_token,
                 start_date: start_time,
                 end_date: end_time
               }
-            }).then((response) => {
-              const { data: salesDays } = response;
-              const keysDays = Object.keys(salesDays);
-              this.dataLine.labels.map((d) => {
-                let isAdd = false;
-                keysDays.map((k) => {
-                  let newkey = k.substring(0, k.length - 5).replace("_", " ");
-                  if (d == newkey) {
-                    this.dataLine.datasets[0].data.push(salesDays[k]);
-                    isAdd = true;
-                  }
-                });
-                if (!isAdd) {
-                  this.dataLine.datasets[0].data.push(0);
-                }
-              });
-              this.loadedLine = true;
-            });
-          },
-          productMostSell() {
-            axios({
-              method: "get",
-              url: "/sales/products/mostsales"
             }).then((response) => {
               const { data: products } = response;
               products.map((product) => {
@@ -46578,16 +46660,70 @@ export default {\r
                 this.dataDoughnut.datasets[0].data.push(parseInt(product.sold));
                 this.dataDoughnut.datasets[0].backgroundColor.push((0, import_randomcolor.default)());
               });
+              if (products.length > 0) {
+                this.loadedDoughnut = true;
+              }
             });
-            this.loadedDoughnut = true;
           },
           percentVal(val) {
             return parseFloat(val / this.doughnutTotal * 100).toFixed(2);
+          },
+          bestSeller() {
+            this.loadedBar = false;
+            const start_time = (0, import_moment4.default)(this.dateRange.startDate).format("Y-MM-DD 00:00:00");
+            const end_time = (0, import_moment4.default)(this.dateRange.endDate).format("Y-MM-DD 23:59:59");
+            axios({
+              method: "post",
+              url: "/sales/report/bestseller",
+              data: {
+                csrf_token: this.csrf_token,
+                start_date: start_time,
+                end_date: end_time
+              }
+            }).then((response) => {
+              const { data: seller } = response;
+              this.dataBar.labels = [`${(0, import_moment4.default)(start_time).format("MMMM DD")} to ${(0, import_moment4.default)(end_time).format("MMMM DD")}`];
+              seller.map((sel) => {
+                this.dataBar.datasets.push({
+                  label: sel.name,
+                  data: [parseFloat(sel.sold).toFixed(2)],
+                  backgroundColor: [(0, import_randomcolor.default)()]
+                });
+              });
+              this.loadedBar = true;
+            });
+          },
+          bestClient() {
+            this.loadedBarClient = false;
+            const start_time = (0, import_moment4.default)(this.dateRange.startDate).format("Y-MM-DD 00:00:00");
+            const end_time = (0, import_moment4.default)(this.dateRange.endDate).format("Y-MM-DD 23:59:59");
+            axios({
+              method: "post",
+              url: "/sales/report/bestclient",
+              data: {
+                csrf_token: this.csrf_token,
+                start_date: start_time,
+                end_date: end_time
+              }
+            }).then((response) => {
+              const { data: client } = response;
+              this.dataBarClient.labels = [`${(0, import_moment4.default)(start_time).format("MMMM DD")} to ${(0, import_moment4.default)(end_time).format("MMMM DD")}`];
+              client.map((cs) => {
+                this.dataBarClient.datasets.push({
+                  label: cs.name,
+                  data: [parseFloat(cs.sold).toFixed(2)],
+                  backgroundColor: [(0, import_randomcolor.default)()]
+                });
+              });
+              this.loadedBarClient = true;
+            });
           }
         },
         async mounted() {
-          this.lastWeekDate();
+          this.salesReport();
           this.productMostSell();
+          this.bestSeller();
+          this.bestClient();
         }
       };
       __vue_render__15 = function() {
@@ -46674,19 +46810,156 @@ export default {\r
                     options: _vm.optionsDoughnut
                   }
                 }) : _vm._e()
-              ], 1)
+              ], 1),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                _c("div", {
+                  staticClass: "d-flex flex-column animate__animated animate__backInLeft"
+                }, [
+                  _c("span", {
+                    staticClass: "text-center text-success fw-bold fs-2 mb-md-0"
+                  }, [_vm._v("Best Seller")]),
+                  _vm._v(" "),
+                  _vm.loadedBar ? _c("sale-bar", {
+                    attrs: {
+                      data: _vm.dataBar,
+                      options: _vm.optionsBar,
+                      classes: "mt-2 m-auto w-75"
+                    }
+                  }) : _vm._e()
+                ], 1)
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                _c("div", { staticClass: "d-flex flex-column" }, [
+                  _c("span", {
+                    staticClass: "text-center text-success fw-bold fs-2 mb-md-0"
+                  }, [_vm._v("Best Customer")]),
+                  _vm._v(" "),
+                  _vm.loadedBarClient ? _c("sale-bar", {
+                    attrs: {
+                      data: _vm.dataBarClient,
+                      options: _vm.optionsBarClient,
+                      classes: "mt-2 m-auto w-75"
+                    }
+                  }) : _vm._e()
+                ], 1)
+              ])
             ])
           ])
         ]);
       };
       __vue_staticRenderFns__15 = [];
       __vue_render__15._withStripped = true;
-      __vue_inject_styles__17 = void 0;
-      __vue_scope_id__17 = void 0;
-      __vue_module_identifier__17 = void 0;
-      __vue_is_functional_template__17 = false;
-      __vue_component__17 = /* @__PURE__ */ __vue_normalize__17({ render: __vue_render__15, staticRenderFns: __vue_staticRenderFns__15 }, __vue_inject_styles__17, __vue_script__17, __vue_scope_id__17, __vue_is_functional_template__17, __vue_module_identifier__17, false, void 0, void 0, void 0);
-      CardReportSale_default = __vue_component__17;
+      __vue_inject_styles__18 = void 0;
+      __vue_scope_id__18 = void 0;
+      __vue_module_identifier__18 = void 0;
+      __vue_is_functional_template__18 = false;
+      __vue_component__18 = /* @__PURE__ */ __vue_normalize__18({ render: __vue_render__15, staticRenderFns: __vue_staticRenderFns__15 }, __vue_inject_styles__18, __vue_script__18, __vue_scope_id__18, __vue_is_functional_template__18, __vue_module_identifier__18, false, void 0, void 0, void 0);
+      CardReportSale_default = __vue_component__18;
+    }
+  });
+
+  // resource/js/components/sales/charts/ChartBarSales.vue
+  var ChartBarSales_exports = {};
+  __export(ChartBarSales_exports, {
+    default: () => ChartBarSales_default
+  });
+  function __vue_normalize__19(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script === "function" ? script.options : script) || {};
+    component2.__file = "resource\\js\\components\\sales\\charts\\ChartBarSales.vue";
+    if (!component2.render) {
+      component2.render = template.render;
+      component2.staticRenderFns = template.staticRenderFns;
+      component2._compiled = true;
+      if (functional)
+        component2.functional = true;
+    }
+    component2._scopeId = scope;
+    if (false) {
+      let hook;
+      if (false) {
+        hook = function(context) {
+          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+            context = __VUE_SSR_CONTEXT__;
+          }
+          if (style) {
+            style.call(this, createInjectorSSR(context));
+          }
+          if (context && context._registeredComponents) {
+            context._registeredComponents.add(moduleIdentifier);
+          }
+        };
+        component2._ssrRegister = hook;
+      } else if (style) {
+        hook = shadowMode ? function(context) {
+          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+        } : function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+      if (hook !== void 0) {
+        if (component2.functional) {
+          const originalRender = component2.render;
+          component2.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context);
+          };
+        } else {
+          const existing = component2.beforeCreate;
+          component2.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+    return component2;
+  }
+  var __vue_script__19, __vue_render__16, __vue_staticRenderFns__16, __vue_inject_styles__19, __vue_scope_id__19, __vue_module_identifier__19, __vue_is_functional_template__19, __vue_component__19, ChartBarSales_default;
+  var init_ChartBarSales = __esm({
+    "resource/js/components/sales/charts/ChartBarSales.vue"() {
+      init_BarChart();
+      __vue_script__19 = {
+        name: "sale-bar",
+        props: {
+          data: {
+            type: Object
+          },
+          options: {
+            type: Object
+          },
+          classes: {
+            type: String,
+            default: "small"
+          }
+        },
+        components: {
+          BarChart: BarChart_default
+        },
+        data() {
+          return {
+            chartData: this.data,
+            chartOptions: this.options
+          };
+        }
+      };
+      __vue_render__16 = function() {
+        var _vm = this;
+        var _h = _vm.$createElement;
+        var _c = _vm._self._c || _h;
+        return _c("div", { class: _vm.classes }, [
+          _c("bar-chart", {
+            attrs: { chartData: _vm.chartData, options: _vm.options }
+          })
+        ], 1);
+      };
+      __vue_staticRenderFns__16 = [];
+      __vue_render__16._withStripped = true;
+      __vue_inject_styles__19 = void 0;
+      __vue_scope_id__19 = void 0;
+      __vue_module_identifier__19 = void 0;
+      __vue_is_functional_template__19 = false;
+      __vue_component__19 = /* @__PURE__ */ __vue_normalize__19({ render: __vue_render__16, staticRenderFns: __vue_staticRenderFns__16 }, __vue_inject_styles__19, __vue_script__19, __vue_scope_id__19, __vue_is_functional_template__19, __vue_module_identifier__19, false, void 0, void 0, void 0);
+      ChartBarSales_default = __vue_component__19;
     }
   });
 
@@ -46716,6 +46989,7 @@ export default {\r
   import_vue3.default.component("report-sale", (init_CardReportSale(), __toCommonJS(CardReportSale_exports)).default);
   import_vue3.default.component("sale-linechart", (init_ChartLineSale(), __toCommonJS(ChartLineSale_exports)).default);
   import_vue3.default.component("sale-doughnut", (init_ChartDoughnutSales(), __toCommonJS(ChartDoughnutSales_exports)).default);
+  import_vue3.default.component("sale-bar", (init_ChartBarSales(), __toCommonJS(ChartBarSales_exports)).default);
   var app = new import_vue3.default({
     el: "#app"
   });
