@@ -1,6 +1,7 @@
 import Vue from "vue/dist/vue";
 import VueSweetalert2 from 'vue-sweetalert2';
 import vSelect from 'vue-select'
+import JsonExcel from "vue-json-excel";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import 'vue-select/dist/vue-select.css';
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
@@ -15,6 +16,7 @@ window.numeral = require('numeral');
 
 Vue.use(VueSweetalert2);
 Vue.component('v-select', vSelect);
+Vue.component('downloadExcel', JsonExcel);
 
 //login components
 Vue.component('login-form', require('./components/login/Login.vue').default);

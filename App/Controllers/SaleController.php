@@ -69,6 +69,20 @@ class SaleController extends Controller
         return response()->json($parseSales);
     }
 
+    public function dataExcel()
+    {
+        if(!input()->exists(['start_date', 'end_date'])){
+            return http_response_code(400);
+        }
+        $data = input()->all();
+        $start_date = Carbon::createFromTimeString($data['start_date']);
+        $end_date = Carbon::createFromTimeString($data['end_date']);
+
+        $sales = Sale::with('products')->with('seller')->with('customer')->whereBetween('created_at', [$start_date, $end_date])->get();
+        
+        return response()->json($sales);
+    }
+
     public function create()
     {
         $products = Product::all();

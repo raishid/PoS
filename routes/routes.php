@@ -49,6 +49,7 @@ SimpleRouter::group(['middleware' => Middleware::class], function () {
     SimpleRouter::post('/sales/sell', [SaleController::class, 'sell'])->name('sales.sell');
     SimpleRouter::get('/sales/print/invoice/{id}', [GeneratePDFController::class, 'generate'])->name('sales.print.invoice');
     SimpleRouter::get('/sales/report', [SaleController::class, 'report'])->name('sales.report');
+    SimpleRouter::post('/sales/report/excel', [SaleController::class, 'dataExcel'])->name('sales.excel');
 
     //Charts sales
     SimpleRouter::post('/sales/ranges/charts', [SaleController::class, 'rangeDaySales']);

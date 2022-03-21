@@ -15128,8 +15128,8 @@
   __export(Login_exports, {
     default: () => Login_default
   });
-  function __vue_normalize__(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\login\\Login.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -15177,10 +15177,10 @@
     }
     return component2;
   }
-  var __vue_script__, __vue_render__, __vue_staticRenderFns__, __vue_inject_styles__, __vue_scope_id__, __vue_module_identifier__, __vue_is_functional_template__, __vue_component__, Login_default;
+  var __vue_script__2, __vue_render__2, __vue_staticRenderFns__2, __vue_inject_styles__2, __vue_scope_id__2, __vue_module_identifier__2, __vue_is_functional_template__2, __vue_component__, Login_default;
   var init_Login = __esm({
     "resource/js/components/login/Login.vue"() {
-      __vue_script__ = {
+      __vue_script__2 = {
         name: "login-form",
         props: ["csrf"],
         data() {
@@ -15230,7 +15230,7 @@
           }
         }
       };
-      __vue_render__ = function() {
+      __vue_render__2 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -15315,7 +15315,7 @@
           ])
         ]);
       };
-      __vue_staticRenderFns__ = [
+      __vue_staticRenderFns__2 = [
         function() {
           var _vm = this;
           var _h = _vm.$createElement;
@@ -15360,12 +15360,12 @@
           ]);
         }
       ];
-      __vue_render__._withStripped = true;
-      __vue_inject_styles__ = void 0;
-      __vue_scope_id__ = void 0;
-      __vue_module_identifier__ = void 0;
-      __vue_is_functional_template__ = false;
-      __vue_component__ = /* @__PURE__ */ __vue_normalize__({ render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, void 0, void 0, void 0);
+      __vue_render__2._withStripped = true;
+      __vue_inject_styles__2 = void 0;
+      __vue_scope_id__2 = void 0;
+      __vue_module_identifier__2 = void 0;
+      __vue_is_functional_template__2 = false;
+      __vue_component__ = /* @__PURE__ */ __vue_normalize__({ render: __vue_render__2, staticRenderFns: __vue_staticRenderFns__2 }, __vue_inject_styles__2, __vue_script__2, __vue_scope_id__2, __vue_is_functional_template__2, __vue_module_identifier__2, false, void 0, void 0, void 0);
       Login_default = __vue_component__;
     }
   });
@@ -15375,8 +15375,8 @@
   __export(ModalUser_exports, {
     default: () => ModalUser_default
   });
-  function __vue_normalize__2(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__2(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\users\\ModalUser.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -15424,10 +15424,10 @@
     }
     return component2;
   }
-  var __vue_script__2, __vue_render__2, __vue_staticRenderFns__2, __vue_inject_styles__2, __vue_scope_id__2, __vue_module_identifier__2, __vue_is_functional_template__2, __vue_component__2, ModalUser_default;
+  var __vue_script__3, __vue_render__3, __vue_staticRenderFns__3, __vue_inject_styles__3, __vue_scope_id__3, __vue_module_identifier__3, __vue_is_functional_template__3, __vue_component__2, ModalUser_default;
   var init_ModalUser = __esm({
     "resource/js/components/users/ModalUser.vue"() {
-      __vue_script__2 = {
+      __vue_script__3 = {
         name: "u-modal",
         props: {
           csrf_token: {
@@ -15529,7 +15529,7 @@
           }
         }
       };
-      __vue_render__2 = function() {
+      __vue_render__3 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -15767,7 +15767,7 @@
           ])
         ]);
       };
-      __vue_staticRenderFns__2 = [
+      __vue_staticRenderFns__3 = [
         function() {
           var _vm = this;
           var _h = _vm.$createElement;
@@ -15801,12 +15801,12 @@
           ]);
         }
       ];
-      __vue_render__2._withStripped = true;
-      __vue_inject_styles__2 = void 0;
-      __vue_scope_id__2 = void 0;
-      __vue_module_identifier__2 = void 0;
-      __vue_is_functional_template__2 = false;
-      __vue_component__2 = /* @__PURE__ */ __vue_normalize__2({ render: __vue_render__2, staticRenderFns: __vue_staticRenderFns__2 }, __vue_inject_styles__2, __vue_script__2, __vue_scope_id__2, __vue_is_functional_template__2, __vue_module_identifier__2, false, void 0, void 0, void 0);
+      __vue_render__3._withStripped = true;
+      __vue_inject_styles__3 = void 0;
+      __vue_scope_id__3 = void 0;
+      __vue_module_identifier__3 = void 0;
+      __vue_is_functional_template__3 = false;
+      __vue_component__2 = /* @__PURE__ */ __vue_normalize__2({ render: __vue_render__3, staticRenderFns: __vue_staticRenderFns__3 }, __vue_inject_styles__3, __vue_script__3, __vue_scope_id__3, __vue_is_functional_template__3, __vue_module_identifier__3, false, void 0, void 0, void 0);
       ModalUser_default = __vue_component__2;
     }
   });
@@ -15816,8 +15816,8 @@
   __export(TableUsers_exports, {
     default: () => TableUsers_default
   });
-  function __vue_normalize__3(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__3(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\users\\TableUsers.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -15865,11 +15865,11 @@
     }
     return component2;
   }
-  var __vue_script__3, __vue_render__3, __vue_staticRenderFns__3, __vue_inject_styles__3, __vue_scope_id__3, __vue_module_identifier__3, __vue_is_functional_template__3, __vue_component__3, TableUsers_default;
+  var __vue_script__4, __vue_render__4, __vue_staticRenderFns__4, __vue_inject_styles__4, __vue_scope_id__4, __vue_module_identifier__4, __vue_is_functional_template__4, __vue_component__3, TableUsers_default;
   var init_TableUsers = __esm({
     "resource/js/components/users/TableUsers.vue"() {
       init_ModalUser();
-      __vue_script__3 = {
+      __vue_script__4 = {
         name: "u-table",
         props: {
           users: {
@@ -16016,7 +16016,7 @@
           this.mountedDatatable();
         }
       };
-      __vue_render__3 = function() {
+      __vue_render__4 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -16111,7 +16111,7 @@
           })
         ], 1);
       };
-      __vue_staticRenderFns__3 = [
+      __vue_staticRenderFns__4 = [
         function() {
           var _vm = this;
           var _h = _vm.$createElement;
@@ -16147,12 +16147,12 @@
           ]);
         }
       ];
-      __vue_render__3._withStripped = true;
-      __vue_inject_styles__3 = void 0;
-      __vue_scope_id__3 = void 0;
-      __vue_module_identifier__3 = void 0;
-      __vue_is_functional_template__3 = false;
-      __vue_component__3 = /* @__PURE__ */ __vue_normalize__3({ render: __vue_render__3, staticRenderFns: __vue_staticRenderFns__3 }, __vue_inject_styles__3, __vue_script__3, __vue_scope_id__3, __vue_is_functional_template__3, __vue_module_identifier__3, false, void 0, void 0, void 0);
+      __vue_render__4._withStripped = true;
+      __vue_inject_styles__4 = void 0;
+      __vue_scope_id__4 = void 0;
+      __vue_module_identifier__4 = void 0;
+      __vue_is_functional_template__4 = false;
+      __vue_component__3 = /* @__PURE__ */ __vue_normalize__3({ render: __vue_render__4, staticRenderFns: __vue_staticRenderFns__4 }, __vue_inject_styles__4, __vue_script__4, __vue_scope_id__4, __vue_is_functional_template__4, __vue_module_identifier__4, false, void 0, void 0, void 0);
       TableUsers_default = __vue_component__3;
     }
   });
@@ -16162,8 +16162,8 @@
   __export(ModalCategories_exports, {
     default: () => ModalCategories_default
   });
-  function __vue_normalize__4(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__4(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\categories\\ModalCategories.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -16211,10 +16211,10 @@
     }
     return component2;
   }
-  var __vue_script__4, __vue_render__4, __vue_staticRenderFns__4, __vue_inject_styles__4, __vue_scope_id__4, __vue_module_identifier__4, __vue_is_functional_template__4, __vue_component__4, ModalCategories_default;
+  var __vue_script__5, __vue_render__5, __vue_staticRenderFns__5, __vue_inject_styles__5, __vue_scope_id__5, __vue_module_identifier__5, __vue_is_functional_template__5, __vue_component__4, ModalCategories_default;
   var init_ModalCategories = __esm({
     "resource/js/components/categories/ModalCategories.vue"() {
-      __vue_script__4 = {
+      __vue_script__5 = {
         name: "cate-modal",
         props: {
           csrf_token: {
@@ -16287,7 +16287,7 @@
           }
         }
       };
-      __vue_render__4 = function() {
+      __vue_render__5 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -16417,7 +16417,7 @@
           ])
         ]);
       };
-      __vue_staticRenderFns__4 = [
+      __vue_staticRenderFns__5 = [
         function() {
           var _vm = this;
           var _h = _vm.$createElement;
@@ -16435,12 +16435,12 @@
           ]);
         }
       ];
-      __vue_render__4._withStripped = true;
-      __vue_inject_styles__4 = void 0;
-      __vue_scope_id__4 = void 0;
-      __vue_module_identifier__4 = void 0;
-      __vue_is_functional_template__4 = false;
-      __vue_component__4 = /* @__PURE__ */ __vue_normalize__4({ render: __vue_render__4, staticRenderFns: __vue_staticRenderFns__4 }, __vue_inject_styles__4, __vue_script__4, __vue_scope_id__4, __vue_is_functional_template__4, __vue_module_identifier__4, false, void 0, void 0, void 0);
+      __vue_render__5._withStripped = true;
+      __vue_inject_styles__5 = void 0;
+      __vue_scope_id__5 = void 0;
+      __vue_module_identifier__5 = void 0;
+      __vue_is_functional_template__5 = false;
+      __vue_component__4 = /* @__PURE__ */ __vue_normalize__4({ render: __vue_render__5, staticRenderFns: __vue_staticRenderFns__5 }, __vue_inject_styles__5, __vue_script__5, __vue_scope_id__5, __vue_is_functional_template__5, __vue_module_identifier__5, false, void 0, void 0, void 0);
       ModalCategories_default = __vue_component__4;
     }
   });
@@ -16450,8 +16450,8 @@
   __export(TableCategories_exports, {
     default: () => TableCategories_default
   });
-  function __vue_normalize__5(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__5(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\categories\\TableCategories.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -16499,11 +16499,11 @@
     }
     return component2;
   }
-  var __vue_script__5, __vue_render__5, __vue_staticRenderFns__5, __vue_inject_styles__5, __vue_scope_id__5, __vue_module_identifier__5, __vue_is_functional_template__5, __vue_component__5, TableCategories_default;
+  var __vue_script__6, __vue_render__6, __vue_staticRenderFns__6, __vue_inject_styles__6, __vue_scope_id__6, __vue_module_identifier__6, __vue_is_functional_template__6, __vue_component__5, TableCategories_default;
   var init_TableCategories = __esm({
     "resource/js/components/categories/TableCategories.vue"() {
       init_ModalCategories();
-      __vue_script__5 = {
+      __vue_script__6 = {
         name: "cate-table",
         props: {
           categories: {
@@ -16589,7 +16589,7 @@
           this.mountedDatatable();
         }
       };
-      __vue_render__5 = function() {
+      __vue_render__6 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -16650,7 +16650,7 @@
           })
         ], 1);
       };
-      __vue_staticRenderFns__5 = [
+      __vue_staticRenderFns__6 = [
         function() {
           var _vm = this;
           var _h = _vm.$createElement;
@@ -16678,12 +16678,12 @@
           ]);
         }
       ];
-      __vue_render__5._withStripped = true;
-      __vue_inject_styles__5 = void 0;
-      __vue_scope_id__5 = void 0;
-      __vue_module_identifier__5 = void 0;
-      __vue_is_functional_template__5 = false;
-      __vue_component__5 = /* @__PURE__ */ __vue_normalize__5({ render: __vue_render__5, staticRenderFns: __vue_staticRenderFns__5 }, __vue_inject_styles__5, __vue_script__5, __vue_scope_id__5, __vue_is_functional_template__5, __vue_module_identifier__5, false, void 0, void 0, void 0);
+      __vue_render__6._withStripped = true;
+      __vue_inject_styles__6 = void 0;
+      __vue_scope_id__6 = void 0;
+      __vue_module_identifier__6 = void 0;
+      __vue_is_functional_template__6 = false;
+      __vue_component__5 = /* @__PURE__ */ __vue_normalize__5({ render: __vue_render__6, staticRenderFns: __vue_staticRenderFns__6 }, __vue_inject_styles__6, __vue_script__6, __vue_scope_id__6, __vue_is_functional_template__6, __vue_module_identifier__6, false, void 0, void 0, void 0);
       TableCategories_default = __vue_component__5;
     }
   });
@@ -16693,8 +16693,8 @@
   __export(ModalProducts_exports, {
     default: () => ModalProducts_default
   });
-  function __vue_normalize__6(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__6(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\products\\ModalProducts.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -16793,10 +16793,10 @@
       }
     };
   }
-  var __vue_script__6, __vue_render__6, __vue_staticRenderFns__6, __vue_inject_styles__6, __vue_scope_id__6, __vue_module_identifier__6, __vue_is_functional_template__6, __vue_component__6, ModalProducts_default;
+  var __vue_script__7, __vue_render__7, __vue_staticRenderFns__7, __vue_inject_styles__7, __vue_scope_id__7, __vue_module_identifier__7, __vue_is_functional_template__7, __vue_component__6, ModalProducts_default;
   var init_ModalProducts = __esm({
     "resource/js/components/products/ModalProducts.vue"() {
-      __vue_script__6 = {
+      __vue_script__7 = {
         name: "prod-modal",
         props: {
           csrf_token: {
@@ -16917,7 +16917,7 @@
           }
         }
       };
-      __vue_render__6 = function() {
+      __vue_render__7 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -17308,7 +17308,7 @@
           ])
         ]);
       };
-      __vue_staticRenderFns__6 = [
+      __vue_staticRenderFns__7 = [
         function() {
           var _vm = this;
           var _h = _vm.$createElement;
@@ -17374,8 +17374,8 @@
           ]);
         }
       ];
-      __vue_render__6._withStripped = true;
-      __vue_inject_styles__6 = function(inject2) {
+      __vue_render__7._withStripped = true;
+      __vue_inject_styles__7 = function(inject2) {
         if (!inject2)
           return;
         inject2("data-v-8ce46910_0", { source: "\n.fs-7{\n  font-size: 0.8rem !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\products\\ModalProducts.vue"], "names": [], "mappings": ";AAiWA;EACA,4BAAA;AACA", "file": "ModalProducts.vue", "sourcesContent": [`<template>\r
@@ -17736,10 +17736,10 @@ export default {\r
   }\r
 </style>`] }, media: void 0 });
       };
-      __vue_scope_id__6 = void 0;
-      __vue_module_identifier__6 = void 0;
-      __vue_is_functional_template__6 = false;
-      __vue_component__6 = /* @__PURE__ */ __vue_normalize__6({ render: __vue_render__6, staticRenderFns: __vue_staticRenderFns__6 }, __vue_inject_styles__6, __vue_script__6, __vue_scope_id__6, __vue_is_functional_template__6, __vue_module_identifier__6, false, __vue_create_injector__, void 0, void 0);
+      __vue_scope_id__7 = void 0;
+      __vue_module_identifier__7 = void 0;
+      __vue_is_functional_template__7 = false;
+      __vue_component__6 = /* @__PURE__ */ __vue_normalize__6({ render: __vue_render__7, staticRenderFns: __vue_staticRenderFns__7 }, __vue_inject_styles__7, __vue_script__7, __vue_scope_id__7, __vue_is_functional_template__7, __vue_module_identifier__7, false, __vue_create_injector__, void 0, void 0);
       ModalProducts_default = __vue_component__6;
     }
   });
@@ -17749,8 +17749,8 @@ export default {\r
   __export(TableProducts_exports, {
     default: () => TableProducts_default
   });
-  function __vue_normalize__7(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__7(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\products\\TableProducts.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -17798,12 +17798,12 @@ export default {\r
     }
     return component2;
   }
-  var import_moment, __vue_script__7, __vue_render__7, __vue_staticRenderFns__7, __vue_inject_styles__7, __vue_scope_id__7, __vue_module_identifier__7, __vue_is_functional_template__7, __vue_component__7, TableProducts_default;
+  var import_moment, __vue_script__8, __vue_render__8, __vue_staticRenderFns__8, __vue_inject_styles__8, __vue_scope_id__8, __vue_module_identifier__8, __vue_is_functional_template__8, __vue_component__7, TableProducts_default;
   var init_TableProducts = __esm({
     "resource/js/components/products/TableProducts.vue"() {
       import_moment = __toESM(require_moment());
       init_ModalProducts();
-      __vue_script__7 = {
+      __vue_script__8 = {
         name: "prod-table",
         props: {
           products: {
@@ -17946,7 +17946,7 @@ export default {\r
           this.dataProducts();
         }
       };
-      __vue_render__7 = function() {
+      __vue_render__8 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -18038,7 +18038,7 @@ export default {\r
           })
         ], 1);
       };
-      __vue_staticRenderFns__7 = [
+      __vue_staticRenderFns__8 = [
         function() {
           var _vm = this;
           var _h = _vm.$createElement;
@@ -18078,12 +18078,12 @@ export default {\r
           ]);
         }
       ];
-      __vue_render__7._withStripped = true;
-      __vue_inject_styles__7 = void 0;
-      __vue_scope_id__7 = void 0;
-      __vue_module_identifier__7 = void 0;
-      __vue_is_functional_template__7 = false;
-      __vue_component__7 = /* @__PURE__ */ __vue_normalize__7({ render: __vue_render__7, staticRenderFns: __vue_staticRenderFns__7 }, __vue_inject_styles__7, __vue_script__7, __vue_scope_id__7, __vue_is_functional_template__7, __vue_module_identifier__7, false, void 0, void 0, void 0);
+      __vue_render__8._withStripped = true;
+      __vue_inject_styles__8 = void 0;
+      __vue_scope_id__8 = void 0;
+      __vue_module_identifier__8 = void 0;
+      __vue_is_functional_template__8 = false;
+      __vue_component__7 = /* @__PURE__ */ __vue_normalize__7({ render: __vue_render__8, staticRenderFns: __vue_staticRenderFns__8 }, __vue_inject_styles__8, __vue_script__8, __vue_scope_id__8, __vue_is_functional_template__8, __vue_module_identifier__8, false, void 0, void 0, void 0);
       TableProducts_default = __vue_component__7;
     }
   });
@@ -29360,8 +29360,8 @@ export default {\r
   __export(ModalCustomers_exports, {
     default: () => ModalCustomers_default
   });
-  function __vue_normalize__8(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__8(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\customers\\ModalCustomers.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -29409,11 +29409,11 @@ export default {\r
     }
     return component2;
   }
-  var __vue_script__8, __vue_render__8, __vue_staticRenderFns__8, __vue_inject_styles__8, __vue_scope_id__8, __vue_module_identifier__8, __vue_is_functional_template__8, __vue_component__8, ModalCustomers_default;
+  var __vue_script__9, __vue_render__9, __vue_staticRenderFns__9, __vue_inject_styles__9, __vue_scope_id__9, __vue_module_identifier__9, __vue_is_functional_template__9, __vue_component__8, ModalCustomers_default;
   var init_ModalCustomers = __esm({
     "resource/js/components/customers/ModalCustomers.vue"() {
       init_esm2();
-      __vue_script__8 = {
+      __vue_script__9 = {
         name: "customer-modal",
         props: {
           csrf_token: {
@@ -29507,7 +29507,7 @@ export default {\r
           }
         }
       };
-      __vue_render__8 = function() {
+      __vue_render__9 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -29750,7 +29750,7 @@ export default {\r
           ])
         ]);
       };
-      __vue_staticRenderFns__8 = [
+      __vue_staticRenderFns__9 = [
         function() {
           var _vm = this;
           var _h = _vm.$createElement;
@@ -29800,12 +29800,12 @@ export default {\r
           ]);
         }
       ];
-      __vue_render__8._withStripped = true;
-      __vue_inject_styles__8 = void 0;
-      __vue_scope_id__8 = void 0;
-      __vue_module_identifier__8 = void 0;
-      __vue_is_functional_template__8 = false;
-      __vue_component__8 = /* @__PURE__ */ __vue_normalize__8({ render: __vue_render__8, staticRenderFns: __vue_staticRenderFns__8 }, __vue_inject_styles__8, __vue_script__8, __vue_scope_id__8, __vue_is_functional_template__8, __vue_module_identifier__8, false, void 0, void 0, void 0);
+      __vue_render__9._withStripped = true;
+      __vue_inject_styles__9 = void 0;
+      __vue_scope_id__9 = void 0;
+      __vue_module_identifier__9 = void 0;
+      __vue_is_functional_template__9 = false;
+      __vue_component__8 = /* @__PURE__ */ __vue_normalize__8({ render: __vue_render__9, staticRenderFns: __vue_staticRenderFns__9 }, __vue_inject_styles__9, __vue_script__9, __vue_scope_id__9, __vue_is_functional_template__9, __vue_module_identifier__9, false, void 0, void 0, void 0);
       ModalCustomers_default = __vue_component__8;
     }
   });
@@ -29815,8 +29815,8 @@ export default {\r
   __export(TableCustomers_exports, {
     default: () => TableCustomers_default
   });
-  function __vue_normalize__9(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__9(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\customers\\TableCustomers.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -29864,12 +29864,12 @@ export default {\r
     }
     return component2;
   }
-  var import_moment2, __vue_script__9, __vue_render__9, __vue_staticRenderFns__9, __vue_inject_styles__9, __vue_scope_id__9, __vue_module_identifier__9, __vue_is_functional_template__9, __vue_component__9, TableCustomers_default;
+  var import_moment2, __vue_script__10, __vue_render__10, __vue_staticRenderFns__10, __vue_inject_styles__10, __vue_scope_id__10, __vue_module_identifier__10, __vue_is_functional_template__10, __vue_component__9, TableCustomers_default;
   var init_TableCustomers = __esm({
     "resource/js/components/customers/TableCustomers.vue"() {
       init_ModalCustomers();
       import_moment2 = __toESM(require_moment());
-      __vue_script__9 = {
+      __vue_script__10 = {
         name: "customer-table",
         props: {
           customers: {
@@ -29962,7 +29962,7 @@ export default {\r
           this.mountedDatatable();
         }
       };
-      __vue_render__9 = function() {
+      __vue_render__10 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -30055,7 +30055,7 @@ export default {\r
           })
         ], 1);
       };
-      __vue_staticRenderFns__9 = [
+      __vue_staticRenderFns__10 = [
         function() {
           var _vm = this;
           var _h = _vm.$createElement;
@@ -30097,12 +30097,12 @@ export default {\r
           ]);
         }
       ];
-      __vue_render__9._withStripped = true;
-      __vue_inject_styles__9 = void 0;
-      __vue_scope_id__9 = void 0;
-      __vue_module_identifier__9 = void 0;
-      __vue_is_functional_template__9 = false;
-      __vue_component__9 = /* @__PURE__ */ __vue_normalize__9({ render: __vue_render__9, staticRenderFns: __vue_staticRenderFns__9 }, __vue_inject_styles__9, __vue_script__9, __vue_scope_id__9, __vue_is_functional_template__9, __vue_module_identifier__9, false, void 0, void 0, void 0);
+      __vue_render__10._withStripped = true;
+      __vue_inject_styles__10 = void 0;
+      __vue_scope_id__10 = void 0;
+      __vue_module_identifier__10 = void 0;
+      __vue_is_functional_template__10 = false;
+      __vue_component__9 = /* @__PURE__ */ __vue_normalize__9({ render: __vue_render__10, staticRenderFns: __vue_staticRenderFns__10 }, __vue_inject_styles__10, __vue_script__10, __vue_scope_id__10, __vue_is_functional_template__10, __vue_module_identifier__10, false, void 0, void 0, void 0);
       TableCustomers_default = __vue_component__9;
     }
   });
@@ -31884,8 +31884,8 @@ export default {\r
   __export(TableSales_exports, {
     default: () => TableSales_default
   });
-  function __vue_normalize__10(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__10(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\sales\\TableSales.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -31984,12 +31984,12 @@ export default {\r
       }
     };
   }
-  var import_moment3, import_vue2_daterange_picker, __vue_script__10, __vue_render__10, __vue_staticRenderFns__10, __vue_inject_styles__10, __vue_scope_id__10, __vue_module_identifier__10, __vue_is_functional_template__10, __vue_component__10, TableSales_default;
+  var import_moment3, import_vue2_daterange_picker, __vue_script__11, __vue_render__11, __vue_staticRenderFns__11, __vue_inject_styles__11, __vue_scope_id__11, __vue_module_identifier__11, __vue_is_functional_template__11, __vue_component__10, TableSales_default;
   var init_TableSales = __esm({
     "resource/js/components/sales/TableSales.vue"() {
       import_moment3 = __toESM(require_moment());
       import_vue2_daterange_picker = __toESM(require_vue2_daterange_picker_umd_min());
-      __vue_script__10 = {
+      __vue_script__11 = {
         name: "sales-table",
         props: {
           sales: {
@@ -32162,7 +32162,7 @@ export default {\r
           this.mountedDatatable();
         }
       };
-      __vue_render__10 = function() {
+      __vue_render__11 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -32262,7 +32262,7 @@ export default {\r
           ])
         ]);
       };
-      __vue_staticRenderFns__10 = [
+      __vue_staticRenderFns__11 = [
         function() {
           var _vm = this;
           var _h = _vm.$createElement;
@@ -32304,8 +32304,8 @@ export default {\r
           ]);
         }
       ];
-      __vue_render__10._withStripped = true;
-      __vue_inject_styles__10 = function(inject2) {
+      __vue_render__11._withStripped = true;
+      __vue_inject_styles__11 = function(inject2) {
         if (!inject2)
           return;
         inject2("data-v-507ce139_0", { source: "\n.reportrange-text{\n  background-color: #f2f2f2 !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\sales\\TableSales.vue"], "names": [], "mappings": ";AAiPA;EACA,oCAAA;AACA", "file": "TableSales.vue", "sourcesContent": [`<template>\r
@@ -32554,10 +32554,10 @@ export default {\r
   }\r
 </style>`] }, media: void 0 });
       };
-      __vue_scope_id__10 = void 0;
-      __vue_module_identifier__10 = void 0;
-      __vue_is_functional_template__10 = false;
-      __vue_component__10 = /* @__PURE__ */ __vue_normalize__10({ render: __vue_render__10, staticRenderFns: __vue_staticRenderFns__10 }, __vue_inject_styles__10, __vue_script__10, __vue_scope_id__10, __vue_is_functional_template__10, __vue_module_identifier__10, false, __vue_create_injector__2, void 0, void 0);
+      __vue_scope_id__11 = void 0;
+      __vue_module_identifier__11 = void 0;
+      __vue_is_functional_template__11 = false;
+      __vue_component__10 = /* @__PURE__ */ __vue_normalize__10({ render: __vue_render__11, staticRenderFns: __vue_staticRenderFns__11 }, __vue_inject_styles__11, __vue_script__11, __vue_scope_id__11, __vue_is_functional_template__11, __vue_module_identifier__11, false, __vue_create_injector__2, void 0, void 0);
       TableSales_default = __vue_component__10;
     }
   });
@@ -32576,8 +32576,8 @@ export default {\r
   __export(CardAddProduct_exports, {
     default: () => CardAddProduct_default
   });
-  function __vue_normalize__11(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__11(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\sales\\CardAddProduct.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -32625,11 +32625,11 @@ export default {\r
     }
     return component2;
   }
-  var __vue_script__11, __vue_render__11, __vue_staticRenderFns__11, __vue_inject_styles__11, __vue_scope_id__11, __vue_module_identifier__11, __vue_is_functional_template__11, __vue_component__11, CardAddProduct_default;
+  var __vue_script__12, __vue_render__12, __vue_staticRenderFns__12, __vue_inject_styles__12, __vue_scope_id__12, __vue_module_identifier__12, __vue_is_functional_template__12, __vue_component__11, CardAddProduct_default;
   var init_CardAddProduct = __esm({
     "resource/js/components/sales/CardAddProduct.vue"() {
       init_EventBus();
-      __vue_script__11 = {
+      __vue_script__12 = {
         name: "table-add-product",
         props: {
           products: {
@@ -32689,7 +32689,7 @@ export default {\r
           }
         }
       };
-      __vue_render__11 = function() {
+      __vue_render__12 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -32761,7 +32761,7 @@ export default {\r
           ])
         ]);
       };
-      __vue_staticRenderFns__11 = [
+      __vue_staticRenderFns__12 = [
         function() {
           var _vm = this;
           var _h = _vm.$createElement;
@@ -32787,12 +32787,12 @@ export default {\r
           ]);
         }
       ];
-      __vue_render__11._withStripped = true;
-      __vue_inject_styles__11 = void 0;
-      __vue_scope_id__11 = void 0;
-      __vue_module_identifier__11 = void 0;
-      __vue_is_functional_template__11 = false;
-      __vue_component__11 = /* @__PURE__ */ __vue_normalize__11({ render: __vue_render__11, staticRenderFns: __vue_staticRenderFns__11 }, __vue_inject_styles__11, __vue_script__11, __vue_scope_id__11, __vue_is_functional_template__11, __vue_module_identifier__11, false, void 0, void 0, void 0);
+      __vue_render__12._withStripped = true;
+      __vue_inject_styles__12 = void 0;
+      __vue_scope_id__12 = void 0;
+      __vue_module_identifier__12 = void 0;
+      __vue_is_functional_template__12 = false;
+      __vue_component__11 = /* @__PURE__ */ __vue_normalize__11({ render: __vue_render__12, staticRenderFns: __vue_staticRenderFns__12 }, __vue_inject_styles__12, __vue_script__12, __vue_scope_id__12, __vue_is_functional_template__12, __vue_module_identifier__12, false, void 0, void 0, void 0);
       CardAddProduct_default = __vue_component__11;
     }
   });
@@ -32802,8 +32802,8 @@ export default {\r
   __export(CardCreateSale_exports, {
     default: () => CardCreateSale_default
   });
-  function __vue_normalize__12(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__12(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\sales\\CardCreateSale.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -32902,7 +32902,7 @@ export default {\r
       }
     };
   }
-  var import_numeral, __vue_script__12, __vue_render__12, __vue_staticRenderFns__12, __vue_inject_styles__12, __vue_scope_id__12, __vue_module_identifier__12, __vue_is_functional_template__12, __vue_component__12, CardCreateSale_default;
+  var import_numeral, __vue_script__13, __vue_render__13, __vue_staticRenderFns__13, __vue_inject_styles__13, __vue_scope_id__13, __vue_module_identifier__13, __vue_is_functional_template__13, __vue_component__12, CardCreateSale_default;
   var init_CardCreateSale = __esm({
     "resource/js/components/sales/CardCreateSale.vue"() {
       init_EventBus();
@@ -32910,7 +32910,7 @@ export default {\r
       init_esm2();
       init_CardAddProduct();
       import_numeral = __toESM(require_numeral());
-      __vue_script__12 = {
+      __vue_script__13 = {
         name: "card-create-sale",
         props: {
           auth: {
@@ -33115,7 +33115,7 @@ export default {\r
           }
         }
       };
-      __vue_render__12 = function() {
+      __vue_render__13 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -33516,7 +33516,7 @@ export default {\r
           ])
         ], 1);
       };
-      __vue_staticRenderFns__12 = [
+      __vue_staticRenderFns__13 = [
         function() {
           var _vm = this;
           var _h = _vm.$createElement;
@@ -33619,8 +33619,8 @@ export default {\r
           ]);
         }
       ];
-      __vue_render__12._withStripped = true;
-      __vue_inject_styles__12 = function(inject2) {
+      __vue_render__13._withStripped = true;
+      __vue_inject_styles__13 = function(inject2) {
         if (!inject2)
           return;
         inject2("data-v-5deb4561_0", { source: "\n.v-select{\n    position: relative;\n    flex: 1 1 auto;\n}\n@media (max-width: 768px) {\n#modal-customer-button{\n        width: 100%;\n}\n.select2{\n        width: 100% !important;\n}\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\sales\\CardCreateSale.vue"], "names": [], "mappings": ";AA+YA;IACA,kBAAA;IACA,cAAA;AACA;AACA;AACA;QACA,WAAA;AACA;AACA;QACA,sBAAA;AACA;AACA", "file": "CardCreateSale.vue", "sourcesContent": [`<template>\r
@@ -34036,10 +34036,10 @@ export default {\r
     }\r
 </style>`] }, media: void 0 });
       };
-      __vue_scope_id__12 = void 0;
-      __vue_module_identifier__12 = void 0;
-      __vue_is_functional_template__12 = false;
-      __vue_component__12 = /* @__PURE__ */ __vue_normalize__12({ render: __vue_render__12, staticRenderFns: __vue_staticRenderFns__12 }, __vue_inject_styles__12, __vue_script__12, __vue_scope_id__12, __vue_is_functional_template__12, __vue_module_identifier__12, false, __vue_create_injector__3, void 0, void 0);
+      __vue_scope_id__13 = void 0;
+      __vue_module_identifier__13 = void 0;
+      __vue_is_functional_template__13 = false;
+      __vue_component__12 = /* @__PURE__ */ __vue_normalize__12({ render: __vue_render__13, staticRenderFns: __vue_staticRenderFns__13 }, __vue_inject_styles__13, __vue_script__13, __vue_scope_id__13, __vue_is_functional_template__13, __vue_module_identifier__13, false, __vue_create_injector__3, void 0, void 0);
       CardCreateSale_default = __vue_component__12;
     }
   });
@@ -34156,7 +34156,7 @@ export default {\r
       })(exports, function(moment5) {
         "use strict";
         moment5 = moment5 && moment5.hasOwnProperty("default") ? moment5["default"] : moment5;
-        function createCommonjsModule(fn, module2) {
+        function createCommonjsModule2(fn, module2) {
           return module2 = { exports: {} }, fn(module2, module2.exports), module2.exports;
         }
         function getCjsExportFromNamespace(n) {
@@ -34312,7 +34312,7 @@ export default {\r
           "yellow": [255, 255, 0],
           "yellowgreen": [154, 205, 50]
         };
-        var conversions = createCommonjsModule(function(module2) {
+        var conversions = createCommonjsModule2(function(module2) {
           var reverseKeywords = {};
           for (var key in colorName) {
             if (colorName.hasOwnProperty(key)) {
@@ -45584,8 +45584,8 @@ export default {\r
   });
 
   // resource/js/components/sales/charts/LineChart.vue
-  function __vue_normalize__13(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__13(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\sales\\charts\\LineChart.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -45633,22 +45633,22 @@ export default {\r
     }
     return component2;
   }
-  var __vue_script__13, __vue_inject_styles__13, __vue_scope_id__13, __vue_module_identifier__13, __vue_is_functional_template__13, __vue_component__13, LineChart_default;
+  var __vue_script__14, __vue_inject_styles__14, __vue_scope_id__14, __vue_module_identifier__14, __vue_is_functional_template__14, __vue_component__13, LineChart_default;
   var init_LineChart = __esm({
     "resource/js/components/sales/charts/LineChart.vue"() {
       init_es();
-      __vue_script__13 = {
+      __vue_script__14 = {
         extends: Line,
         mixins: [mixins_default.reactiveProp],
         mounted() {
           this.renderChart(this.chartData, this.options);
         }
       };
-      __vue_inject_styles__13 = void 0;
-      __vue_scope_id__13 = void 0;
-      __vue_module_identifier__13 = void 0;
-      __vue_is_functional_template__13 = void 0;
-      __vue_component__13 = /* @__PURE__ */ __vue_normalize__13({}, __vue_inject_styles__13, __vue_script__13, __vue_scope_id__13, __vue_is_functional_template__13, __vue_module_identifier__13, false, void 0, void 0, void 0);
+      __vue_inject_styles__14 = void 0;
+      __vue_scope_id__14 = void 0;
+      __vue_module_identifier__14 = void 0;
+      __vue_is_functional_template__14 = void 0;
+      __vue_component__13 = /* @__PURE__ */ __vue_normalize__13({}, __vue_inject_styles__14, __vue_script__14, __vue_scope_id__14, __vue_is_functional_template__14, __vue_module_identifier__14, false, void 0, void 0, void 0);
       LineChart_default = __vue_component__13;
     }
   });
@@ -45658,8 +45658,8 @@ export default {\r
   __export(ChartLineSale_exports, {
     default: () => ChartLineSale_default
   });
-  function __vue_normalize__14(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__14(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\sales\\charts\\ChartLineSale.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -45758,11 +45758,11 @@ export default {\r
       }
     };
   }
-  var __vue_script__14, __vue_render__13, __vue_staticRenderFns__13, __vue_inject_styles__14, __vue_scope_id__14, __vue_module_identifier__14, __vue_is_functional_template__14, __vue_component__14, ChartLineSale_default;
+  var __vue_script__15, __vue_render__14, __vue_staticRenderFns__14, __vue_inject_styles__15, __vue_scope_id__15, __vue_module_identifier__15, __vue_is_functional_template__15, __vue_component__14, ChartLineSale_default;
   var init_ChartLineSale = __esm({
     "resource/js/components/sales/charts/ChartLineSale.vue"() {
       init_LineChart();
-      __vue_script__14 = {
+      __vue_script__15 = {
         name: "sale-linechart",
         props: {
           data: {
@@ -45782,7 +45782,7 @@ export default {\r
           };
         }
       };
-      __vue_render__13 = function() {
+      __vue_render__14 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -45793,9 +45793,9 @@ export default {\r
           })
         ], 1);
       };
-      __vue_staticRenderFns__13 = [];
-      __vue_render__13._withStripped = true;
-      __vue_inject_styles__14 = function(inject2) {
+      __vue_staticRenderFns__14 = [];
+      __vue_render__14._withStripped = true;
+      __vue_inject_styles__15 = function(inject2) {
         if (!inject2)
           return;
         inject2("data-v-6781671e_0", { source: "\n.small {\n  max-width: 700px;\n  margin: 50px auto;\n}\n@media (min-width: 796px) {\n.small {\n          margin:  150px auto;\n}\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\sales\\charts\\ChartLineSale.vue"], "names": [], "mappings": ";AA8BA;EACA,gBAAA;EACA,iBAAA;AACA;AACA;AACA;UACA,mBAAA;AACA;AACA", "file": "ChartLineSale.vue", "sourcesContent": [`<template>\r
@@ -45839,17 +45839,17 @@ export default {\r
     }\r
 </style>`] }, media: void 0 });
       };
-      __vue_scope_id__14 = void 0;
-      __vue_module_identifier__14 = void 0;
-      __vue_is_functional_template__14 = false;
-      __vue_component__14 = /* @__PURE__ */ __vue_normalize__14({ render: __vue_render__13, staticRenderFns: __vue_staticRenderFns__13 }, __vue_inject_styles__14, __vue_script__14, __vue_scope_id__14, __vue_is_functional_template__14, __vue_module_identifier__14, false, __vue_create_injector__4, void 0, void 0);
+      __vue_scope_id__15 = void 0;
+      __vue_module_identifier__15 = void 0;
+      __vue_is_functional_template__15 = false;
+      __vue_component__14 = /* @__PURE__ */ __vue_normalize__14({ render: __vue_render__14, staticRenderFns: __vue_staticRenderFns__14 }, __vue_inject_styles__15, __vue_script__15, __vue_scope_id__15, __vue_is_functional_template__15, __vue_module_identifier__15, false, __vue_create_injector__4, void 0, void 0);
       ChartLineSale_default = __vue_component__14;
     }
   });
 
   // resource/js/components/sales/charts/DoughnutChart.vue
-  function __vue_normalize__15(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__15(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\sales\\charts\\DoughnutChart.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -45897,22 +45897,22 @@ export default {\r
     }
     return component2;
   }
-  var __vue_script__15, __vue_inject_styles__15, __vue_scope_id__15, __vue_module_identifier__15, __vue_is_functional_template__15, __vue_component__15, DoughnutChart_default;
+  var __vue_script__16, __vue_inject_styles__16, __vue_scope_id__16, __vue_module_identifier__16, __vue_is_functional_template__16, __vue_component__15, DoughnutChart_default;
   var init_DoughnutChart = __esm({
     "resource/js/components/sales/charts/DoughnutChart.vue"() {
       init_es();
-      __vue_script__15 = {
+      __vue_script__16 = {
         extends: Doughnut,
         mixins: [mixins_default.reactiveProp],
         mounted() {
           this.renderChart(this.chartData, this.options);
         }
       };
-      __vue_inject_styles__15 = void 0;
-      __vue_scope_id__15 = void 0;
-      __vue_module_identifier__15 = void 0;
-      __vue_is_functional_template__15 = void 0;
-      __vue_component__15 = /* @__PURE__ */ __vue_normalize__15({}, __vue_inject_styles__15, __vue_script__15, __vue_scope_id__15, __vue_is_functional_template__15, __vue_module_identifier__15, false, void 0, void 0, void 0);
+      __vue_inject_styles__16 = void 0;
+      __vue_scope_id__16 = void 0;
+      __vue_module_identifier__16 = void 0;
+      __vue_is_functional_template__16 = void 0;
+      __vue_component__15 = /* @__PURE__ */ __vue_normalize__15({}, __vue_inject_styles__16, __vue_script__16, __vue_scope_id__16, __vue_is_functional_template__16, __vue_module_identifier__16, false, void 0, void 0, void 0);
       DoughnutChart_default = __vue_component__15;
     }
   });
@@ -45922,8 +45922,8 @@ export default {\r
   __export(ChartDoughnutSales_exports, {
     default: () => ChartDoughnutSales_default
   });
-  function __vue_normalize__16(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__16(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\sales\\charts\\ChartDoughnutSales.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -45971,11 +45971,11 @@ export default {\r
     }
     return component2;
   }
-  var __vue_script__16, __vue_render__14, __vue_staticRenderFns__14, __vue_inject_styles__16, __vue_scope_id__16, __vue_module_identifier__16, __vue_is_functional_template__16, __vue_component__16, ChartDoughnutSales_default;
+  var __vue_script__17, __vue_render__15, __vue_staticRenderFns__15, __vue_inject_styles__17, __vue_scope_id__17, __vue_module_identifier__17, __vue_is_functional_template__17, __vue_component__16, ChartDoughnutSales_default;
   var init_ChartDoughnutSales = __esm({
     "resource/js/components/sales/charts/ChartDoughnutSales.vue"() {
       init_DoughnutChart();
-      __vue_script__16 = {
+      __vue_script__17 = {
         name: "sale-doughnut",
         props: {
           data: {
@@ -45995,7 +45995,7 @@ export default {\r
           };
         }
       };
-      __vue_render__14 = function() {
+      __vue_render__15 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -46005,13 +46005,13 @@ export default {\r
           })
         ], 1);
       };
-      __vue_staticRenderFns__14 = [];
-      __vue_render__14._withStripped = true;
-      __vue_inject_styles__16 = void 0;
-      __vue_scope_id__16 = void 0;
-      __vue_module_identifier__16 = void 0;
-      __vue_is_functional_template__16 = false;
-      __vue_component__16 = /* @__PURE__ */ __vue_normalize__16({ render: __vue_render__14, staticRenderFns: __vue_staticRenderFns__14 }, __vue_inject_styles__16, __vue_script__16, __vue_scope_id__16, __vue_is_functional_template__16, __vue_module_identifier__16, false, void 0, void 0, void 0);
+      __vue_staticRenderFns__15 = [];
+      __vue_render__15._withStripped = true;
+      __vue_inject_styles__17 = void 0;
+      __vue_scope_id__17 = void 0;
+      __vue_module_identifier__17 = void 0;
+      __vue_is_functional_template__17 = false;
+      __vue_component__16 = /* @__PURE__ */ __vue_normalize__16({ render: __vue_render__15, staticRenderFns: __vue_staticRenderFns__15 }, __vue_inject_styles__17, __vue_script__17, __vue_scope_id__17, __vue_is_functional_template__17, __vue_module_identifier__17, false, void 0, void 0, void 0);
       ChartDoughnutSales_default = __vue_component__16;
     }
   });
@@ -46352,8 +46352,8 @@ export default {\r
   });
 
   // resource/js/components/sales/charts/BarChart.vue
-  function __vue_normalize__17(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__17(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\sales\\charts\\BarChart.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -46401,22 +46401,22 @@ export default {\r
     }
     return component2;
   }
-  var __vue_script__17, __vue_inject_styles__17, __vue_scope_id__17, __vue_module_identifier__17, __vue_is_functional_template__17, __vue_component__17, BarChart_default;
+  var __vue_script__18, __vue_inject_styles__18, __vue_scope_id__18, __vue_module_identifier__18, __vue_is_functional_template__18, __vue_component__17, BarChart_default;
   var init_BarChart = __esm({
     "resource/js/components/sales/charts/BarChart.vue"() {
       init_es();
-      __vue_script__17 = {
+      __vue_script__18 = {
         extends: Bar,
         mixins: [mixins_default.reactiveProp],
         mounted() {
           this.renderChart(this.chartData, this.options);
         }
       };
-      __vue_inject_styles__17 = void 0;
-      __vue_scope_id__17 = void 0;
-      __vue_module_identifier__17 = void 0;
-      __vue_is_functional_template__17 = void 0;
-      __vue_component__17 = /* @__PURE__ */ __vue_normalize__17({}, __vue_inject_styles__17, __vue_script__17, __vue_scope_id__17, __vue_is_functional_template__17, __vue_module_identifier__17, false, void 0, void 0, void 0);
+      __vue_inject_styles__18 = void 0;
+      __vue_scope_id__18 = void 0;
+      __vue_module_identifier__18 = void 0;
+      __vue_is_functional_template__18 = void 0;
+      __vue_component__17 = /* @__PURE__ */ __vue_normalize__17({}, __vue_inject_styles__18, __vue_script__18, __vue_scope_id__18, __vue_is_functional_template__18, __vue_module_identifier__18, false, void 0, void 0, void 0);
       BarChart_default = __vue_component__17;
     }
   });
@@ -46426,8 +46426,8 @@ export default {\r
   __export(CardReportSale_exports, {
     default: () => CardReportSale_default
   });
-  function __vue_normalize__18(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__18(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\sales\\CardReportSale.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -46475,7 +46475,7 @@ export default {\r
     }
     return component2;
   }
-  var import_moment4, import_vue2_daterange_picker2, import_randomcolor, __vue_script__18, __vue_render__15, __vue_staticRenderFns__15, __vue_inject_styles__18, __vue_scope_id__18, __vue_module_identifier__18, __vue_is_functional_template__18, __vue_component__18, CardReportSale_default;
+  var import_moment4, import_vue2_daterange_picker2, import_randomcolor, __vue_script__19, __vue_render__16, __vue_staticRenderFns__16, __vue_inject_styles__19, __vue_scope_id__19, __vue_module_identifier__19, __vue_is_functional_template__19, __vue_component__18, CardReportSale_default;
   var init_CardReportSale = __esm({
     "resource/js/components/sales/CardReportSale.vue"() {
       import_moment4 = __toESM(require_moment());
@@ -46484,7 +46484,7 @@ export default {\r
       init_ChartDoughnutSales();
       import_randomcolor = __toESM(require_randomColor());
       init_BarChart();
-      __vue_script__18 = {
+      __vue_script__19 = {
         name: "report-sale",
         props: ["csrf_token"],
         data() {
@@ -46558,7 +46558,17 @@ export default {\r
             optionsBarClient: {
               responsive: true
             },
-            loadedBarClient: false
+            loadedBarClient: false,
+            data_excel: [
+              {
+                name: "test",
+                last_name: "test2"
+              },
+              {
+                name: "test",
+                last_name: "test2"
+              }
+            ]
           };
         },
         filters: {
@@ -46638,7 +46648,7 @@ export default {\r
             this.bestSeller();
             this.dataBarClient.labels = [];
             this.dataBarClient.datasets = [];
-            this.bestSeller();
+            this.bestClient();
           },
           productMostSell() {
             this.loadedDoughnut = false;
@@ -46717,6 +46727,8 @@ export default {\r
               });
               this.loadedBarClient = true;
             });
+          },
+          fetchDataExcel() {
           }
         },
         async mounted() {
@@ -46726,33 +46738,47 @@ export default {\r
           this.bestClient();
         }
       };
-      __vue_render__15 = function() {
+      __vue_render__16 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
         return _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
-            _c("date-range-picker", {
-              on: { update: _vm.changeDateRange },
-              scopedSlots: _vm._u([
-                {
-                  key: "input",
-                  fn: function(picker) {
-                    return [
-                      _vm._v("\n        " + _vm._s(_vm._f("date")(picker.startDate)) + " - " + _vm._s(_vm._f("date")(picker.endDate)) + "\n        ")
-                    ];
+            _c("div", { staticClass: "d-flex align-items-center justify-content-between" }, [
+              _c("date-range-picker", {
+                on: { update: _vm.changeDateRange },
+                scopedSlots: _vm._u([
+                  {
+                    key: "input",
+                    fn: function(picker) {
+                      return [
+                        _vm._v("\n            " + _vm._s(_vm._f("date")(picker.startDate)) + " - " + _vm._s(_vm._f("date")(picker.endDate)) + "\n            ")
+                      ];
+                    }
                   }
+                ]),
+                model: {
+                  value: _vm.dateRange,
+                  callback: function($$v) {
+                    _vm.dateRange = $$v;
+                  },
+                  expression: "dateRange"
                 }
-              ]),
-              model: {
-                value: _vm.dateRange,
-                callback: function($$v) {
-                  _vm.dateRange = $$v;
-                },
-                expression: "dateRange"
-              }
-            })
-          ], 1),
+              }),
+              _vm._v(" "),
+              _c("download-excel", {
+                attrs: {
+                  data: _vm.data_excel,
+                  worksheet: "Report",
+                  name: "filename.xls"
+                }
+              }, [
+                _c("button", { staticClass: "btn btn-primary" }, [
+                  _vm._v("Export Excel")
+                ])
+              ])
+            ], 1)
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "row" }, [
@@ -46831,31 +46857,33 @@ export default {\r
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                _c("div", { staticClass: "d-flex flex-column" }, [
+                _vm.loadedBarClient ? _c("div", {
+                  staticClass: "d-flex flex-column animate__animated animate__backInRight"
+                }, [
                   _c("span", {
                     staticClass: "text-center text-success fw-bold fs-2 mb-md-0"
                   }, [_vm._v("Best Customer")]),
                   _vm._v(" "),
-                  _vm.loadedBarClient ? _c("sale-bar", {
+                  _c("sale-bar", {
                     attrs: {
                       data: _vm.dataBarClient,
                       options: _vm.optionsBarClient,
                       classes: "mt-2 m-auto w-75"
                     }
-                  }) : _vm._e()
-                ], 1)
+                  })
+                ], 1) : _vm._e()
               ])
             ])
           ])
         ]);
       };
-      __vue_staticRenderFns__15 = [];
-      __vue_render__15._withStripped = true;
-      __vue_inject_styles__18 = void 0;
-      __vue_scope_id__18 = void 0;
-      __vue_module_identifier__18 = void 0;
-      __vue_is_functional_template__18 = false;
-      __vue_component__18 = /* @__PURE__ */ __vue_normalize__18({ render: __vue_render__15, staticRenderFns: __vue_staticRenderFns__15 }, __vue_inject_styles__18, __vue_script__18, __vue_scope_id__18, __vue_is_functional_template__18, __vue_module_identifier__18, false, void 0, void 0, void 0);
+      __vue_staticRenderFns__16 = [];
+      __vue_render__16._withStripped = true;
+      __vue_inject_styles__19 = void 0;
+      __vue_scope_id__19 = void 0;
+      __vue_module_identifier__19 = void 0;
+      __vue_is_functional_template__19 = false;
+      __vue_component__18 = /* @__PURE__ */ __vue_normalize__18({ render: __vue_render__16, staticRenderFns: __vue_staticRenderFns__16 }, __vue_inject_styles__19, __vue_script__19, __vue_scope_id__19, __vue_is_functional_template__19, __vue_module_identifier__19, false, void 0, void 0, void 0);
       CardReportSale_default = __vue_component__18;
     }
   });
@@ -46865,8 +46893,8 @@ export default {\r
   __export(ChartBarSales_exports, {
     default: () => ChartBarSales_default
   });
-  function __vue_normalize__19(template, style, script, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    const component2 = (typeof script === "function" ? script.options : script) || {};
+  function __vue_normalize__19(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
     component2.__file = "resource\\js\\components\\sales\\charts\\ChartBarSales.vue";
     if (!component2.render) {
       component2.render = template.render;
@@ -46914,11 +46942,11 @@ export default {\r
     }
     return component2;
   }
-  var __vue_script__19, __vue_render__16, __vue_staticRenderFns__16, __vue_inject_styles__19, __vue_scope_id__19, __vue_module_identifier__19, __vue_is_functional_template__19, __vue_component__19, ChartBarSales_default;
+  var __vue_script__20, __vue_render__17, __vue_staticRenderFns__17, __vue_inject_styles__20, __vue_scope_id__20, __vue_module_identifier__20, __vue_is_functional_template__20, __vue_component__19, ChartBarSales_default;
   var init_ChartBarSales = __esm({
     "resource/js/components/sales/charts/ChartBarSales.vue"() {
       init_BarChart();
-      __vue_script__19 = {
+      __vue_script__20 = {
         name: "sale-bar",
         props: {
           data: {
@@ -46942,7 +46970,7 @@ export default {\r
           };
         }
       };
-      __vue_render__16 = function() {
+      __vue_render__17 = function() {
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
@@ -46952,13 +46980,13 @@ export default {\r
           })
         ], 1);
       };
-      __vue_staticRenderFns__16 = [];
-      __vue_render__16._withStripped = true;
-      __vue_inject_styles__19 = void 0;
-      __vue_scope_id__19 = void 0;
-      __vue_module_identifier__19 = void 0;
-      __vue_is_functional_template__19 = false;
-      __vue_component__19 = /* @__PURE__ */ __vue_normalize__19({ render: __vue_render__16, staticRenderFns: __vue_staticRenderFns__16 }, __vue_inject_styles__19, __vue_script__19, __vue_scope_id__19, __vue_is_functional_template__19, __vue_module_identifier__19, false, void 0, void 0, void 0);
+      __vue_staticRenderFns__17 = [];
+      __vue_render__17._withStripped = true;
+      __vue_inject_styles__20 = void 0;
+      __vue_scope_id__20 = void 0;
+      __vue_module_identifier__20 = void 0;
+      __vue_is_functional_template__20 = false;
+      __vue_component__19 = /* @__PURE__ */ __vue_normalize__19({ render: __vue_render__17, staticRenderFns: __vue_staticRenderFns__17 }, __vue_inject_styles__20, __vue_script__20, __vue_scope_id__20, __vue_is_functional_template__20, __vue_module_identifier__20, false, void 0, void 0, void 0);
       ChartBarSales_default = __vue_component__19;
     }
   });
@@ -46967,6 +46995,459 @@ export default {\r
   var import_vue3 = __toESM(require_vue());
   var import_vue_sweetalert2 = __toESM(require_vue_sweetalert_umd());
   var import_vue_select = __toESM(require_vue_select());
+
+  // node_modules/vue-json-excel/dist/vue-json-excel.esm.js
+  var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
+  function createCommonjsModule(fn, module) {
+    return module = { exports: {} }, fn(module, module.exports), module.exports;
+  }
+  var download = createCommonjsModule(function(module, exports) {
+    (function(root, factory) {
+      {
+        module.exports = factory();
+      }
+    })(commonjsGlobal, function() {
+      return function download2(data2, strFileName, strMimeType) {
+        var self2 = window, defaultMime = "application/octet-stream", mimeType = strMimeType || defaultMime, payload = data2, url = !strFileName && !strMimeType && payload, anchor = document.createElement("a"), toString2 = function(a) {
+          return String(a);
+        }, myBlob = self2.Blob || self2.MozBlob || self2.WebKitBlob || toString2, fileName = strFileName || "download", blob, reader;
+        myBlob = myBlob.call ? myBlob.bind(self2) : Blob;
+        if (String(this) === "true") {
+          payload = [payload, mimeType];
+          mimeType = payload[0];
+          payload = payload[1];
+        }
+        if (url && url.length < 2048) {
+          fileName = url.split("/").pop().split("?")[0];
+          anchor.href = url;
+          if (anchor.href.indexOf(url) !== -1) {
+            var ajax = new XMLHttpRequest();
+            ajax.open("GET", url, true);
+            ajax.responseType = "blob";
+            ajax.onload = function(e) {
+              download2(e.target.response, fileName, defaultMime);
+            };
+            setTimeout(function() {
+              ajax.send();
+            }, 0);
+            return ajax;
+          }
+        }
+        if (/^data:([\w+-]+\/[\w+.-]+)?[,;]/.test(payload)) {
+          if (payload.length > 1024 * 1024 * 1.999 && myBlob !== toString2) {
+            payload = dataUrlToBlob(payload);
+            mimeType = payload.type || defaultMime;
+          } else {
+            return navigator.msSaveBlob ? navigator.msSaveBlob(dataUrlToBlob(payload), fileName) : saver(payload);
+          }
+        } else {
+          if (/([\x80-\xff])/.test(payload)) {
+            var i = 0, tempUiArr = new Uint8Array(payload.length), mx = tempUiArr.length;
+            for (i; i < mx; ++i)
+              tempUiArr[i] = payload.charCodeAt(i);
+            payload = new myBlob([tempUiArr], { type: mimeType });
+          }
+        }
+        blob = payload instanceof myBlob ? payload : new myBlob([payload], { type: mimeType });
+        function dataUrlToBlob(strUrl) {
+          var parts = strUrl.split(/[:;,]/), type = parts[1], decoder = parts[2] == "base64" ? atob : decodeURIComponent, binData = decoder(parts.pop()), mx2 = binData.length, i2 = 0, uiArr = new Uint8Array(mx2);
+          for (i2; i2 < mx2; ++i2)
+            uiArr[i2] = binData.charCodeAt(i2);
+          return new myBlob([uiArr], { type });
+        }
+        function saver(url2, winMode) {
+          if ("download" in anchor) {
+            anchor.href = url2;
+            anchor.setAttribute("download", fileName);
+            anchor.className = "download-js-link";
+            anchor.innerHTML = "downloading...";
+            anchor.style.display = "none";
+            document.body.appendChild(anchor);
+            setTimeout(function() {
+              anchor.click();
+              document.body.removeChild(anchor);
+              if (winMode === true) {
+                setTimeout(function() {
+                  self2.URL.revokeObjectURL(anchor.href);
+                }, 250);
+              }
+            }, 66);
+            return true;
+          }
+          if (/(Version)\/(\d+)\.(\d+)(?:\.(\d+))?.*Safari\//.test(navigator.userAgent)) {
+            if (/^data:/.test(url2))
+              url2 = "data:" + url2.replace(/^data:([\w\/\-\+]+)/, defaultMime);
+            if (!window.open(url2)) {
+              if (confirm("Displaying New Document\n\nUse Save As... to download, then click back to return to this page.")) {
+                location.href = url2;
+              }
+            }
+            return true;
+          }
+          var f = document.createElement("iframe");
+          document.body.appendChild(f);
+          if (!winMode && /^data:/.test(url2)) {
+            url2 = "data:" + url2.replace(/^data:([\w\/\-\+]+)/, defaultMime);
+          }
+          f.src = url2;
+          setTimeout(function() {
+            document.body.removeChild(f);
+          }, 333);
+        }
+        if (navigator.msSaveBlob) {
+          return navigator.msSaveBlob(blob, fileName);
+        }
+        if (self2.URL) {
+          saver(self2.URL.createObjectURL(blob), true);
+        } else {
+          if (typeof blob === "string" || blob.constructor === toString2) {
+            try {
+              return saver("data:" + mimeType + ";base64," + self2.btoa(blob));
+            } catch (y) {
+              return saver("data:" + mimeType + "," + encodeURIComponent(blob));
+            }
+          }
+          reader = new FileReader();
+          reader.onload = function(e) {
+            saver(this.result);
+          };
+          reader.readAsDataURL(blob);
+        }
+        return true;
+      };
+    });
+  });
+  var script = {
+    props: {
+      type: {
+        type: String,
+        default: "xls"
+      },
+      data: {
+        type: Array,
+        required: false,
+        default: null
+      },
+      fields: {
+        type: Object,
+        default: () => null
+      },
+      exportFields: {
+        type: Object,
+        default: () => null
+      },
+      defaultValue: {
+        type: String,
+        required: false,
+        default: ""
+      },
+      header: {
+        default: null
+      },
+      footer: {
+        default: null
+      },
+      name: {
+        type: String,
+        default: "data.xls"
+      },
+      fetch: {
+        type: Function
+      },
+      meta: {
+        type: Array,
+        default: () => []
+      },
+      worksheet: {
+        type: String,
+        default: "Sheet1"
+      },
+      beforeGenerate: {
+        type: Function
+      },
+      beforeFinish: {
+        type: Function
+      },
+      escapeCsv: {
+        type: Boolean,
+        default: true
+      },
+      stringifyLongNum: {
+        type: Boolean,
+        default: false
+      }
+    },
+    computed: {
+      idName() {
+        var now = new Date().getTime();
+        return "export_" + now;
+      },
+      downloadFields() {
+        if (this.fields)
+          return this.fields;
+        if (this.exportFields)
+          return this.exportFields;
+      }
+    },
+    methods: {
+      async generate() {
+        if (typeof this.beforeGenerate === "function") {
+          await this.beforeGenerate();
+        }
+        let data2 = this.data;
+        if (typeof this.fetch === "function" || !data2)
+          data2 = await this.fetch();
+        if (!data2 || !data2.length) {
+          return;
+        }
+        let json = this.getProcessedJson(data2, this.downloadFields);
+        if (this.type === "html") {
+          return this.export(this.jsonToXLS(json), this.name.replace(".xls", ".html"), "text/html");
+        } else if (this.type === "csv") {
+          return this.export(this.jsonToCSV(json), this.name.replace(".xls", ".csv"), "application/csv");
+        }
+        return this.export(this.jsonToXLS(json), this.name, "application/vnd.ms-excel");
+      },
+      export: async function(data2, filename, mime) {
+        let blob = this.base64ToBlob(data2, mime);
+        if (typeof this.beforeFinish === "function")
+          await this.beforeFinish();
+        download(blob, filename, mime);
+      },
+      jsonToXLS(data2) {
+        let xlsTemp = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><meta name=ProgId content=Excel.Sheet> <meta name=Generator content="Microsoft Excel 11"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>${worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><style>br {mso-data-placement: same-cell;}</style></head><body><table>${table}</table></body></html>';
+        let xlsData = "<thead>";
+        const colspan = Object.keys(data2[0]).length;
+        let _self = this;
+        const header = this.header || this.$attrs.title;
+        if (header) {
+          xlsData += this.parseExtraData(header, '<tr><th colspan="' + colspan + '">${data}</th></tr>');
+        }
+        xlsData += "<tr>";
+        for (let key in data2[0]) {
+          xlsData += "<th>" + key + "</th>";
+        }
+        xlsData += "</tr>";
+        xlsData += "</thead>";
+        xlsData += "<tbody>";
+        data2.map(function(item, index) {
+          xlsData += "<tr>";
+          for (let key in item) {
+            xlsData += "<td>" + _self.preprocessLongNum(_self.valueReformattedForMultilines(item[key])) + "</td>";
+          }
+          xlsData += "</tr>";
+        });
+        xlsData += "</tbody>";
+        if (this.footer != null) {
+          xlsData += "<tfoot>";
+          xlsData += this.parseExtraData(this.footer, '<tr><td colspan="' + colspan + '">${data}</td></tr>');
+          xlsData += "</tfoot>";
+        }
+        return xlsTemp.replace("${table}", xlsData).replace("${worksheet}", this.worksheet);
+      },
+      jsonToCSV(data2) {
+        let _self = this;
+        var csvData = [];
+        const header = this.header || this.$attrs.title;
+        if (header) {
+          csvData.push(this.parseExtraData(header, "${data}\r\n"));
+        }
+        for (let key in data2[0]) {
+          csvData.push(key);
+          csvData.push(",");
+        }
+        csvData.pop();
+        csvData.push("\r\n");
+        data2.map(function(item) {
+          for (let key in item) {
+            let escapedCSV = item[key] + "";
+            if (_self.escapeCsv) {
+              escapedCSV = '="' + escapedCSV + '"';
+              if (escapedCSV.match(/[,"\n]/)) {
+                escapedCSV = '"' + escapedCSV.replace(/\"/g, '""') + '"';
+              }
+            }
+            csvData.push(escapedCSV);
+            csvData.push(",");
+          }
+          csvData.pop();
+          csvData.push("\r\n");
+        });
+        if (this.footer != null) {
+          csvData.push(this.parseExtraData(this.footer, "${data}\r\n"));
+        }
+        return csvData.join("");
+      },
+      getProcessedJson(data2, header) {
+        let keys = this.getKeys(data2, header);
+        let newData = [];
+        let _self = this;
+        data2.map(function(item, index) {
+          let newItem = {};
+          for (let label in keys) {
+            let property = keys[label];
+            newItem[label] = _self.getValue(property, item);
+          }
+          newData.push(newItem);
+        });
+        return newData;
+      },
+      getKeys(data2, header) {
+        if (header) {
+          return header;
+        }
+        let keys = {};
+        for (let key in data2[0]) {
+          keys[key] = key;
+        }
+        return keys;
+      },
+      parseExtraData(extraData, format3) {
+        let parseData = "";
+        if (Array.isArray(extraData)) {
+          for (var i = 0; i < extraData.length; i++) {
+            if (extraData[i])
+              parseData += format3.replace("${data}", extraData[i]);
+          }
+        } else {
+          parseData += format3.replace("${data}", extraData);
+        }
+        return parseData;
+      },
+      getValue(key, item) {
+        const field = typeof key !== "object" ? key : key.field;
+        let indexes = typeof field !== "string" ? [] : field.split(".");
+        let value = this.defaultValue;
+        if (!field)
+          value = item;
+        else if (indexes.length > 1)
+          value = this.getValueFromNestedItem(item, indexes);
+        else
+          value = this.parseValue(item[field]);
+        if (key.hasOwnProperty("callback"))
+          value = this.getValueFromCallback(value, key.callback);
+        return value;
+      },
+      valueReformattedForMultilines(value) {
+        if (typeof value == "string")
+          return value.replace(/\n/gi, "<br/>");
+        else
+          return value;
+      },
+      preprocessLongNum(value) {
+        if (this.stringifyLongNum) {
+          if (String(value).startsWith("0x")) {
+            return value;
+          }
+          if (!isNaN(value) && value != "") {
+            if (value > 99999999999 || value < 1e-13) {
+              return '="' + value + '"';
+            }
+          }
+        }
+        return value;
+      },
+      getValueFromNestedItem(item, indexes) {
+        let nestedItem = item;
+        for (let index of indexes) {
+          if (nestedItem)
+            nestedItem = nestedItem[index];
+        }
+        return this.parseValue(nestedItem);
+      },
+      getValueFromCallback(item, callback) {
+        if (typeof callback !== "function")
+          return this.defaultValue;
+        const value = callback(item);
+        return this.parseValue(value);
+      },
+      parseValue(value) {
+        return value || value === 0 || typeof value === "boolean" ? value : this.defaultValue;
+      },
+      base64ToBlob(data2, mime) {
+        let base64 = window.btoa(window.unescape(encodeURIComponent(data2)));
+        let bstr = atob(base64);
+        let n = bstr.length;
+        let u8arr = new Uint8ClampedArray(n);
+        while (n--) {
+          u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], { type: mime });
+      }
+    }
+  };
+  function normalizeComponent(template, style, script2, scopeId, isFunctionalTemplate, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    if (typeof shadowMode !== "boolean") {
+      createInjectorSSR = createInjector;
+      createInjector = shadowMode;
+      shadowMode = false;
+    }
+    var options = typeof script2 === "function" ? script2.options : script2;
+    if (template && template.render) {
+      options.render = template.render;
+      options.staticRenderFns = template.staticRenderFns;
+      options._compiled = true;
+      if (isFunctionalTemplate) {
+        options.functional = true;
+      }
+    }
+    if (scopeId) {
+      options._scopeId = scopeId;
+    }
+    var hook;
+    if (moduleIdentifier) {
+      hook = function hook2(context) {
+        context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+        if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+          context = __VUE_SSR_CONTEXT__;
+        }
+        if (style) {
+          style.call(this, createInjectorSSR(context));
+        }
+        if (context && context._registeredComponents) {
+          context._registeredComponents.add(moduleIdentifier);
+        }
+      };
+      options._ssrRegister = hook;
+    } else if (style) {
+      hook = shadowMode ? function() {
+        style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
+      } : function(context) {
+        style.call(this, createInjector(context));
+      };
+    }
+    if (hook) {
+      if (options.functional) {
+        var originalRender = options.render;
+        options.render = function renderWithStyleInjection(h, context) {
+          hook.call(context);
+          return originalRender(h, context);
+        };
+      } else {
+        var existing = options.beforeCreate;
+        options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+      }
+    }
+    return script2;
+  }
+  var normalizeComponent_1 = normalizeComponent;
+  var __vue_script__ = script;
+  var __vue_render__ = function() {
+    var _vm = this;
+    var _h = _vm.$createElement;
+    var _c = _vm._self._c || _h;
+    return _c("div", { attrs: { id: _vm.idName }, on: { click: _vm.generate } }, [_vm._t("default", [_vm._v(" Download " + _vm._s(_vm.name) + " ")])], 2);
+  };
+  var __vue_staticRenderFns__ = [];
+  __vue_render__._withStripped = true;
+  var __vue_inject_styles__ = void 0;
+  var __vue_scope_id__ = void 0;
+  var __vue_module_identifier__ = void 0;
+  var __vue_is_functional_template__ = false;
+  var JsonExcel = normalizeComponent_1({ render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, void 0, void 0);
+  var vue_json_excel_esm_default = JsonExcel;
+
+  // resource/js/app.js
   import_vue3.default.config.productionTip = false;
   window.axios = require_axios2();
   window.Vue = require_vue();
@@ -46974,6 +47455,7 @@ export default {\r
   window.numeral = require_numeral();
   import_vue3.default.use(import_vue_sweetalert2.default);
   import_vue3.default.component("v-select", import_vue_select.default);
+  import_vue3.default.component("downloadExcel", vue_json_excel_esm_default);
   import_vue3.default.component("login-form", (init_Login(), __toCommonJS(Login_exports)).default);
   import_vue3.default.component("u-table", (init_TableUsers(), __toCommonJS(TableUsers_exports)).default);
   import_vue3.default.component("u-modal", (init_ModalUser(), __toCommonJS(ModalUser_exports)).default);

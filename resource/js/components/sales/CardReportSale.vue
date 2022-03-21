@@ -1,14 +1,20 @@
 <template>
     <div class="card">
         <div class="card-header">
-            <date-range-picker
-            v-model="dateRange"
-            @update="changeDateRange"
-            >
-            <template #input="picker" style="min-width: 350px;">
-            {{ picker.startDate | date }} - {{ picker.endDate | date }}
-            </template>
-            </date-range-picker>
+            <div class="d-flex align-items-center justify-content-between">
+                <date-range-picker
+                v-model="dateRange"
+                @update="changeDateRange"
+                >
+                <template #input="picker" style="min-width: 350px;">
+                {{ picker.startDate | date }} - {{ picker.endDate | date }}
+                </template>
+                </date-range-picker>
+                <download-excel :data="data_excel" worksheet="Report" name="filename.xls">
+                    <button class="btn btn-primary">Export Excel</button>
+                </download-excel>
+            </div>
+            
         </div>
         <div class="card-body">
             <div class="row">
@@ -41,9 +47,9 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
-                    <div class="d-flex flex-column">
+                    <div class="d-flex flex-column animate__animated animate__backInRight" v-if="loadedBarClient">
                         <span class="text-center text-success fw-bold fs-2 mb-md-0">Best Customer</span>
-                        <sale-bar v-if="loadedBarClient" :data="dataBarClient" :options="optionsBarClient" :classes="'mt-2 m-auto w-75'"></sale-bar>
+                        <sale-bar :data="dataBarClient" :options="optionsBarClient" :classes="'mt-2 m-auto w-75'"></sale-bar>
                     </div>
                 </div>
             </div>
@@ -135,6 +141,16 @@ export default {
 
             },
             loadedBarClient: false,
+            data_excel:[
+                {
+                    name: "test",
+                    last_name: 'test2'
+                },
+                {
+                    name: "test",
+                    last_name: 'test2'
+                }
+            ]
 
         }
     },
@@ -218,7 +234,7 @@ export default {
 
             this.dataBarClient.labels = [];
             this.dataBarClient.datasets = [];
-            this.bestSeller();
+            this.bestClient();
         },
         productMostSell(){
             this.loadedDoughnut = false;
@@ -299,6 +315,9 @@ export default {
                 this.loadedBarClient = true;
                 
             });
+        },
+        fetchDataExcel(){
+            
         }
     },
     async mounted(){
