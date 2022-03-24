@@ -46559,16 +46559,7 @@ export default {\r
               responsive: true
             },
             loadedBarClient: false,
-            data_excel: [
-              {
-                name: "test",
-                last_name: "test2"
-              },
-              {
-                name: "test",
-                last_name: "test2"
-              }
-            ]
+            data_excel: []
           };
         },
         filters: {
@@ -46728,7 +46719,45 @@ export default {\r
               this.loadedBarClient = true;
             });
           },
-          fetchDataExcel() {
+          async fetchDataExcel() {
+            const start_time = (0, import_moment4.default)(this.dateRange.startDate).format("Y-MM-DD 00:00:00");
+            const end_time = (0, import_moment4.default)(this.dateRange.endDate).format("Y-MM-DD 23:59:59");
+            const data_excel = [];
+            await axios({
+              method: "post",
+              url: "/sales/report/excel",
+              data: {
+                csrf_token: this.csrf_token,
+                start_date: start_time,
+                end_date: end_time
+              }
+            }).then((response) => {
+              const { data: data2 } = response;
+              data2.map((sale) => {
+                let amount = "";
+                let products = "";
+                sale.products.map((product) => {
+                  amount += product.pivot.quantity + "\n";
+                  products += product.name + "\n";
+                });
+                data_excel.push({
+                  "#": sale.id_sale.toString().substr(0, 2) + "-" + sale.id_sale.toString().substr(2, 4),
+                  client: sale.customer.name,
+                  seller: sale.seller.name,
+                  amount,
+                  products,
+                  tax: sale.tax,
+                  net: sale.net,
+                  total: sale.total,
+                  method: sale.method,
+                  date: (0, import_moment4.default)(sale.created_at).format("MM-DD-YYYY, h:mm:ss a")
+                });
+              });
+            });
+            return data_excel;
+          },
+          formatDate3(val) {
+            return val ? (0, import_moment4.default)(val).format("Y-MM-DD") : "";
           }
         },
         async mounted() {
@@ -46768,9 +46797,10 @@ export default {\r
               _vm._v(" "),
               _c("download-excel", {
                 attrs: {
-                  data: _vm.data_excel,
+                  fetch: _vm.fetchDataExcel,
+                  type: "xls",
                   worksheet: "Report",
-                  name: "filename.xls"
+                  name: "Report Sales " + _vm.formatDate3(_vm.dateRange.startDate) + " to " + _vm.formatDate3(_vm.dateRange.endDate) + ".xls"
                 }
               }, [
                 _c("button", { staticClass: "btn btn-primary" }, [

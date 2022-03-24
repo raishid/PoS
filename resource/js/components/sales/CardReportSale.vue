@@ -10,7 +10,7 @@
                 {{ picker.startDate | date }} - {{ picker.endDate | date }}
                 </template>
                 </date-range-picker>
-                <download-excel :data="data_excel" worksheet="Report" name="filename.xls">
+                <download-excel :fetch="fetchDataExcel" type="xls" worksheet="Report" :name="`Report Sales ${formatDate3(dateRange.startDate)} to ${formatDate3(dateRange.endDate)}.xls`">
                     <button class="btn btn-primary">Export Excel</button>
                 </download-excel>
             </div>
@@ -142,15 +142,7 @@ export default {
             },
             loadedBarClient: false,
             data_excel:[
-                {
-                    name: "test",
-                    last_name: 'test2'
-                },
-                {
-                    name: "test",
-                    last_name: 'test2'
-                }
-            ]
+            ],
 
         }
     },
@@ -316,8 +308,48 @@ export default {
                 
             });
         },
-        fetchDataExcel(){
+        async fetchDataExcel(){
+            const start_time = moment(this.dateRange.startDate).format('Y-MM-DD 00:00:00')
+            const end_time = moment(this.dateRange.endDate).format('Y-MM-DD 23:59:59');
+            const data_excel = [];
+            await axios({
+                method:'post',
+                url: '/sales/report/excel',
+                data:{
+                    csrf_token: this.csrf_token,
+                    start_date: start_time,
+                    end_date: end_time 
+                }
+            }).then(response => {
+                const { data } = response;
+                data.map(sale => {
+                    let amount = '';
+                    let products = '';
+                    sale.products.map(product => {
+                        amount += product.pivot.quantity+'\n';
+                        products += product.name + '\n';
+                    });
+
+                    data_excel.push({
+                        "#": ((sale.id_sale.toString().substr(0, 2) + '-') + sale.id_sale.toString().substr(2, 4)),
+                        client: sale.customer.name,
+                        seller: sale.seller.name,
+                        amount: amount,
+                        products: products, 
+                        tax: sale.tax,
+                        net: sale.net,
+                        total: sale.total,
+                        method: sale.method,
+                        date: moment(sale.created_at).format('MM-DD-YYYY, h:mm:ss a')
+
+                    })
+                });
+            })
             
+            return data_excel;
+        },
+        formatDate3(val){
+            return val ? moment(val).format('Y-MM-DD') : ''
         }
     },
     async mounted(){
@@ -325,6 +357,7 @@ export default {
         this.productMostSell();
         this.bestSeller();
         this.bestClient();
+        /* this.fetchDataExcel(); */
     }
 }
 </script>
