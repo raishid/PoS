@@ -46490,7 +46490,7 @@ export default {\r
         data() {
           let last_week = (0, import_moment4.default)().subtract(7, "days").format("Y-MM-DD 00:00:00");
           let today = (0, import_moment4.default)().format("Y-MM-DD 23:59:59");
-          const days_last_week2 = [
+          const days_last_week = [
             (0, import_moment4.default)().subtract(7, "days").format("MMMM DD"),
             (0, import_moment4.default)().subtract(6, "days").format("MMMM DD"),
             (0, import_moment4.default)().subtract(5, "days").format("MMMM DD"),
@@ -46507,7 +46507,7 @@ export default {\r
             },
             total_sale: 0,
             dataLine: {
-              labels: days_last_week2,
+              labels: days_last_week,
               datasets: [{
                 data: [],
                 label: "Sales",
@@ -47084,6 +47084,16 @@ export default {\r
         data() {
           let today_ = moment().format("Y-MM-DD 00:00:00");
           let today = moment().format("Y-MM-DD 23:59:59");
+          const days_last_week = [
+            moment().subtract(7, "days").format("MMMM DD"),
+            moment().subtract(6, "days").format("MMMM DD"),
+            moment().subtract(5, "days").format("MMMM DD"),
+            moment().subtract(4, "days").format("MMMM DD"),
+            moment().subtract(3, "days").format("MMMM DD"),
+            moment().subtract(2, "days").format("MMMM DD"),
+            moment().subtract(1, "days").format("MMMM DD"),
+            moment().format("MMMM DD")
+          ];
           return {
             dataLine: {
               labels: days_last_week,
@@ -47159,6 +47169,8 @@ export default {\r
         var _c = _vm._self._c || _h;
         return _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-body" }, [
+            _vm._m(0),
+            _vm._v(" "),
             _vm.loadedLine ? _c("sale-linechart", {
               ref: "chart",
               attrs: { data: _vm.dataLine, options: _vm.optionsLine }
@@ -47166,7 +47178,17 @@ export default {\r
           ], 1)
         ]);
       };
-      __vue_staticRenderFns__18 = [];
+      __vue_staticRenderFns__18 = [
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("h2", { staticClass: "mt-2" }, [
+            _c("i", { staticClass: "ion ion-grid fs-2" }),
+            _vm._v(" Sale Chart")
+          ]);
+        }
+      ];
       __vue_render__18._withStripped = true;
       __vue_inject_styles__21 = void 0;
       __vue_scope_id__21 = void 0;

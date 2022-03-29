@@ -1,6 +1,7 @@
 <template>
     <div class="card">
         <div class="card-body">
+            <h2 class="mt-2"><i class="ion ion-grid fs-2"></i> Sale Chart</h2>
             <sale-linechart ref="chart" v-if="loadedLine" :data="dataLine" :options="optionsLine"></sale-linechart>
         </div>
     </div>
@@ -13,6 +14,15 @@ export default {
     data() {
         let today_ = moment().format('Y-MM-DD 00:00:00');
         let today = moment().format('Y-MM-DD 23:59:59');
+        const days_last_week = [
+            moment().subtract(7, 'days').format('MMMM DD'), 
+            moment().subtract(6, 'days').format('MMMM DD'), 
+            moment().subtract(5, 'days').format('MMMM DD'),
+            moment().subtract(4, 'days').format('MMMM DD'),
+            moment().subtract(3, 'days').format('MMMM DD'),
+            moment().subtract(2, 'days').format('MMMM DD'),
+            moment().subtract(1, 'days').format('MMMM DD'),
+            moment().format('MMMM DD')]
         return {
             dataLine:{
                 labels: days_last_week,

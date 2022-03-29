@@ -81,8 +81,11 @@
       </div>
       <!-- /.row -->
       <div class="row">
-      <div class="col-sm-12 col-md-8">
+      <div class="col-sm-12">
           <report-home-sales></report-home-sales>
+      </div>
+      <div class="col-sm-12">
+        
       </div>
       </div>
   </section>
