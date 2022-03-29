@@ -41,6 +41,7 @@ Vue.component('report-sale', require('./components/sales/CardReportSale.vue').de
 Vue.component('sale-linechart', require('./components/sales/charts/ChartLineSale.vue').default);
 Vue.component('sale-doughnut', require('./components/sales/charts/ChartDoughnutSales.vue').default);
 Vue.component('sale-bar', require('./components/sales/charts/ChartBarSales.vue').default);
+Vue.component('report-home-sales', require('./components/home/ReportSales.vue').default);
 
 const app = new Vue({
     el: '#app'

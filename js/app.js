@@ -34153,9 +34153,9 @@ export default {\r
             }
           }());
         }) : (global2 = global2 || self, global2.Chart = factory(global2.moment));
-      })(exports, function(moment5) {
+      })(exports, function(moment6) {
         "use strict";
-        moment5 = moment5 && moment5.hasOwnProperty("default") ? moment5["default"] : moment5;
+        moment6 = moment6 && moment6.hasOwnProperty("default") ? moment6["default"] : moment6;
         function createCommonjsModule2(fn, module2) {
           return module2 = { exports: {} }, fn(module2, module2.exports), module2.exports;
         }
@@ -44488,40 +44488,40 @@ export default {\r
           quarter: "[Q]Q - YYYY",
           year: "YYYY"
         };
-        core_adapters._date.override(typeof moment5 === "function" ? {
+        core_adapters._date.override(typeof moment6 === "function" ? {
           _id: "moment",
           formats: function() {
             return FORMATS;
           },
           parse: function(value, format3) {
             if (typeof value === "string" && typeof format3 === "string") {
-              value = moment5(value, format3);
-            } else if (!(value instanceof moment5)) {
-              value = moment5(value);
+              value = moment6(value, format3);
+            } else if (!(value instanceof moment6)) {
+              value = moment6(value);
             }
             return value.isValid() ? value.valueOf() : null;
           },
           format: function(time, format3) {
-            return moment5(time).format(format3);
+            return moment6(time).format(format3);
           },
           add: function(time, amount, unit) {
-            return moment5(time).add(amount, unit).valueOf();
+            return moment6(time).add(amount, unit).valueOf();
           },
           diff: function(max, min, unit) {
-            return moment5(max).diff(moment5(min), unit);
+            return moment6(max).diff(moment6(min), unit);
           },
           startOf: function(time, unit, weekday) {
-            time = moment5(time);
+            time = moment6(time);
             if (unit === "isoWeek") {
               return time.isoWeekday(weekday).valueOf();
             }
             return time.startOf(unit).valueOf();
           },
           endOf: function(time, unit) {
-            return moment5(time).endOf(unit).valueOf();
+            return moment6(time).endOf(unit).valueOf();
           },
           _create: function(time) {
-            return moment5(time);
+            return moment6(time);
           }
         } : {});
         core_defaults._set("global", {
@@ -46490,7 +46490,7 @@ export default {\r
         data() {
           let last_week = (0, import_moment4.default)().subtract(7, "days").format("Y-MM-DD 00:00:00");
           let today = (0, import_moment4.default)().format("Y-MM-DD 23:59:59");
-          const days_last_week = [
+          const days_last_week2 = [
             (0, import_moment4.default)().subtract(7, "days").format("MMMM DD"),
             (0, import_moment4.default)().subtract(6, "days").format("MMMM DD"),
             (0, import_moment4.default)().subtract(5, "days").format("MMMM DD"),
@@ -46507,7 +46507,7 @@ export default {\r
             },
             total_sale: 0,
             dataLine: {
-              labels: days_last_week,
+              labels: days_last_week2,
               datasets: [{
                 data: [],
                 label: "Sales",
@@ -47021,6 +47021,162 @@ export default {\r
     }
   });
 
+  // resource/js/components/home/ReportSales.vue
+  var ReportSales_exports = {};
+  __export(ReportSales_exports, {
+    default: () => ReportSales_default
+  });
+  function __vue_normalize__20(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
+    component2.__file = "resource\\js\\components\\home\\ReportSales.vue";
+    if (!component2.render) {
+      component2.render = template.render;
+      component2.staticRenderFns = template.staticRenderFns;
+      component2._compiled = true;
+      if (functional)
+        component2.functional = true;
+    }
+    component2._scopeId = scope;
+    if (false) {
+      let hook;
+      if (false) {
+        hook = function(context) {
+          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+            context = __VUE_SSR_CONTEXT__;
+          }
+          if (style) {
+            style.call(this, createInjectorSSR(context));
+          }
+          if (context && context._registeredComponents) {
+            context._registeredComponents.add(moduleIdentifier);
+          }
+        };
+        component2._ssrRegister = hook;
+      } else if (style) {
+        hook = shadowMode ? function(context) {
+          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+        } : function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+      if (hook !== void 0) {
+        if (component2.functional) {
+          const originalRender = component2.render;
+          component2.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context);
+          };
+        } else {
+          const existing = component2.beforeCreate;
+          component2.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+    return component2;
+  }
+  var __vue_script__21, __vue_render__18, __vue_staticRenderFns__18, __vue_inject_styles__21, __vue_scope_id__21, __vue_module_identifier__21, __vue_is_functional_template__21, __vue_component__20, ReportSales_default;
+  var init_ReportSales = __esm({
+    "resource/js/components/home/ReportSales.vue"() {
+      init_ChartLineSale();
+      __vue_script__21 = {
+        name: "report-home-sales",
+        data() {
+          let today_ = moment().format("Y-MM-DD 00:00:00");
+          let today = moment().format("Y-MM-DD 23:59:59");
+          return {
+            dataLine: {
+              labels: days_last_week,
+              datasets: [{
+                data: [],
+                label: "Sales",
+                borderColor: "green",
+                backgroundColor: "transparent",
+                pointRadius: 10,
+                pointHoverRadius: 15,
+                fill: false,
+                tension: 0.1
+              }]
+            },
+            optionsLine: {
+              responsive: true,
+              scales: {
+                y: {
+                  min: 0,
+                  suggestedMin: 100,
+                  display: true
+                }
+              }
+            },
+            loadedLine: false,
+            dateRange: {
+              startDate: today_,
+              endDate: today
+            }
+          };
+        },
+        components: {
+          SaleChart: ChartLineSale_default
+        },
+        methods: {
+          getDataLine() {
+            this.loadedLine = false;
+            axios({
+              method: "post",
+              url: "/sales/ranges/charts",
+              data: {
+                csrf_token: this.csrf_token,
+                start_date: this.dateRange.startDate,
+                end_date: this.dateRange.endDate
+              }
+            }).then((response) => {
+              const { data: salesDays } = response;
+              const keysDays = Object.keys(salesDays);
+              this.dataLine.labels.map((d) => {
+                let isAdd = false;
+                keysDays.map((k) => {
+                  let newkey = k.substring(0, k.length - 5).replace("_", " ");
+                  if (d == newkey) {
+                    this.dataLine.datasets[0].data.push(salesDays[k]);
+                    isAdd = true;
+                  }
+                });
+                if (!isAdd) {
+                  this.dataLine.datasets[0].data.push(0);
+                }
+              });
+              this.loadedLine = true;
+            });
+          }
+        },
+        mounted() {
+          this.getDataLine();
+        }
+      };
+      __vue_render__18 = function() {
+        var _vm = this;
+        var _h = _vm.$createElement;
+        var _c = _vm._self._c || _h;
+        return _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _vm.loadedLine ? _c("sale-linechart", {
+              ref: "chart",
+              attrs: { data: _vm.dataLine, options: _vm.optionsLine }
+            }) : _vm._e()
+          ], 1)
+        ]);
+      };
+      __vue_staticRenderFns__18 = [];
+      __vue_render__18._withStripped = true;
+      __vue_inject_styles__21 = void 0;
+      __vue_scope_id__21 = void 0;
+      __vue_module_identifier__21 = void 0;
+      __vue_is_functional_template__21 = false;
+      __vue_component__20 = /* @__PURE__ */ __vue_normalize__20({ render: __vue_render__18, staticRenderFns: __vue_staticRenderFns__18 }, __vue_inject_styles__21, __vue_script__21, __vue_scope_id__21, __vue_is_functional_template__21, __vue_module_identifier__21, false, void 0, void 0, void 0);
+      ReportSales_default = __vue_component__20;
+    }
+  });
+
   // resource/js/app.js
   var import_vue3 = __toESM(require_vue());
   var import_vue_sweetalert2 = __toESM(require_vue_sweetalert_umd());
@@ -47502,6 +47658,7 @@ export default {\r
   import_vue3.default.component("sale-linechart", (init_ChartLineSale(), __toCommonJS(ChartLineSale_exports)).default);
   import_vue3.default.component("sale-doughnut", (init_ChartDoughnutSales(), __toCommonJS(ChartDoughnutSales_exports)).default);
   import_vue3.default.component("sale-bar", (init_ChartBarSales(), __toCommonJS(ChartBarSales_exports)).default);
+  import_vue3.default.component("report-home-sales", (init_ReportSales(), __toCommonJS(ReportSales_exports)).default);
   var app = new import_vue3.default({
     el: "#app"
   });

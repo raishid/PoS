@@ -357,7 +357,6 @@ export default {
         this.productMostSell();
         this.bestSeller();
         this.bestClient();
-        /* this.fetchDataExcel(); */
     }
 }
 </script>
