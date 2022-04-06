@@ -194,6 +194,15 @@ export default {
                     //remove user in dom
                     this.userParser.splice(this.userParser.findIndex(u => u.id === id_u), 1);
                   }
+              }).catch(error => {
+                const { response: { status } } = error;
+                if(status == 401){
+                  this.$swal.fire(
+                    'Error!',
+                    'you are not authorized to delete this user.',
+                    'error'
+                  )
+                }
               });
             }
           })

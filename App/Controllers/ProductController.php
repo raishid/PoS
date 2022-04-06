@@ -109,6 +109,12 @@ class ProductController extends Controller
         return response()->json(array('status' => true, 'response' => $product));
     }
 
+    public function lastest()
+    {
+        $products = Product::limit(10)->orderBy('created_at', 'desc')->get();
+        return response()->json(array('status' => true, 'response' => $products));
+    }
+
     public function delete($id)
     {
         $result = Product::destroy($id);

@@ -1,9 +1,7 @@
 <template>
-    <div class="card">
-        <div class="card-body">
-            <h2 class="mt-2"><i class="ion ion-grid fs-2"></i> Sale Chart</h2>
-            <sale-linechart ref="chart" v-if="loadedLine" :data="dataLine" :options="optionsLine"></sale-linechart>
-        </div>
+    <div>
+        <h2 class="mt-2"><i class="ion ion-grid fs-2"></i> Sale Chart</h2>
+        <sale-linechart ref="chart" v-if="loadedLine" :data="dataLine" :options="optionsLine"></sale-linechart>
     </div>
 </template>
 <script>
@@ -11,6 +9,12 @@ import SaleChart from '../sales/charts/ChartLineSale.vue';
 
 export default {
     name: "report-home-sales",
+    props:{
+        csrf_token: {
+            type: String,
+            required: true
+        },
+    },
     data() {
         let today_ = moment().format('Y-MM-DD 00:00:00');
         let today = moment().format('Y-MM-DD 23:59:59');

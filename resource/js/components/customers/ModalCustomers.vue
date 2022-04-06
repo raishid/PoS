@@ -206,6 +206,15 @@ export default {
               this.$refs.closeModal.click();
               this.reset();
             }
+          }).catch(error => {
+            const { response: { status } } = error;
+            if(status == 401){
+              this.$swal.fire(
+                'Error!',
+                'You are not authorized to do this action.',
+                'error'
+              )
+            }
           });
         }else{
           axios({
@@ -228,7 +237,16 @@ export default {
                 text: resp,
               });
             }
-          })
+          }).catch(error => {
+            const { response: { status } } = error;
+            if(status == 401){
+              this.$swal.fire(
+                'Error!',
+                'You are not authorized to perform this action.',
+                'error'
+              )
+            }
+          });
         }
     },
     reset() {

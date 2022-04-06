@@ -143,6 +143,15 @@ export default {
                     //remove user in dom
                     this.customerParser.splice(this.customerParser.findIndex(u => u.id === id), 1);
                   }
+              }).catch(error => {
+                const { response: { status } } = error;
+                if(status == 401){
+                  this.$swal.fire(
+                    'Error!',
+                    'you are not authorized to delete this customer.',
+                    'error'
+                  )
+                }
               });
             }
           })

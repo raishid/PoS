@@ -139,7 +139,9 @@ export default {
                 text: resp,
               });
             }
-          })
+          }).catch(error => {
+            console.log(error);
+          });
         }
     },
     reset() {

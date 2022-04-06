@@ -191,8 +191,19 @@ export default {
                     //remove user in dom
                     this.productsParser.splice(this.productsParser.findIndex(u => u.id === id), 1);
                   }
+              }).catch(error => {
+                const { response: { status } } = error;
+                if(status === 401){
+                  this.$swal.fire(
+                    'Error!',
+                    'you are not authorized to delete this product.',
+                    'error'
+                  )
+                }
               });
+
             }
+
           })
         },
         formatDate(timestamp){

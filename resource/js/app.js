@@ -42,6 +42,8 @@ Vue.component('sale-linechart', require('./components/sales/charts/ChartLineSale
 Vue.component('sale-doughnut', require('./components/sales/charts/ChartDoughnutSales.vue').default);
 Vue.component('sale-bar', require('./components/sales/charts/ChartBarSales.vue').default);
 Vue.component('report-home-sales', require('./components/home/ReportSales.vue').default);
+Vue.component('report-home-most-sale-products', require('./components/home/MostSaleProducts.vue').default);
+Vue.component('products-recently', require('./components/home/ProductRecently.vue').default);
 
 const app = new Vue({
     el: '#app'

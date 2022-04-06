@@ -25,15 +25,23 @@
           <li class="nav-item menu-open">
             <a href="<?=url('index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'index' ? 'active' : ''?>"><i class="fa fa-home"></i><p class="px-1">Home</p></a>
           </li>
+
+        <?php if(intval(auth()->role) == 1): ?>
           <li class="nav-item menu-open">
             <a href="<?=url('users.index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'users.index' ? 'active' : ''?>"><i class="fa fa-user"></i><p class="px-1">Users</p></a>
           </li>
+        <?php endif; ?>
+
+        <?php if(intval(auth()->role) == 1 || intval(auth()->role) == 2): ?>
           <li class="nav-item menu-open">
             <a href="<?=url('category.index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'category.index' ? 'active' : ''?>"><i class="fa fa-th"></i><p class="px-1">Categories</p></a>
           </li>
+        <?php endif; ?>
+
           <li class="nav-item menu-open">
             <a href="<?=url('product.index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'product.index' ? 'active' : ''?>"><i class="fa fa-store"></i><p class="px-1">Products</p></a>
           </li>
+
           <li class="nav-item menu-open">
             <a href="<?=url('customer.index')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'customer.index' ? 'active' : ''?>"><i class="fa fa-address-book"></i><p class="px-1">Customers</p></a>
           </li>
@@ -53,10 +61,12 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Sell</p>
                 </a>
+              <?php if(intval(auth()->role) == 1): ?>
                 <a href="<?=url('sales.report')?>" class="nav-link <?=request()->getLoadedRoute()->getName() == 'sales.report' ? 'active' : ''?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Sales report</p>
                 </a>
+              <?php endif; ?>
               </li>
           </li>
           

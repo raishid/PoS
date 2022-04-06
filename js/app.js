@@ -15484,6 +15484,11 @@
                   this.$refs.closeModal.click();
                   this.reset();
                 }
+              }).catch((error) => {
+                const { response: { status } } = error;
+                if (status == 401) {
+                  this.$swal.fire("Error!", "You are not authorized to do this action.", "error");
+                }
               });
             } else {
               axios({
@@ -15505,6 +15510,11 @@
                     title: "Error.",
                     text: resp
                   });
+                }
+              }).catch((error) => {
+                const { response: { status } } = error;
+                if (status == 401) {
+                  this.$swal.fire("Error!", "You are not authorized to do this action.", "error");
                 }
               });
             }
@@ -16007,6 +16017,11 @@
                     this.$swal.fire("Deleted!", "the user was deleted.", "success");
                     this.userParser.splice(this.userParser.findIndex((u) => u.id === id_u), 1);
                   }
+                }).catch((error) => {
+                  const { response: { status } } = error;
+                  if (status == 401) {
+                    this.$swal.fire("Error!", "you are not authorized to delete this user.", "error");
+                  }
                 });
               }
             });
@@ -16271,6 +16286,8 @@
                     text: resp
                   });
                 }
+              }).catch((error) => {
+                console.log(error);
               });
             }
           },
@@ -16858,6 +16875,11 @@
                   this.$refs.closeModal.click();
                   this.reset();
                 }
+              }).catch((error) => {
+                const { response: { status } } = error;
+                if (status == 401) {
+                  this.$swal.fire("Error!", "You are not authorized to do this action.", "error");
+                }
               });
             } else {
               axios({
@@ -16879,6 +16901,11 @@
                     title: "Error.",
                     text: response.data.response
                   });
+                }
+              }).catch((error) => {
+                const { response: { status } } = error;
+                if (status == 401) {
+                  this.$swal.fire("Error!", "You are not authorized to do this action.", "error");
                 }
               });
             }
@@ -17378,7 +17405,7 @@
       __vue_inject_styles__7 = function(inject2) {
         if (!inject2)
           return;
-        inject2("data-v-8ce46910_0", { source: "\n.fs-7{\n  font-size: 0.8rem !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\products\\ModalProducts.vue"], "names": [], "mappings": ";AAiWA;EACA,4BAAA;AACA", "file": "ModalProducts.vue", "sourcesContent": [`<template>\r
+        inject2("data-v-4dc5c326_0", { source: "\n.fs-7{\n  font-size: 0.8rem !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\products\\ModalProducts.vue"], "names": [], "mappings": ";AAqXA;EACA,4BAAA;AACA", "file": "ModalProducts.vue", "sourcesContent": [`<template>\r
   <div\r
     class="modal fade"\r
     id="create-modal-product"\r
@@ -17661,6 +17688,15 @@ export default {\r
               this.$refs.closeModal.click();\r
               this.reset();\r
             }\r
+          }).catch(error => {\r
+            const { response: { status } } = error;\r
+            if(status == 401){\r
+              this.$swal.fire(\r
+                'Error!',\r
+                'You are not authorized to do this action.',\r
+                'error'\r
+              )\r
+            }\r
           });\r
         }else{\r
           axios({\r
@@ -17683,7 +17719,18 @@ export default {\r
                 text: response.data.response,\r
               });\r
             }\r
-          })\r
+          }).catch(error => {\r
+            const { response: { status } } = error;\r
+            if(status == 401){\r
+              this.$swal.fire(\r
+                'Error!',\r
+                'You are not authorized to do this action.',\r
+                'error'\r
+              )\r
+            }\r
+          });\r
+\r
+\r
         }\r
     },\r
     onFileChange(e) {\r
@@ -17932,6 +17979,11 @@ export default {\r
                   if (status) {
                     this.$swal.fire("Deleted!", "the product was deleted.", "success");
                     this.productsParser.splice(this.productsParser.findIndex((u) => u.id === id), 1);
+                  }
+                }).catch((error) => {
+                  const { response: { status } } = error;
+                  if (status === 401) {
+                    this.$swal.fire("Error!", "you are not authorized to delete this product.", "error");
                   }
                 });
               }
@@ -29460,6 +29512,11 @@ export default {\r
                   this.$refs.closeModal.click();
                   this.reset();
                 }
+              }).catch((error) => {
+                const { response: { status } } = error;
+                if (status == 401) {
+                  this.$swal.fire("Error!", "You are not authorized to do this action.", "error");
+                }
               });
             } else {
               axios({
@@ -29481,6 +29538,11 @@ export default {\r
                     title: "Error.",
                     text: resp
                   });
+                }
+              }).catch((error) => {
+                const { response: { status } } = error;
+                if (status == 401) {
+                  this.$swal.fire("Error!", "You are not authorized to perform this action.", "error");
                 }
               });
             }
@@ -29949,6 +30011,11 @@ export default {\r
                   if (status) {
                     this.$swal.fire("Deleted!", "the customer was deleted.", "success");
                     this.customerParser.splice(this.customerParser.findIndex((u) => u.id === id), 1);
+                  }
+                }).catch((error) => {
+                  const { response: { status } } = error;
+                  if (status == 401) {
+                    this.$swal.fire("Error!", "you are not authorized to delete this customer.", "error");
                   }
                 });
               }
@@ -34153,9 +34220,9 @@ export default {\r
             }
           }());
         }) : (global2 = global2 || self, global2.Chart = factory(global2.moment));
-      })(exports, function(moment6) {
+      })(exports, function(moment7) {
         "use strict";
-        moment6 = moment6 && moment6.hasOwnProperty("default") ? moment6["default"] : moment6;
+        moment7 = moment7 && moment7.hasOwnProperty("default") ? moment7["default"] : moment7;
         function createCommonjsModule2(fn, module2) {
           return module2 = { exports: {} }, fn(module2, module2.exports), module2.exports;
         }
@@ -44488,40 +44555,40 @@ export default {\r
           quarter: "[Q]Q - YYYY",
           year: "YYYY"
         };
-        core_adapters._date.override(typeof moment6 === "function" ? {
+        core_adapters._date.override(typeof moment7 === "function" ? {
           _id: "moment",
           formats: function() {
             return FORMATS;
           },
           parse: function(value, format3) {
             if (typeof value === "string" && typeof format3 === "string") {
-              value = moment6(value, format3);
-            } else if (!(value instanceof moment6)) {
-              value = moment6(value);
+              value = moment7(value, format3);
+            } else if (!(value instanceof moment7)) {
+              value = moment7(value);
             }
             return value.isValid() ? value.valueOf() : null;
           },
           format: function(time, format3) {
-            return moment6(time).format(format3);
+            return moment7(time).format(format3);
           },
           add: function(time, amount, unit) {
-            return moment6(time).add(amount, unit).valueOf();
+            return moment7(time).add(amount, unit).valueOf();
           },
           diff: function(max, min, unit) {
-            return moment6(max).diff(moment6(min), unit);
+            return moment7(max).diff(moment7(min), unit);
           },
           startOf: function(time, unit, weekday) {
-            time = moment6(time);
+            time = moment7(time);
             if (unit === "isoWeek") {
               return time.isoWeekday(weekday).valueOf();
             }
             return time.startOf(unit).valueOf();
           },
           endOf: function(time, unit) {
-            return moment6(time).endOf(unit).valueOf();
+            return moment7(time).endOf(unit).valueOf();
           },
           _create: function(time) {
-            return moment6(time);
+            return moment7(time);
           }
         } : {});
         core_defaults._set("global", {
@@ -46021,11 +46088,11 @@ export default {\r
     "node_modules/randomcolor/randomColor.js"(exports, module) {
       (function(root, factory) {
         if (typeof exports === "object") {
-          var randomColor2 = factory();
+          var randomColor3 = factory();
           if (typeof module === "object" && module && module.exports) {
-            exports = module.exports = randomColor2;
+            exports = module.exports = randomColor3;
           }
-          exports.randomColor = randomColor2;
+          exports.randomColor = randomColor3;
         } else if (typeof define === "function" && define.amd) {
           define([], factory);
         } else {
@@ -46036,7 +46103,7 @@ export default {\r
         var colorDictionary = {};
         loadColorBounds();
         var colorRanges = [];
-        var randomColor2 = function(options) {
+        var randomColor3 = function(options) {
           options = options || {};
           if (options.seed !== void 0 && options.seed !== null && options.seed === parseInt(options.seed, 10)) {
             seed = options.seed;
@@ -46055,7 +46122,7 @@ export default {\r
             }
             options.count = null;
             while (totalColors > colors.length) {
-              var color = randomColor2(options);
+              var color = randomColor3(options);
               if (seed !== null) {
                 options.seed = seed;
               }
@@ -46346,7 +46413,7 @@ export default {\r
           }
           return [0, 360];
         }
-        return randomColor2;
+        return randomColor3;
       });
     }
   });
@@ -47081,6 +47148,12 @@ export default {\r
       init_ChartLineSale();
       __vue_script__21 = {
         name: "report-home-sales",
+        props: {
+          csrf_token: {
+            type: String,
+            required: true
+          }
+        },
         data() {
           let today_ = moment().format("Y-MM-DD 00:00:00");
           let today = moment().format("Y-MM-DD 23:59:59");
@@ -47167,16 +47240,14 @@ export default {\r
         var _vm = this;
         var _h = _vm.$createElement;
         var _c = _vm._self._c || _h;
-        return _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _vm.loadedLine ? _c("sale-linechart", {
-              ref: "chart",
-              attrs: { data: _vm.dataLine, options: _vm.optionsLine }
-            }) : _vm._e()
-          ], 1)
-        ]);
+        return _c("div", [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm.loadedLine ? _c("sale-linechart", {
+            ref: "chart",
+            attrs: { data: _vm.dataLine, options: _vm.optionsLine }
+          }) : _vm._e()
+        ], 1);
       };
       __vue_staticRenderFns__18 = [
         function() {
@@ -47196,6 +47267,472 @@ export default {\r
       __vue_is_functional_template__21 = false;
       __vue_component__20 = /* @__PURE__ */ __vue_normalize__20({ render: __vue_render__18, staticRenderFns: __vue_staticRenderFns__18 }, __vue_inject_styles__21, __vue_script__21, __vue_scope_id__21, __vue_is_functional_template__21, __vue_module_identifier__21, false, void 0, void 0, void 0);
       ReportSales_default = __vue_component__20;
+    }
+  });
+
+  // resource/js/components/home/MostSaleProducts.vue
+  var MostSaleProducts_exports = {};
+  __export(MostSaleProducts_exports, {
+    default: () => MostSaleProducts_default
+  });
+  function __vue_normalize__21(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
+    component2.__file = "resource\\js\\components\\home\\MostSaleProducts.vue";
+    if (!component2.render) {
+      component2.render = template.render;
+      component2.staticRenderFns = template.staticRenderFns;
+      component2._compiled = true;
+      if (functional)
+        component2.functional = true;
+    }
+    component2._scopeId = scope;
+    if (false) {
+      let hook;
+      if (false) {
+        hook = function(context) {
+          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+            context = __VUE_SSR_CONTEXT__;
+          }
+          if (style) {
+            style.call(this, createInjectorSSR(context));
+          }
+          if (context && context._registeredComponents) {
+            context._registeredComponents.add(moduleIdentifier);
+          }
+        };
+        component2._ssrRegister = hook;
+      } else if (style) {
+        hook = shadowMode ? function(context) {
+          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+        } : function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+      if (hook !== void 0) {
+        if (component2.functional) {
+          const originalRender = component2.render;
+          component2.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context);
+          };
+        } else {
+          const existing = component2.beforeCreate;
+          component2.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+    return component2;
+  }
+  var import_moment5, import_randomcolor2, __vue_script__22, __vue_render__19, __vue_staticRenderFns__19, __vue_inject_styles__22, __vue_scope_id__22, __vue_module_identifier__22, __vue_is_functional_template__22, __vue_component__21, MostSaleProducts_default;
+  var init_MostSaleProducts = __esm({
+    "resource/js/components/home/MostSaleProducts.vue"() {
+      init_ChartDoughnutSales();
+      import_moment5 = __toESM(require_moment());
+      import_randomcolor2 = __toESM(require_randomColor());
+      __vue_script__22 = {
+        name: "report-home-most-sale-products",
+        props: {
+          csrf_token: {
+            type: String,
+            required: true
+          }
+        },
+        data() {
+          return {
+            loadedLine: false,
+            dataDoughnut: {
+              labels: [],
+              datasets: [{
+                label: "Most Sales",
+                data: [],
+                backgroundColor: []
+              }]
+            },
+            optionsDoughnut: {
+              responsive: true
+            },
+            loadedDoughnut: false,
+            doughnutTotal: 0
+          };
+        },
+        components: {
+          ProductsCharts: ChartDoughnutSales_default
+        },
+        methods: {
+          productMostSell() {
+            this.loadedDoughnut = false;
+            const start_time = (0, import_moment5.default)().format("Y-MM-DD 00:00:00");
+            const end_time = (0, import_moment5.default)().format("Y-MM-DD 23:59:59");
+            axios({
+              method: "post",
+              url: "/sales/products/mostsales",
+              data: {
+                csrf_token: this.csrf_token,
+                start_date: start_time,
+                end_date: end_time
+              }
+            }).then((response) => {
+              const { data: products } = response;
+              products.map((product) => {
+                this.doughnutTotal += parseInt(product.sold);
+                this.dataDoughnut.labels.push(product.name);
+                this.dataDoughnut.datasets[0].data.push(parseInt(product.sold));
+                this.dataDoughnut.datasets[0].backgroundColor.push((0, import_randomcolor2.default)());
+              });
+              if (products.length > 0) {
+                this.loadedDoughnut = true;
+              }
+            });
+          }
+        },
+        mounted() {
+          this.productMostSell();
+        }
+      };
+      __vue_render__19 = function() {
+        var _vm = this;
+        var _h = _vm.$createElement;
+        var _c = _vm._self._c || _h;
+        return _c("div", { staticClass: "p-auto m-auto" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm.loadedDoughnut ? _c("sale-doughnut", {
+            ref: "chart_doughnut",
+            staticClass: "mt-4 p-2",
+            attrs: { data: _vm.dataDoughnut, options: _vm.optionsDoughnut }
+          }) : _vm._e()
+        ], 1);
+      };
+      __vue_staticRenderFns__19 = [
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("h2", { staticClass: "mt-auto" }, [
+            _c("i", { staticClass: "ion ion-stats-bars fs-2" }),
+            _vm._v(" Products Most Sold")
+          ]);
+        }
+      ];
+      __vue_render__19._withStripped = true;
+      __vue_inject_styles__22 = void 0;
+      __vue_scope_id__22 = void 0;
+      __vue_module_identifier__22 = void 0;
+      __vue_is_functional_template__22 = false;
+      __vue_component__21 = /* @__PURE__ */ __vue_normalize__21({ render: __vue_render__19, staticRenderFns: __vue_staticRenderFns__19 }, __vue_inject_styles__22, __vue_script__22, __vue_scope_id__22, __vue_is_functional_template__22, __vue_module_identifier__22, false, void 0, void 0, void 0);
+      MostSaleProducts_default = __vue_component__21;
+    }
+  });
+
+  // resource/js/components/home/ProductRecently.vue
+  var ProductRecently_exports = {};
+  __export(ProductRecently_exports, {
+    default: () => ProductRecently_default
+  });
+  function __vue_normalize__22(template, style, script2, scope, functional, moduleIdentifier, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    const component2 = (typeof script2 === "function" ? script2.options : script2) || {};
+    component2.__file = "resource\\js\\components\\home\\ProductRecently.vue";
+    if (!component2.render) {
+      component2.render = template.render;
+      component2.staticRenderFns = template.staticRenderFns;
+      component2._compiled = true;
+      if (functional)
+        component2.functional = true;
+    }
+    component2._scopeId = scope;
+    if (true) {
+      let hook;
+      if (false) {
+        hook = function(context) {
+          context = context || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext;
+          if (!context && typeof __VUE_SSR_CONTEXT__ !== "undefined") {
+            context = __VUE_SSR_CONTEXT__;
+          }
+          if (style) {
+            style.call(this, createInjectorSSR(context));
+          }
+          if (context && context._registeredComponents) {
+            context._registeredComponents.add(moduleIdentifier);
+          }
+        };
+        component2._ssrRegister = hook;
+      } else if (style) {
+        hook = shadowMode ? function(context) {
+          style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+        } : function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+      if (hook !== void 0) {
+        if (component2.functional) {
+          const originalRender = component2.render;
+          component2.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context);
+          };
+        } else {
+          const existing = component2.beforeCreate;
+          component2.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
+    return component2;
+  }
+  function __vue_create_injector__5() {
+    const styles = __vue_create_injector__5.styles || (__vue_create_injector__5.styles = {});
+    const isOldIE = typeof navigator !== "undefined" && /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
+    return function addStyle(id, css) {
+      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]'))
+        return;
+      const group = isOldIE ? css.media || "default" : id;
+      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: void 0 });
+      if (!style.ids.includes(id)) {
+        let code = css.source;
+        let index = style.ids.length;
+        style.ids.push(id);
+        if (false) {
+          code += "\n/*# sourceURL=" + css.map.sources[0] + " */";
+          code += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) + " */";
+        }
+        if (isOldIE) {
+          style.element = style.element || document.querySelector("style[data-group=" + group + "]");
+        }
+        if (!style.element) {
+          const head = document.head || document.getElementsByTagName("head")[0];
+          const el = style.element = document.createElement("style");
+          el.type = "text/css";
+          if (css.media)
+            el.setAttribute("media", css.media);
+          if (isOldIE) {
+            el.setAttribute("data-group", group);
+            el.setAttribute("data-next-index", "0");
+          }
+          head.appendChild(el);
+        }
+        if (isOldIE) {
+          index = parseInt(style.element.getAttribute("data-next-index"));
+          style.element.setAttribute("data-next-index", index + 1);
+        }
+        if (style.element.styleSheet) {
+          style.parts.push(code);
+          style.element.styleSheet.cssText = style.parts.filter(Boolean).join("\n");
+        } else {
+          const textNode = document.createTextNode(code);
+          const nodes = style.element.childNodes;
+          if (nodes[index])
+            style.element.removeChild(nodes[index]);
+          if (nodes.length)
+            style.element.insertBefore(textNode, nodes[index]);
+          else
+            style.element.appendChild(textNode);
+        }
+      }
+    };
+  }
+  var __vue_script__23, __vue_render__20, __vue_staticRenderFns__20, __vue_inject_styles__23, __vue_scope_id__23, __vue_module_identifier__23, __vue_is_functional_template__23, __vue_component__22, ProductRecently_default;
+  var init_ProductRecently = __esm({
+    "resource/js/components/home/ProductRecently.vue"() {
+      __vue_script__23 = {
+        name: "products-recently",
+        props: {
+          csrf_token: {
+            type: String,
+            required: true
+          }
+        },
+        data() {
+          return {
+            data: [],
+            loaded: false
+          };
+        },
+        filters: {
+          formatTotal(val) {
+            const formatter = new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD"
+            });
+            return formatter.format(val);
+          }
+        },
+        methods: {
+          getProducts() {
+            this.loaded = false;
+            axios({
+              method: "post",
+              url: "/api/products/lastest",
+              data: {
+                csrf_token: this.csrf_token
+              }
+            }).then((response) => {
+              const { data: { response: products } } = response;
+              this.data = products;
+              this.loaded = true;
+            });
+          }
+        },
+        mounted() {
+          this.getProducts();
+        }
+      };
+      __vue_render__20 = function() {
+        var _vm = this;
+        var _h = _vm.$createElement;
+        var _c = _vm._self._c || _h;
+        return _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm.loaded ? _c("div", { staticClass: "card-body p-0" }, _vm._l(_vm.data, function(product, index) {
+            return _c("ul", {
+              key: index,
+              staticClass: "products-list product-list-in-card pl-2 pr-2"
+            }, [
+              _c("li", { staticClass: "item d-flex justify-content-between" }, [
+                _c("div", { staticClass: "product-info m-0" }, [
+                  _c("a", {
+                    staticClass: "product-title",
+                    attrs: { href: "javascript:void(0)" }
+                  }, [_vm._v(_vm._s(product.name))]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "product-description" }, [
+                    _vm._v("\n                        " + _vm._s(product.description) + "\n                    ")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "product-price" }, [
+                  _c("span", { staticClass: "badge badge-warning float-right" }, [_vm._v(_vm._s(_vm._f("formatTotal")(product.price)))])
+                ])
+              ])
+            ]);
+          }), 0) : _vm._e(),
+          _vm._v(" "),
+          _vm._m(1)
+        ]);
+      };
+      __vue_staticRenderFns__20 = [
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title" }, [
+              _vm._v("Recently Added Products")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-tools" }, [
+              _c("button", {
+                staticClass: "btn btn-tool",
+                attrs: { type: "button", "data-card-widget": "collapse" }
+              }, [_c("i", { staticClass: "fas fa-minus" })])
+            ])
+          ]);
+        },
+        function() {
+          var _vm = this;
+          var _h = _vm.$createElement;
+          var _c = _vm._self._c || _h;
+          return _c("div", { staticClass: "card-footer text-center d-none" }, [
+            _c("a", { staticClass: "uppercase", attrs: { href: "javascript:void(0)" } }, [_vm._v("View All Products")])
+          ]);
+        }
+      ];
+      __vue_render__20._withStripped = true;
+      __vue_inject_styles__23 = function(inject2) {
+        if (!inject2)
+          return;
+        inject2("data-v-335110fa_0", { source: "\n.products-list>.item::after {\n    content: none !important;\n}\n.product-img{\n    width: 100px !important;\n}\n", map: { "version": 3, "sources": ["resource\\js\\components\\home\\ProductRecently.vue"], "names": [], "mappings": ";AA+EA;IACA,wBAAA;AACA;AACA;IACA,uBAAA;AACA", "file": "ProductRecently.vue", "sourcesContent": [`<template>\r
+    <div class="card">\r
+        <div class="card-header">\r
+            <h3 class="card-title">Recently Added Products</h3>\r
+\r
+            <div class="card-tools">\r
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">\r
+                    <i class="fas fa-minus"></i>\r
+                </button>\r
+            </div>\r
+        </div>\r
+        <div class="card-body p-0" v-if="loaded">\r
+            <ul class="products-list product-list-in-card pl-2 pr-2" v-for="(product, index) in data" :key="index">\r
+                <li class="item d-flex justify-content-between">\r
+                    <div class="product-info m-0">\r
+                        <a href="javascript:void(0)" class="product-title">{{ product.name }}</a>\r
+                        <span class="product-description">\r
+                            {{ product.description }}\r
+                        </span>\r
+                    </div>\r
+                    <div class="product-price">\r
+                        <span class="badge badge-warning float-right">{{ product.price | formatTotal }}</span>\r
+                    </div>\r
+                </li>\r
+            \r
+            </ul>\r
+        </div>\r
+        <div class="card-footer text-center d-none">\r
+            <a href="javascript:void(0)" class="uppercase">View All Products</a>\r
+        </div>\r
+    </div>\r
+</template>\r
+<script>\r
+export default {\r
+    name: 'products-recently',\r
+    props:{\r
+        csrf_token: {\r
+            type: String,\r
+            required: true\r
+        },\r
+    },\r
+    data() {\r
+        return {\r
+            data: [],\r
+            loaded: false,\r
+        }\r
+    },\r
+    filters: {\r
+        formatTotal(val){\r
+        const formatter = new Intl.NumberFormat('en-US', {\r
+          style: 'currency',\r
+          currency: 'USD',\r
+        });\r
+        return formatter.format(val);\r
+      }\r
+    },\r
+    methods: {\r
+        getProducts() {\r
+            this.loaded = false;\r
+            axios({\r
+                method: 'post',\r
+                url: '/api/products/lastest',\r
+                data: {\r
+                    csrf_token: this.csrf_token,\r
+                }\r
+            }).then(response => {\r
+                const { data: { response:products } } = response;\r
+                this.data = products;\r
+                this.loaded = true;\r
+            })\r
+        },\r
+    },\r
+    mounted() {\r
+        this.getProducts();\r
+    },\r
+}\r
+<\/script>\r
+\r
+<style>\r
+    .products-list>.item::after {\r
+        content: none !important;\r
+    }\r
+    .product-img{\r
+        width: 100px !important;\r
+    }\r
+</style>`] }, media: void 0 });
+      };
+      __vue_scope_id__23 = void 0;
+      __vue_module_identifier__23 = void 0;
+      __vue_is_functional_template__23 = false;
+      __vue_component__22 = /* @__PURE__ */ __vue_normalize__22({ render: __vue_render__20, staticRenderFns: __vue_staticRenderFns__20 }, __vue_inject_styles__23, __vue_script__23, __vue_scope_id__23, __vue_is_functional_template__23, __vue_module_identifier__23, false, __vue_create_injector__5, void 0, void 0);
+      ProductRecently_default = __vue_component__22;
     }
   });
 
@@ -47681,6 +48218,8 @@ export default {\r
   import_vue3.default.component("sale-doughnut", (init_ChartDoughnutSales(), __toCommonJS(ChartDoughnutSales_exports)).default);
   import_vue3.default.component("sale-bar", (init_ChartBarSales(), __toCommonJS(ChartBarSales_exports)).default);
   import_vue3.default.component("report-home-sales", (init_ReportSales(), __toCommonJS(ReportSales_exports)).default);
+  import_vue3.default.component("report-home-most-sale-products", (init_MostSaleProducts(), __toCommonJS(MostSaleProducts_exports)).default);
+  import_vue3.default.component("products-recently", (init_ProductRecently(), __toCommonJS(ProductRecently_exports)).default);
   var app = new import_vue3.default({
     el: "#app"
   });
